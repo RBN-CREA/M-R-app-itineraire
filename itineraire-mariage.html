@@ -3,8 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Itinéraire — Le Domaine</title>
+<meta name="description" content="Itinéraire du jour — mariage Mariana & Robin, Domaine Monmanoir.">
+<meta name="theme-color" content="#7F9A80">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'">
+<title>Itinéraire — Domaine Monmanoir</title>
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -105,6 +112,16 @@
     color:#FBF6EC;
     position:relative;
   }
+  .header-top{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:4px;
+  }
+  .back-link{
+    font-size:12px; color:#F4EBD9; text-decoration:none;
+    opacity:0.9; padding:6px 4px;
+  }
+  .back-link:hover{ opacity:1; text-decoration:underline; }
+  .header-spacer{ width:48px; }
   .header h1{
     font-family:'Parisienne', cursive;
     font-weight:400;
@@ -141,6 +158,12 @@
     margin:5px 0 4px; color:var(--encre);
   }
   .status p{ font-size:13px; color:#7A6A57; margin:0; line-height:1.5; }
+  .status .next{
+    margin-top:10px; padding-top:10px;
+    border-top:1px dashed #EAD9BE;
+    font-size:11.5px; color:#8A7A64; line-height:1.4;
+  }
+  .status .next strong{ color:var(--encre); font-weight:600; }
   .status .time-badge{
     position:absolute; top:16px; right:16px;
     font-family:'Cormorant Garamond', serif; font-size:15px; font-weight:600;
@@ -395,16 +418,20 @@
   .map-caption .locate-btn{
     border:none; background:var(--terracotta); color:#fff;
     font-size:10.5px; padding:6px 12px; border-radius:20px;
-    font-family:'Jost'; font-weight:600; cursor:pointer;
+    font-family:'Jost', sans-serif; font-weight:600; cursor:pointer;
     display:flex; align-items:center; gap:5px;
   }
   .map-caption .locate-btn:active{ transform:scale(0.96); }
+  .map-caption .locate-btn:focus-visible{ outline:2px solid var(--or); outline-offset:2px; }
+  .map-caption .locate-btn.tracking{ background:var(--sauge); }
 
   /* TIMELINE */
   .timeline{
     display:flex; gap:8px; padding:16px 18px 6px;
-    justify-content:center;
+    justify-content:flex-start;
     overflow-x:auto; scrollbar-width:none;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
   .timeline::-webkit-scrollbar{display:none;}
   .stage{
@@ -414,7 +441,9 @@
     border-radius:16px;
     padding:10px 10px 9px; text-align:center; cursor:pointer;
     transition:all .2s ease;
+    scroll-snap-align: center;
   }
+  .stage:focus-visible{ outline:2px solid var(--terracotta); outline-offset:2px; }
   .stage.active{
     background:var(--terracotta);
     border-color:var(--terracotta);
@@ -440,34 +469,74 @@
   .demo .reset{
     display:inline-block; margin-top:6px; font-size:10.5px;
     text-decoration:underline; cursor:pointer; color:var(--terracotta);
+    background:none; border:none; font-family:inherit; padding:0;
   }
+  .demo .reset:focus-visible{ outline:2px solid var(--terracotta); outline-offset:2px; }
 
   .footnote{
     text-align:center; font-size:10px; color:#A79878;
     padding:0 26px 22px; line-height:1.5;
+  }
+
+  /* Écran d'accès : visible par défaut (pas de contournement sans JS) */
+  .lock-screen{
+    display:flex; position:fixed; inset:0; z-index:200;
+    background:var(--creme);
+    align-items:center; justify-content:center; padding:24px;
+  }
+  .lock-screen.unlocked{ display:none; }
+  .phone{ display:none; }
+  .phone.unlocked{ display:block; }
+  .lock-card{
+    width:100%; max-width:340px; text-align:center;
+    background:var(--papier); border:1px solid #EAD9BE;
+    border-radius:22px; padding:32px 24px; box-shadow:var(--ombre);
+  }
+  .lock-card h2{
+    font-family:'Parisienne', cursive; font-weight:400; font-size:28px;
+    margin:0 0 8px; color:var(--encre);
+  }
+  .lock-card p{ font-size:13px; color:#8A7A64; margin:0 0 18px; line-height:1.5; }
+  .lock-card a{
+    display:inline-block; font-size:13px; font-weight:600;
+    color:#fff; background:#7F9A80; text-decoration:none;
+    padding:12px 20px; border-radius:999px;
   }
 </style>
 </head>
 
 <body>
 
-<div class="phone">
+<div class="lock-screen" id="lockScreen" aria-hidden="false">
+  <div class="lock-card">
+    <h2>Accès réservé</h2>
+    <p>Cette page est réservée aux invités. Revenez à l'accueil pour entrer le code d'accès.</p>
+    <a href="index.html">Retour à l'accueil</a>
+  </div>
+</div>
+
+<div class="phone" id="appRoot" aria-hidden="true">
   <div class="header">
+    <div class="header-top">
+      <a class="back-link" href="index.html">← Accueil</a>
+      <span class="header-spacer" aria-hidden="true"></span>
+    </div>
     <h1>Mariana &amp; Robin</h1>
     <div class="sub">Domaine Monmanoir · 15 mai 2027</div>
   </div>
-  <div class="brush"></div>
+  <div class="brush" aria-hidden="true"></div>
 
-  <div class="status">
-    <div class="time-badge" id="clockBadge">14:02</div>
-    <div class="eyebrow"><span class="dot"></span> En ce moment</div>
-    <h2 id="stageTitle">Cérémonie</h2>
-    <p id="stageDesc">Installez-vous, ça va commencer. Le chemin vers le vin d'honneur s'affichera juste après.</p>
+  <div class="status" aria-live="polite">
+    <div class="time-badge" id="clockBadge">--:--</div>
+    <div class="eyebrow"><span class="dot" aria-hidden="true"></span> <span id="statusEyebrow">En ce moment</span></div>
+    <h2 id="stageTitle">…</h2>
+    <p id="stageDesc"></p>
+    <div class="next" id="nextHint" hidden></div>
   </div>
 
   <div class="map-wrap" id="mapWrap">
     <div class="map-layer" id="mapLayer">
-    <img src="asset/plan V2.png" alt="Plan du domaine">
+    <img src="asset/plan%20V2.png" alt="Plan du domaine">
 
     <!-- Trajets illustrés : chaque image est révélée par un masque qui suit le
          VRAI tracé de la courbe (et non une simple bande horizontale), pour que
@@ -589,18 +658,18 @@
   </div>
   <div class="map-caption">
     <span id="mapCaptionText">Suivez le chemin</span>
-    <button class="locate-btn" id="locateBtn">📍 Me localiser</button>
+    <button type="button" class="locate-btn" id="locateBtn" aria-pressed="false">Me localiser</button>
   </div>
 
-  <div class="timeline" id="timeline"></div>
+  <div class="timeline" id="timeline" role="tablist" aria-label="Programme de la journée"></div>
 
   <div class="demo">
     <div><b>Mode démonstration</b> — touchez une étape pour prévisualiser le chemin et le message correspondant.</div>
-    <span class="reset" id="resetDemo">Revenir à l'heure réelle</span>
+    <button type="button" class="reset" id="resetDemo">Revenir à l'heure réelle</button>
   </div>
 
   <div class="footnote">
-    Ajoutez cette page à votre écran d'accueil pour recevoir les rappels au bon moment, même app fermée.
+    Astuce : sur mobile, utilisez « Partager → Sur l'écran d'accueil » pour garder l'itinéraire à portée de main le jour J.
   </div>
   <img class="frame-corner tl" src="asset/corner-tl.png" alt="">
   <img class="frame-corner tr" src="asset/corner-tr.png" alt="">
@@ -610,6 +679,23 @@
 </div>
 
 <script>
+(function(){
+'use strict';
+
+const ACCESS_TOKEN = 'mr-guest-2027';
+try{
+  if(sessionStorage.getItem('wedding_access') !== ACCESS_TOKEN){
+    return;
+  }
+  document.getElementById('lockScreen').classList.add('unlocked');
+  document.getElementById('lockScreen').setAttribute('aria-hidden','true');
+  const root = document.getElementById('appRoot');
+  root.classList.add('unlocked');
+  root.setAttribute('aria-hidden','false');
+}catch(_){
+  return;
+}
+
 const stages = [
   {id:'arrivee',   time:'13:30', label:"Arrivée",      title:"Bienvenue !",  desc:"Garez-vous sur le parking en suivant le chemin depuis le portail.",              path:'path-entree-parking',    pin:'pin-parking', illu:null},
   {id:'ceremonie', time:'14:00', label:"Cérémonie",    title:"Cérémonie",    desc:"Suivez le chemin depuis le parking, la cérémonie va commencer.",                path:'path-parking-ceremonie', pin:'pin-ceremonie', illu:null},
@@ -622,6 +708,7 @@ const ALL_PATHS = ['path-entree-parking','path-parking-ceremonie','path-ceremoni
 const ALL_PINS  = ['pin-parking','pin-ceremonie','pin-cocktail'];
 
 let demoIndex = null;
+let watchId = null;
 
 function timeToMinutes(t){ const [h,m] = t.split(':').map(Number); return h*60+m; }
 
@@ -636,6 +723,13 @@ function currentStageIndex(){
 
 let lastStageIndex = -1;
 
+function scrollActiveStageIntoView(idx){
+  const el = document.querySelectorAll('.stage')[idx];
+  if(el && el.scrollIntoView){
+    el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+}
+
 function render(){
   const idx = currentStageIndex();
   const stage = stages[idx];
@@ -644,13 +738,26 @@ function render(){
 
   document.getElementById('stageTitle').textContent = stage.title;
   document.getElementById('stageDesc').textContent = stage.desc;
+  document.getElementById('statusEyebrow').textContent =
+    demoIndex !== null ? 'Aperçu' : 'En ce moment';
+
+  const nextEl = document.getElementById('nextHint');
+  if(idx < stages.length - 1){
+    const next = stages[idx + 1];
+    nextEl.hidden = false;
+    nextEl.replaceChildren();
+    const label = document.createElement('strong');
+    label.textContent = 'Ensuite · ' + next.label + ' (' + next.time + ')';
+    nextEl.appendChild(label);
+  } else {
+    nextEl.hidden = true;
+    nextEl.textContent = '';
+  }
 
   const now = new Date();
   document.getElementById('clockBadge').textContent =
     demoIndex !== null ? stage.time + ' (démo)' : now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
 
-  // Trajets : uniquement visibles pendant leur propre étape ; dès qu'on change
-  // d'étape, l'ancien trajet disparaît complètement (plus de trace après coup).
   ALL_PATHS.forEach(pathId=>{
     const image = document.getElementById(pathId);
     const dashes = Array.from(document.querySelectorAll('.dash-' + pathId.replace('path-','')));
@@ -661,19 +768,16 @@ function render(){
         image.classList.add('active');
         dashes.forEach(el=>{
           el.classList.remove('active');
-          void el.getBoundingClientRect(); // relance la boucle proprement (garde le déphasage entre les 2 traits)
+          void el.getBoundingClientRect();
           el.classList.add('active');
         });
       }
-      // sinon : on ne touche à rien, la boucle infinie continue de tourner
     } else {
       image.classList.remove('active');
       dashes.forEach(el => el.classList.remove('active'));
     }
   });
 
-  // Points de localisation : visibles uniquement pendant l'étape qui les concerne,
-  // ils disparaissent dès qu'on passe à une autre section.
   ALL_PINS.forEach(pinId=>{
     const el = document.getElementById('wrap-' + pinId);
     const owner = stages.findIndex(s => s.pin === pinId);
@@ -681,19 +785,21 @@ function render(){
     el.classList.toggle('shown', owner === idx);
   });
 
-  document.querySelectorAll('.stage').forEach((el,i)=>{ el.classList.toggle('active', i===idx); });
+  document.querySelectorAll('.stage').forEach((el,i)=>{
+    const active = i===idx;
+    el.classList.toggle('active', active);
+    el.setAttribute('aria-selected', active ? 'true' : 'false');
+    el.tabIndex = active ? 0 : -1;
+  });
 
-  // Illustrations (dîner, soirée) : remplacent le plan pour les étapes sans trajet
+  if(stageChanged) scrollActiveStageIntoView(idx);
+
   const mapWrap = document.getElementById('mapWrap');
   mapWrap.classList.toggle('show-illu', !!stage.illu);
   document.querySelectorAll('.illu-img').forEach(el=>{
     el.classList.toggle('active', el.id === stage.illu);
   });
 
-  // Effets lumineux de l'illustration soirée : on force un redémarrage propre
-  // (classe retirée puis reflow puis rajoutée) à chaque fois qu'on arrive sur
-  // cette étape, pour que les animations repartent toujours de leur position
-  // de départ plutôt que d'être reprises en plein milieu de leur cycle.
   const discoOverlay = document.getElementById('discoOverlay');
   if(discoOverlay){
     if(stage.illu === 'illu-soiree'){
@@ -724,25 +830,43 @@ function render(){
 function buildTimeline(){
   const wrap = document.getElementById('timeline');
   stages.forEach((s,i)=>{
-    const div = document.createElement('div');
-    div.className = 'stage';
-    div.innerHTML = `<div class="stage-time">${s.time}</div><div class="stage-label">${s.label}</div>`;
-    div.addEventListener('click', ()=>{ demoIndex = i; render(); });
-    wrap.appendChild(div);
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'stage';
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', 'false');
+    btn.setAttribute('aria-controls', 'mapWrap');
+    btn.id = 'stage-tab-' + s.id;
+
+    const time = document.createElement('div');
+    time.className = 'stage-time';
+    time.textContent = s.time;
+    const label = document.createElement('div');
+    label.className = 'stage-label';
+    label.textContent = s.label;
+    btn.appendChild(time);
+    btn.appendChild(label);
+
+    btn.addEventListener('click', ()=>{ demoIndex = i; render(); });
+    btn.addEventListener('keydown', e=>{
+      let next = null;
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown') next = Math.min(stages.length-1, i+1);
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = Math.max(0, i-1);
+      if(e.key === 'Home') next = 0;
+      if(e.key === 'End') next = stages.length-1;
+      if(next !== null){
+        e.preventDefault();
+        demoIndex = next;
+        render();
+        document.querySelectorAll('.stage')[next].focus();
+      }
+    });
+    wrap.appendChild(btn);
   });
 }
 
 document.getElementById('resetDemo').addEventListener('click', ()=>{ demoIndex = null; render(); });
 
-// --- Geolocation: convert real GPS to a point on the map image (1600x900 space) ---
-// Calibré avec 3 repères réels du domaine (parking, manoir, esplanade). Avec 3
-// points on résout une vraie transformation affine (x = A·lat + B·lng + C, et
-// pareil pour y) : ça gère aussi la rotation/l'inclinaison du plan par rapport
-// au nord, contrairement à une simple règle de 3 sur 2 points.
-// Repères utilisés :
-//   Parking   49°00'35.30"N 2°17'14.49"E -> x:290,  y:615
-//   Manoir    49°00'30.41"N 2°17'18.40"E -> x:741,  y:204
-//   Esplanade 49°00'26.85"N 2°17'17.43"E -> x:1164, y:206
 const GPS_CALIBRATION = {
   coefX: { lat: -403422.83353515, lng: -89293.51815774,  c: 19976210.90109994 },
   coefY: { lat:   75393.4276022,  lng: -284124.33223098, c: -3044508.06791933 }
@@ -756,11 +880,6 @@ function gpsToSvg(lat, lng){
   };
 }
 
-// --- Restreint la position affichée au tracé réel des chemins ---
-// Plutôt que d'afficher la position GPS brute (qui pourrait tomber sur le
-// point d'eau, une pelouse, etc. à cause de l'imprécision du GPS), on cherche
-// le point le plus proche sur l'un des 3 chemins tracés et on affiche le
-// marqueur là, comme "où en est la personne sur le parcours".
 const SNAP_PATH_IDS = ['dash-entree-parking', 'dash-parking-ceremonie', 'dash-ceremonie-cocktail'];
 
 function snapToNearestPath(x, y){
@@ -770,7 +889,7 @@ function snapToNearestPath(x, y){
     const path = document.getElementById(id);
     if(!path) return;
     const total = path.getTotalLength();
-    const steps = 120; // résolution de l'échantillonnage le long du chemin
+    const steps = 120;
     for(let i = 0; i <= steps; i++){
       const pt = path.getPointAtLength((i / steps) * total);
       const d = (pt.x - x) ** 2 + (pt.y - y) ** 2;
@@ -780,28 +899,64 @@ function snapToNearestPath(x, y){
   return best || { x, y };
 }
 
+function placeGuestDot(lat, lng){
+  const raw = gpsToSvg(lat, lng);
+  const {x,y} = snapToNearestPath(raw.x, raw.y);
+  const cx = Math.max(20, Math.min(1580, x));
+  const cy = Math.max(20, Math.min(880, y));
+  const dot = document.getElementById('guestDot');
+  dot.setAttribute('transform', `translate(${cx},${cy})`);
+  dot.style.display = 'block';
+}
+
+function stopTracking(){
+  if(watchId !== null && navigator.geolocation){
+    navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+  }
+  const btn = document.getElementById('locateBtn');
+  btn.classList.remove('tracking');
+  btn.setAttribute('aria-pressed', 'false');
+  btn.textContent = 'Me localiser';
+}
+
 document.getElementById('locateBtn').addEventListener('click', ()=>{
   const caption = document.getElementById('mapCaptionText');
-  if(!navigator.geolocation){ caption.textContent = "Géolocalisation non disponible sur cet appareil."; return; }
+  const btn = document.getElementById('locateBtn');
+
+  if(watchId !== null){
+    stopTracking();
+    caption.textContent = 'Suivi arrêté';
+    return;
+  }
+
+  if(!navigator.geolocation){
+    caption.textContent = "Géolocalisation non disponible sur cet appareil.";
+    return;
+  }
+  if(!window.isSecureContext){
+    caption.textContent = "La localisation nécessite une connexion sécurisée (HTTPS).";
+    return;
+  }
+
   caption.textContent = "Localisation en cours…";
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const {latitude, longitude} = pos.coords;
-    const raw = gpsToSvg(latitude, longitude);
-    const {x,y} = snapToNearestPath(raw.x, raw.y);
-    const cx = Math.max(20, Math.min(1580, x));
-    const cy = Math.max(20, Math.min(880, y));
-    const dot = document.getElementById('guestDot');
-    dot.setAttribute('transform', `translate(${cx},${cy})`);
-    dot.style.display = 'block';
-    caption.textContent = "Position mise à jour · calibration de démo à ajuster";
-  }, ()=>{ caption.textContent = "Position indisponible — autorisez la localisation dans les réglages."; },
-  { enableHighAccuracy:true, timeout:8000 });
+  watchId = navigator.geolocation.watchPosition(pos=>{
+    placeGuestDot(pos.coords.latitude, pos.coords.longitude);
+    caption.textContent = "Position suivie · appuyez pour arrêter";
+    btn.classList.add('tracking');
+    btn.setAttribute('aria-pressed', 'true');
+    btn.textContent = 'Arrêter le suivi';
+  }, ()=>{
+    stopTracking();
+    caption.textContent = "Position indisponible — autorisez la localisation dans les réglages.";
+  }, { enableHighAccuracy:true, timeout:10000, maximumAge:5000 });
 });
 
 buildTimeline();
 render();
 setInterval(render, 30000);
 
+})();
 </script>
 
 </body>
