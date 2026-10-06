@@ -1,7 +1,7 @@
 // Mode hors-ligne : pages en "réseau d'abord", le reste en "cache d'abord".
 // Changer la version pour forcer la mise à jour du cache chez les invités.
-const CACHE = 'mariage-v5';
-const CORE = ['./', 'index.html', 'itineraire-v3.html', 'photos.html', 'manifest.webmanifest',
+const CACHE = 'mariage-v6';
+const CORE = ['./', 'index.html', 'itineraire-v4.html', 'photos.html', 'manifest.webmanifest',
   'asset/plan.webp', 'asset/diner-illu.webp', 'asset/soiree-illu.webp',
   'asset/corner-tl.png', 'asset/corner-tr.png', 'asset/corner-bl.png', 'asset/corner-br.png', 'asset/sprig-right.png',
   'asset/point-parking.png', 'asset/point-ceremonie.png', 'asset/point-cocktail.png',
