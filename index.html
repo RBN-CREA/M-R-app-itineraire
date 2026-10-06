@@ -3,18 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mariana &amp; Robin — 15 mai 2027</title>
-<meta name="theme-color" content="#C66B49">
-<meta name="description" content="Mariana &amp; Robin — 15 mai 2027 — Domaine Monmanoir">
-<meta property="og:title" content="Mariana &amp; Robin — 15 mai 2027">
-<meta property="og:description" content="Toutes les infos pratiques de notre mariage au Domaine Monmanoir.">
+<meta name="description" content="Mariana & Robin se marient le 15 mai 2027 au Domaine Monmanoir.">
+<meta name="theme-color" content="#9CAF9B">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'">
+<meta property="og:title" content="Mariana & Robin — 15 mai 2027">
+<meta property="og:description" content="Notre mariage au Domaine Monmanoir.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="asset/icon-512.png">
+<meta name="robots" content="noindex, nofollow">
+<title>Mariana &amp; Robin — 15 mai 2027</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="asset/icon-192.png">
 <link rel="apple-touch-icon" href="asset/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -24,10 +26,12 @@
     --or:#E8A856;
     --bleu:#A4C3D2;
     --sauge:#9CAF9B;
+    --sauge-fonce:#7F9A80;
     --encre:#5B4636;
-    --ombre: 0 20px 45px -20px rgba(91,70,54,0.35);
+    --encre-douce:#8A7A64;
+    --ligne:#EAD9BE;
+    --ombre: 0 24px 50px -24px rgba(91,70,54,0.38);
   }
-  [hidden]{display:none !important;}
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
   body{
@@ -38,92 +42,96 @@
     display:flex; align-items:center; justify-content:center;
     padding:24px 12px;
     background:
-      radial-gradient(circle at 15% 15%, rgba(164,195,210,0.35), transparent 45%),
-      radial-gradient(circle at 85% 85%, rgba(232,168,86,0.25), transparent 45%),
+      radial-gradient(ellipse 70% 50% at 12% 8%, rgba(164,195,210,0.42), transparent 55%),
+      radial-gradient(ellipse 60% 45% at 92% 88%, rgba(232,168,86,0.28), transparent 50%),
+      radial-gradient(ellipse 40% 35% at 70% 20%, rgba(156,175,155,0.22), transparent 45%),
       var(--creme);
   }
 
-  .card{
+  .shell{
     width:100%; max-width:460px;
     background:var(--papier);
     border-radius:26px;
     box-shadow:var(--ombre);
-    border:1px solid #EAD9BE;
-    padding:58px 32px 36px;
+    border:1px solid var(--ligne);
+    padding:52px 32px 36px;
     text-align:center;
     position:relative;
     overflow:hidden;
+    opacity:0;
+    transform:translateY(18px);
+    animation:rise-in .9s cubic-bezier(.22,1,.36,1) .08s forwards;
+  }
+  @keyframes rise-in{
+    to{ opacity:1; transform:translateY(0); }
   }
 
   @media (max-width: 560px){
-    body{
-      padding:0;
-      align-items:stretch;
-    }
-    .card{
-      max-width:100%;
-      width:100%;
-      border-radius:0;
-      border:none;
-      box-shadow:none;
-      padding-top:calc(58px + env(safe-area-inset-top));
+    body{ padding:0; align-items:stretch; }
+    .shell{
+      max-width:100%; width:100%;
+      border-radius:0; border:none; box-shadow:none;
+      padding-top:calc(52px + env(safe-area-inset-top));
       padding-bottom:calc(36px + env(safe-area-inset-bottom));
+      min-height:100dvh;
+      display:flex; flex-direction:column; justify-content:center;
     }
   }
 
-  /* Ornements floraux (mêmes fichiers que sur le reste du site) */
   .frame-corner{
     position:absolute;
     width:min(28vw, 130px);
     height:auto;
     pointer-events:none;
     z-index:50;
+    opacity:0;
+    animation:fade-frame 1.1s ease .35s forwards;
   }
+  @keyframes fade-frame{ to{ opacity:1; } }
   .frame-corner.tl{ top:0; left:0; }
   .frame-corner.tr{ top:0; right:0; }
   .frame-corner.bl{ bottom:0; left:0; width:min(15vw, 70px); }
   .frame-corner.br{ bottom:0; right:0; width:min(24vw, 112px); }
   .frame-sprig{
     position:absolute;
-    right:0;
-    top:55%;
+    right:0; top:55%;
     width:min(9vw, 42px);
     height:auto;
     pointer-events:none;
     z-index:50;
-  }
-
-  .logo{
-    width:84px; height:84px; object-fit:contain;
-    margin:0 auto 18px;
-    display:block;
+    opacity:0;
+    animation:fade-frame 1.1s ease .5s forwards;
   }
 
   h1{
     font-family:'Parisienne', cursive;
     font-weight:400;
-    font-size:34px;
+    font-size:clamp(32px, 8vw, 40px);
     margin:0 0 6px;
     color:var(--encre);
+    line-height:1.15;
   }
   .venue{
     font-size:11px; letter-spacing:0.24em; text-transform:uppercase;
-    color:var(--terracotta); opacity:0.85; margin-bottom:30px;
+    color:var(--terracotta); opacity:0.9; margin-bottom:28px;
   }
 
   .eyebrow{
     font-size:11px; letter-spacing:0.2em; text-transform:uppercase;
-    color:#8A7A64; margin-bottom:14px;
+    color:var(--encre-douce); margin-bottom:14px;
   }
 
   .countdown{
-    display:flex; justify-content:center; gap:10px; margin-bottom:28px;
+    display:flex; justify-content:center; gap:8px; margin-bottom:26px;
   }
   .unit{
-    padding:0;
+    padding:12px 6px 10px;
     min-width:64px;
     flex:1;
     max-width:78px;
+    background:rgba(244,235,217,0.55);
+    border:1px solid var(--ligne);
+    border-radius:14px;
   }
   .unit .num{
     font-family:'Cormorant Garamond', serif;
@@ -135,66 +143,123 @@
   }
   .unit .label{
     font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase;
-    color:#8A7A64; margin-top:5px;
+    color:var(--encre-douce); margin-top:6px;
   }
 
   .date-line{
     font-family:'Cormorant Garamond', serif;
-    font-size:18px; font-weight:600;
+    font-size:20px; font-weight:600;
     color:var(--encre);
-    margin-bottom:6px;
+    margin-bottom:8px;
   }
   .sub-msg{
-    font-size:12.5px; color:#8A7A64; line-height:1.6;
-    max-width:320px; margin:0 auto;
+    font-size:13px; color:var(--encre-douce); line-height:1.65;
+    max-width:320px; margin:0 auto 28px;
   }
 
-  /* --- Bloc d'accès de TEST : à retirer avant la mise en ligne définitive ---
-     Il suffit de supprimer tout le <div class="test-access">...</div>
-     ci-dessous (et éventuellement ce commentaire) pour publier la version
-     finale, sans aucune porte d'entrée vers le reste du site. */
-  .test-access{
-    margin-top:34px;
-    padding-top:20px;
+  .actions{
+    display:flex; flex-direction:column; gap:10px;
+    max-width:280px; margin:0 auto;
+  }
+  .btn{
+    appearance:none; border:none; cursor:pointer;
+    font-family:'Jost', sans-serif; font-weight:600; font-size:13px;
+    letter-spacing:0.04em;
+    padding:13px 18px;
+    border-radius:999px;
+    transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .btn:active{ transform:scale(0.97); }
+  .btn-primary{
+    background:var(--sauge-fonce);
+    color:var(--papier);
+  }
+  .btn-primary:hover{ background:var(--sauge); }
+  .btn-ghost{
+    background:transparent;
+    color:var(--encre);
+    border:1px solid var(--ligne);
+  }
+  .btn-ghost:hover{ border-color:var(--terracotta); color:var(--terracotta); }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  /* Accès discret : 5 taps sur le titre dévoilent le champ code */
+  .gate{
+    display:none;
+    margin-top:22px;
+    padding-top:18px;
     border-top:1px dashed #E0CDA6;
   }
-  .test-access .test-label{
-    font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase;
-    color:#C9B48A; margin-bottom:8px;
+  .gate.open{ display:block; animation:rise-in .4s ease forwards; }
+  .gate label{
+    display:block;
+    font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:#C9B48A; margin-bottom:10px;
   }
-  .test-tile{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:34px; height:34px;
-    border-radius:8px;
+  .gate-row{ display:flex; gap:8px; justify-content:center; }
+  .gate input{
+    flex:1; max-width:180px;
+    font-family:'Jost', sans-serif; font-size:14px;
+    padding:10px 12px;
+    border:1px solid var(--ligne);
+    border-radius:12px;
     background:var(--creme);
-    border:1px solid #EAD9BE;
-    color:var(--terracotta);
-    text-decoration:none;
-    font-size:14px;
-    transition: all .15s ease;
+    color:var(--encre);
+    text-align:center;
+    letter-spacing:0.08em;
   }
-  .test-tile:hover{ background:var(--terracotta); color:#fff; border-color:var(--terracotta); }
+  .gate input:focus{ outline:2px solid var(--sauge); outline-offset:2px; }
+  .gate .enter{
+    appearance:none; border:1px solid var(--ligne);
+    background:var(--creme); color:var(--terracotta);
+    width:42px; height:42px; border-radius:12px;
+    font-size:16px; cursor:pointer;
+  }
+  .gate .enter:hover{ background:var(--terracotta); color:#fff; border-color:var(--terracotta); }
+  .gate .err{
+    display:none; margin-top:8px;
+    font-size:11px; color:var(--terracotta);
+  }
+  .gate .err.show{ display:block; }
+
+  .toast{
+    position:fixed; left:50%; bottom:28px;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--encre); color:var(--papier);
+    font-size:12px; padding:10px 16px; border-radius:999px;
+    opacity:0; pointer-events:none;
+    transition: opacity .25s ease, transform .25s ease;
+    z-index:100;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 
   @media (max-width:420px){
     .unit .num{ font-size:24px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .shell, .frame-corner, .frame-sprig{ animation:none; opacity:1; transform:none; }
   }
 </style>
 </head>
 <body>
 
-  <div class="card">
-    <img class="frame-corner tl" src="asset/corner-tl.png" alt="">
-    <img class="frame-corner tr" src="asset/corner-tr.png" alt="">
-    <img class="frame-corner bl" src="asset/corner-bl.png" alt="">
-    <img class="frame-corner br" src="asset/corner-br.png" alt="">
-    <img class="frame-sprig" src="asset/sprig-right.png" alt="">
+  <main class="shell">
+    <img class="frame-corner tl" src="asset/corner-tl.png" alt="" width="130" height="130">
+    <img class="frame-corner tr" src="asset/corner-tr.png" alt="" width="130" height="130">
+    <img class="frame-corner bl" src="asset/corner-bl.png" alt="" width="70" height="70">
+    <img class="frame-corner br" src="asset/corner-br.png" alt="" width="112" height="112">
+    <img class="frame-sprig" src="asset/sprig-right.png" alt="" width="42" height="120">
 
-    <h1>Mariana &amp; Robin</h1>
+    <h1 id="brandTitle" tabindex="0">Mariana &amp; Robin</h1>
     <div class="venue">Domaine Monmanoir</div>
 
-    <div class="eyebrow">Le grand jour arrive dans</div>
+    <p class="eyebrow" id="countdownEyebrow">Le grand jour arrive dans</p>
 
-    <div class="countdown">
+    <div class="countdown" id="countdown" role="timer" aria-live="polite" aria-atomic="true">
       <div class="unit"><div class="num" id="cd-days">00</div><div class="label">jours</div></div>
       <div class="unit"><div class="num" id="cd-hours">00</div><div class="label">heures</div></div>
       <div class="unit"><div class="num" id="cd-mins">00</div><div class="label">min</div></div>
@@ -202,42 +267,210 @@
     </div>
 
     <div class="date-line">15 mai 2027</div>
-    <p class="sub-msg">Toutes les informations pratiques (plan, horaires, itinéraires) seront disponibles ici à l'approche du jour J.</p>
+    <p class="sub-msg" id="subMsg">Toutes les informations pratiques (plan, horaires, itinéraires) seront disponibles ici à l'approche du jour J.</p>
 
-    <!-- ===================== BLOC DE TEST — à retirer avant publication ===================== -->
-    <div class="test-access" id="testAccess" hidden>
-      <div class="test-label">Accès test</div>
-      <a class="test-tile" href="itineraire-v3.html" title="Accéder au site (test)">→</a>
+    <div class="actions">
+      <button type="button" class="btn btn-primary" id="saveDateBtn">Ajouter au calendrier</button>
+      <button type="button" class="btn btn-ghost" id="shareBtn">Partager</button>
     </div>
-    <!-- ===================================================================================== -->
-  </div>
+
+    <div class="gate" id="gate" aria-hidden="true">
+      <label for="accessCode">Code d'accès invité</label>
+      <div class="gate-row">
+        <input id="accessCode" type="password" inputmode="text" autocomplete="off" maxlength="24" placeholder="••••••••" aria-describedby="gateErr">
+        <button type="button" class="enter" id="gateEnter" aria-label="Entrer">→</button>
+      </div>
+      <p class="err" id="gateErr" role="alert">Code incorrect</p>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <span class="sr-only" id="cdAnnounce" aria-live="polite"></span>
 
 <script>
-  const TARGET_DATE = new Date('2027-05-15T14:00:00+02:00');
+(function(){
+  'use strict';
 
-  function pad(n){ return String(n).padStart(2,'0'); }
+  const TARGET_DATE = new Date('2027-05-15T13:30:00+02:00');
+  const ACCESS_TOKEN = 'mr-guest-2027';
+  // SHA-256 du code invité (jamais le code en clair dans le source)
+  const ACCESS_HASH = 'e1418aeee0fd2dad0ef814db4544b85a54e4411796c360b87578e9afad814733';
+  // Fallback djb2 si SubtleCrypto indisponible (file://)
+  const ACCESS_HASH_FALLBACK = 'djb2:ae464d9f133c91bd';
+
+  const pad = n => String(n).padStart(2, '0');
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(showToast._timer);
+    showToast._timer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+
+  async function sha256Hex(str){
+    if(window.crypto && crypto.subtle){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+    // Fallback file:// / navigateurs sans SubtleCrypto
+    let h1 = 5381, h2 = 52711;
+    for(let i = 0; i < str.length; i++){
+      const c = str.charCodeAt(i);
+      h1 = Math.imul(h1, 33) ^ c;
+      h2 = Math.imul(h2, 33) ^ c;
+    }
+    return 'djb2:' + (h1 >>> 0).toString(16) + (h2 >>> 0).toString(16);
+  }
 
   function updateCountdown(){
     const now = new Date();
     let diff = TARGET_DATE - now;
-    if (diff < 0) diff = 0;
+    const eyebrow = document.getElementById('countdownEyebrow');
+    const sub = document.getElementById('subMsg');
 
-    const days = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff / (1000*60*60)) % 24);
-    const mins = Math.floor((diff / (1000*60)) % 60);
+    if(diff <= 0){
+      document.getElementById('cd-days').textContent = '0';
+      document.getElementById('cd-hours').textContent = '00';
+      document.getElementById('cd-mins').textContent = '00';
+      document.getElementById('cd-secs').textContent = '00';
+      eyebrow.textContent = "C'est le grand jour";
+      sub.textContent = "Bienvenue ! Ouvrez l'itinéraire pour suivre le programme et vous orienter sur le domaine.";
+      return;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff / 3600000) % 24);
+    const mins = Math.floor((diff / 60000) % 60);
     const secs = Math.floor((diff / 1000) % 60);
 
-    document.getElementById('cd-days').textContent = days;
+    document.getElementById('cd-days').textContent = String(days);
     document.getElementById('cd-hours').textContent = pad(hours);
     document.getElementById('cd-mins').textContent = pad(mins);
     document.getElementById('cd-secs').textContent = pad(secs);
+
+    if(days <= 7){
+      eyebrow.textContent = 'Plus que quelques jours';
+      sub.textContent = "L'itinéraire du jour J (plan, horaires, chemins) est prêt. Demandez le code d'accès aux mariés.";
+    }
   }
 
-  // Accès test réservé à l'organisation : ajouter ?test à l'adresse de la page.
-  if(new URLSearchParams(location.search).has('test')) document.getElementById('testAccess').hidden = false;
+  /* Calendrier .ics */
+  document.getElementById('saveDateBtn').addEventListener('click', () => {
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Mariana & Robin//Wedding//FR',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      'UID:mariana-robin-2027-05-15@wedding',
+      'DTSTAMP:20260515T000000Z',
+      'DTSTART:20270515T113000Z',
+      'DTEND:20270516T020000Z',
+      'SUMMARY:Mariage Mariana & Robin',
+      'LOCATION:Domaine Monmanoir',
+      'DESCRIPTION:Mariage de Mariana et Robin — Domaine Monmanoir',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'mariage-mariana-robin.ics';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Événement ajouté au calendrier');
+  });
+
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const data = {
+      title: 'Mariana & Robin — 15 mai 2027',
+      text: 'Mariana & Robin se marient le 15 mai 2027 au Domaine Monmanoir.',
+      url: location.href.split('#')[0]
+    };
+    try{
+      if(navigator.share){ await navigator.share(data); }
+      else{
+        await navigator.clipboard.writeText(data.url);
+        showToast('Lien copié');
+      }
+    }catch(e){
+      if(e && e.name === 'AbortError') return;
+      try{
+        await navigator.clipboard.writeText(data.url);
+        showToast('Lien copié');
+      }catch(_){
+        showToast('Partage indisponible');
+      }
+    }
+  });
+
+  /* Accès discret : 5 taps / Enter sur le titre */
+  let taps = 0;
+  let tapTimer = null;
+  function openGate(){
+    const gate = document.getElementById('gate');
+    gate.classList.add('open');
+    gate.setAttribute('aria-hidden', 'false');
+    document.getElementById('accessCode').focus();
+  }
+  function onBrandActivate(){
+    taps += 1;
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { taps = 0; }, 900);
+    if(taps >= 5){ taps = 0; openGate(); }
+  }
+  document.getElementById('brandTitle').addEventListener('click', onBrandActivate);
+  document.getElementById('brandTitle').addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); onBrandActivate(); }
+  });
+
+  async function tryAccess(){
+    const input = document.getElementById('accessCode');
+    const err = document.getElementById('gateErr');
+    const code = (input.value || '').trim().toUpperCase();
+    if(!code){ err.classList.add('show'); return; }
+
+    const hash = await sha256Hex(code);
+    const ok = hash === ACCESS_HASH || hash === ACCESS_HASH_FALLBACK;
+
+    if(ok){
+      err.classList.remove('show');
+      try{ sessionStorage.setItem('wedding_access', ACCESS_TOKEN); }catch(_){}
+      location.href = 'itineraire-v3.html';
+    } else {
+      err.classList.add('show');
+      input.value = '';
+      input.focus();
+    }
+  }
+
+  document.getElementById('gateEnter').addEventListener('click', tryAccess);
+  document.getElementById('accessCode').addEventListener('keydown', e => {
+    if(e.key === 'Enter') tryAccess();
+  });
+
+  // Si déjà authentifié dans la session, proposer l'itinéraire quand proche du jour J
+  try{
+    if(sessionStorage.getItem('wedding_access') === ACCESS_TOKEN){
+      const daysLeft = Math.ceil((TARGET_DATE - new Date()) / 86400000);
+      if(daysLeft <= 30){
+        const go = document.createElement('button');
+        go.type = 'button';
+        go.className = 'btn btn-ghost';
+        go.textContent = "Ouvrir l'itinéraire";
+        go.style.marginTop = '4px';
+        go.addEventListener('click', () => { location.href = 'itineraire-v3.html'; });
+        document.querySelector('.actions').appendChild(go);
+      }
+    }
+  }catch(_){}
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+})();
 </script>
 
 <script>if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>

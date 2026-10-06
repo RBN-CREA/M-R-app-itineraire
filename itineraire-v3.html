@@ -4,16 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mariana &amp; Robin — Programme</title>
-<meta name="theme-color" content="#C66B49">
-<meta name="description" content="Mariana &amp; Robin — 15 mai 2027 — Domaine Monmanoir">
+<meta name="description" content="Itinéraire du jour — mariage Mariana & Robin, Domaine Monmanoir.">
+<meta name="theme-color" content="#7F9A80">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'">
 <meta property="og:title" content="Mariana &amp; Robin — 15 mai 2027">
 <meta property="og:description" content="Toutes les infos pratiques de notre mariage au Domaine Monmanoir.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="asset/icon-512.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="asset/icon-192.png">
 <link rel="apple-touch-icon" href="asset/icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -539,13 +542,34 @@
   @media (prefers-reduced-motion: reduce){
     .diner-overlay *, .disco-overlay *{ animation:none !important; }
   }
+  /* Écran d'accès : visible par défaut (pas de contournement sans JS) */
+  .lock-screen{ display:flex; position:fixed; inset:0; z-index:300; background:var(--creme); align-items:center; justify-content:center; padding:24px; }
+  .lock-screen.unlocked{ display:none; }
+  .phone{ display:none; }
+  .phone.unlocked{ display:block; }
+  .lock-card{ width:100%; max-width:340px; text-align:center; background:var(--papier); border:1px solid #EAD9BE; border-radius:22px; padding:32px 24px; box-shadow:var(--ombre); }
+  .lock-card h2{ font-family:'Parisienne', cursive; font-weight:400; font-size:28px; margin:0 0 8px; color:var(--encre); }
+  .lock-card p{ font-size:13px; color:#8A7A64; margin:0 0 18px; line-height:1.5; }
+  .lock-card a{ display:inline-block; font-size:13px; font-weight:600; color:#fff; background:#7F9A80; text-decoration:none; padding:12px 20px; border-radius:999px; }
+  .back-link{ font-size:12px; color:#F4EBD9; text-decoration:none; opacity:0.9; padding:6px 4px; }
+  .back-link:hover{ opacity:1; text-decoration:underline; }
+  .header-top{ display:flex; align-items:center; justify-content:flex-start; margin-bottom:4px; }
 </style>
 </head>
 
 <body>
 
-<div class="phone">
+<div class="lock-screen" id="lockScreen" aria-hidden="false">
+  <div class="lock-card">
+    <h2>Accès réservé</h2>
+    <p>Cette page est réservée aux invités. Revenez à l'accueil pour entrer le code d'accès.</p>
+    <a href="index.html">Retour à l'accueil</a>
+  </div>
+</div>
+
+<div class="phone" id="appRoot" aria-hidden="true">
   <div class="header">
+    <div class="header-top"><a class="back-link" href="index.html">← Accueil</a></div>
     <h1>Mariana &amp; Robin</h1>
     <div class="sub">Domaine Monmanoir · 15 mai 2027</div>
   </div>
@@ -732,6 +756,16 @@
 </div>
 
 <script>
+(function(){
+const ACCESS_TOKEN = 'mr-guest-2027';
+try{
+  if(sessionStorage.getItem('wedding_access') !== ACCESS_TOKEN){ return; }
+  document.getElementById('lockScreen').classList.add('unlocked');
+  document.getElementById('lockScreen').setAttribute('aria-hidden','true');
+  const root = document.getElementById('appRoot');
+  root.classList.add('unlocked');
+  root.setAttribute('aria-hidden','false');
+}catch(_){ return; }
 const stages = [
   {id:'arrivee',   time:'13:30', label:"Accueil", welcome:true,      title:"Bienvenue !",  desc:"Garez-vous sur le parking en suivant le chemin depuis le portail.",              path:'path-entree-parking',    pin:'pin-parking', illu:null},
   {id:'ceremonie', time:'14:00', label:"Cérémonie",    title:"Cérémonie",    desc:"Suivez le chemin depuis le parking, la cérémonie va commencer.",                path:'path-parking-ceremonie', pin:'pin-ceremonie', illu:null},
@@ -1000,6 +1034,7 @@ document.getElementById('copyAddr').addEventListener('click', async e=>{
 buildHub();
 render();
 setInterval(render, 30000);
+})();
 
 </script>
 
