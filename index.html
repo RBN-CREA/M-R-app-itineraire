@@ -187,55 +187,21 @@
     overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
   }
 
-  /* Accès discret : 5 taps sur le titre dévoilent le champ code */
-  .gate{
-    display:none;
-    margin-top:22px;
-    padding-top:18px;
-    border-top:1px dashed #E0CDA6;
-  }
-  .gate.open{ display:block; animation:rise-in .4s ease forwards; }
-  .gate label{
-    display:block;
-    font-size:9.5px; letter-spacing:0.12em; text-transform:uppercase;
-    color:#C9B48A; margin-bottom:10px;
-  }
-  .gate-row{ display:flex; gap:8px; justify-content:center; }
-  .gate input{
-    flex:1; max-width:180px;
-    font-family:'Jost', sans-serif; font-size:14px;
-    padding:10px 12px;
-    border:1px solid var(--ligne);
-    border-radius:12px;
-    background:var(--creme);
-    color:var(--encre);
-    text-align:center;
-    letter-spacing:0.08em;
-  }
-  .gate input:focus{ outline:2px solid var(--sauge); outline-offset:2px; }
-  .gate .enter{
-    appearance:none; border:1px solid var(--ligne);
-    background:var(--creme); color:var(--terracotta);
-    width:42px; height:42px; border-radius:12px;
-    font-size:16px; cursor:pointer;
-  }
-  .gate .enter:hover{ background:var(--terracotta); color:#fff; border-color:var(--terracotta); }
-  .gate .err{
-    display:none; margin-top:8px;
-    font-size:11px; color:var(--terracotta);
-  }
-  .gate .err.show{ display:block; }
+  /* Le jour J : étape en cours à la place du compte à rebours */
+  .now[hidden], .countdown[hidden]{ display:none; }
+  .now{ margin:0 0 26px; animation:rise-in .5s ease both; }
+  .now-name{ font-family:'Parisienne', cursive; font-weight:400; font-size:46px; line-height:1.1; color:var(--terracotta); margin:2px 0 8px; }
+  .now-desc{ font-size:14px; line-height:1.5; color:var(--encre-douce); max-width:300px; margin:0 auto; }
 
-  .toast{
-    position:fixed; left:50%; bottom:28px;
-    transform:translateX(-50%) translateY(20px);
-    background:var(--encre); color:var(--papier);
-    font-size:12px; padding:10px 16px; border-radius:999px;
-    opacity:0; pointer-events:none;
-    transition: opacity .25s ease, transform .25s ease;
-    z-index:100;
-  }
-  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+  .enter-note{ margin:2px 0 0; font-size:13px; line-height:1.5; color:var(--encre-douce); }
+  .enter-note[hidden]{ display:none; }
+  .sheet[hidden]{ display:none; }
+  .sheet{ position:fixed; inset:0; z-index:100; background:rgba(91,70,54,0.35); display:flex; align-items:flex-end; justify-content:center; padding:16px; animation:fade-in .2s ease; }
+  .sheet-card{ width:100%; max-width:380px; background:var(--papier); border-radius:22px; padding:22px 20px 18px; text-align:center; box-shadow:var(--ombre); display:flex; flex-direction:column; gap:10px; margin-bottom:env(safe-area-inset-bottom); }
+  .sheet-card h2{ font-family:'Cormorant Garamond', serif; font-size:22px; font-weight:600; margin:0; color:var(--encre); }
+  .sheet-card p{ font-size:13px; line-height:1.5; color:var(--encre-douce); margin:0 0 6px; }
+  .sheet-card .btn{ text-decoration:none; text-align:center; }
+  @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
 
   @media (max-width:420px){
     .unit .num{ font-size:24px; }
@@ -254,7 +220,7 @@
     <img class="frame-corner br" src="asset/corner-br.png" alt="" width="112" height="112">
     <img class="frame-sprig" src="asset/sprig-right.png" alt="" width="42" height="120">
 
-    <h1 id="brandTitle" tabindex="0">Mariana &amp; Robin</h1>
+    <h1 id="brandTitle">Mariana &amp; Robin</h1>
     <div class="venue">Domaine Monmanoir</div>
 
     <p class="eyebrow" id="countdownEyebrow">Le grand jour arrive dans</p>
@@ -266,25 +232,31 @@
       <div class="unit"><div class="num" id="cd-secs">00</div><div class="label">sec</div></div>
     </div>
 
-    <div class="date-line">15 mai 2027</div>
-    <p class="sub-msg" id="subMsg">Toutes les informations pratiques (plan, horaires, itinéraires) seront disponibles ici à l'approche du jour J.</p>
-
-    <div class="actions">
-      <button type="button" class="btn btn-primary" id="saveDateBtn">Ajouter au calendrier</button>
-      <button type="button" class="btn btn-ghost" id="shareBtn">Partager</button>
+    <div class="now" id="now" hidden>
+      <div class="now-name" id="nowName"></div>
+      <p class="now-desc" id="nowDesc"></p>
     </div>
 
-    <div class="gate" id="gate" aria-hidden="true">
-      <label for="accessCode">Code d'accès invité</label>
-      <div class="gate-row">
-        <input id="accessCode" type="password" inputmode="text" autocomplete="off" maxlength="24" placeholder="••••••••" aria-describedby="gateErr">
-        <button type="button" class="enter" id="gateEnter" aria-label="Entrer">→</button>
-      </div>
-      <p class="err" id="gateErr" role="alert">Code incorrect</p>
+    <div class="date-line">15 mai 2027</div>
+    <p class="sub-msg" id="subMsg">Retrouvez ici le plan, les horaires et l'itinéraire du jour J.</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" id="enterBtn" href="itineraire-v3.html" style="text-decoration:none;text-align:center">Entrer</a>
+      <p class="enter-note" id="enterNote" hidden></p>
+      <button type="button" class="btn btn-ghost" id="routeBtn">Itinéraire</button>
     </div>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="sheet" id="routeSheet" hidden>
+    <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="routeTitle">
+      <h2 id="routeTitle">Ouvrir l'itinéraire avec</h2>
+      <p>Domaine Monmanoir<br>6 Rue de Paris, 95680 Montlignon</p>
+      <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
+      <a class="btn btn-primary" href="https://waze.com/ul?q=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
+      <button type="button" class="btn btn-ghost" id="routeCancel">Annuler</button>
+    </div>
+  </div>
+
   <span class="sr-only" id="cdAnnounce" aria-live="polite"></span>
 
 <script>
@@ -292,50 +264,76 @@
   'use strict';
 
   const TARGET_DATE = new Date('2027-05-15T13:30:00+02:00');
-  const ACCESS_TOKEN = 'mr-guest-2027';
-  // SHA-256 du code invité (jamais le code en clair dans le source)
-  const ACCESS_HASH = 'e1418aeee0fd2dad0ef814db4544b85a54e4411796c360b87578e9afad814733';
-  // Fallback djb2 si SubtleCrypto indisponible (file://)
-  const ACCESS_HASH_FALLBACK = 'djb2:ae464d9f133c91bd';
-
   const pad = n => String(n).padStart(2, '0');
 
-  function showToast(msg){
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(showToast._timer);
-    showToast._timer = setTimeout(() => t.classList.remove('show'), 2400);
+  /* Étapes du jour J (heure de Paris) */
+  const WEDDING_DATE = '2027-05-15';
+  const STAGES = [
+    {time:'13:30', name:'Accueil',       desc:"Garez-vous sur le parking en suivant le chemin depuis le portail."},
+    {time:'14:00', name:'Cérémonie',     desc:"Suivez le chemin depuis le parking, la cérémonie va commencer."},
+    {time:'15:00', name:"Vin d'honneur", desc:"Suivez le chemin vers la terrasse pour l'apéritif."},
+    {time:'19:00', name:'Dîner',         desc:"Installez-vous, le dîner va être servi."},
+    {time:'22:00', name:'Soirée',        desc:"Place à la piste de danse pour la suite de la fête."}
+  ];
+  // Pour tester : ?heure=15:30 simule le jour J à cette heure.
+  const FAKE_TIME = new URLSearchParams(location.search).get('heure');
+  function parisNow(){
+    if(FAKE_TIME && /^\d{1,2}:\d{2}$/.test(FAKE_TIME)){
+      const [h,m] = FAKE_TIME.split(':').map(Number);
+      return { date:WEDDING_DATE, min:h*60+m };
+    }
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',
+      year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'})
+      .formatToParts(new Date()).map(x=>[x.type,x.value]));
+    return { date:`${p.year}-${p.month}-${p.day}`, min:(+p.hour)*60 + (+p.minute) };
   }
-
-  async function sha256Hex(str){
-    if(window.crypto && crypto.subtle){
-      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-    }
-    // Fallback file:// / navigateurs sans SubtleCrypto
-    let h1 = 5381, h2 = 52711;
-    for(let i = 0; i < str.length; i++){
-      const c = str.charCodeAt(i);
-      h1 = Math.imul(h1, 33) ^ c;
-      h2 = Math.imul(h2, 33) ^ c;
-    }
-    return 'djb2:' + (h1 >>> 0).toString(16) + (h2 >>> 0).toString(16);
+  // Fin de la fête : 3h du matin le lendemain (à ajuster) ; ensuite, message de remerciement
+  const END_MIN = 27 * 60;
+  function minutesSinceWeddingDayStart(){
+    const n = parisNow();
+    const days = Math.round((Date.UTC(...n.date.split('-').map((v,i)=>i===1?v-1:+v)) - Date.UTC(...WEDDING_DATE.split('-').map((v,i)=>i===1?v-1:+v))) / 86400000);
+    return days*1440 + n.min;
+  }
+  function partyOver(){ return minutesSinceWeddingDayStart() >= END_MIN; }
+  function currentStageIndex(){
+    const m = minutesSinceWeddingDayStart();
+    let cur = 0;
+    STAGES.forEach((st,i)=>{ const [h,mm] = st.time.split(':').map(Number); if(m >= h*60+mm) cur = i; });
+    return cur;
   }
 
   function updateCountdown(){
     const now = new Date();
-    let diff = TARGET_DATE - now;
+    let diff = FAKE_TIME ? 0 : TARGET_DATE - now;
     const eyebrow = document.getElementById('countdownEyebrow');
     const sub = document.getElementById('subMsg');
 
     if(diff <= 0){
-      document.getElementById('cd-days').textContent = '0';
-      document.getElementById('cd-hours').textContent = '00';
-      document.getElementById('cd-mins').textContent = '00';
-      document.getElementById('cd-secs').textContent = '00';
-      eyebrow.textContent = "C'est le grand jour";
-      sub.textContent = "Bienvenue ! Ouvrez l'itinéraire pour suivre le programme et vous orienter sur le domaine.";
+      // Compte à rebours terminé : étape en cours, puis remerciement une fois la fête finie
+      document.getElementById('countdown').hidden = true;
+      document.getElementById('now').hidden = false;
+      const enter = document.getElementById('enterBtn');
+      const extra = FAKE_TIME ? '&heure=' + encodeURIComponent(FAKE_TIME) : '';
+      if(partyOver()){
+        document.getElementById('nowName').textContent = 'Merci !';
+        document.getElementById('nowDesc').textContent = "Merci d'avoir partagé ce jour si spécial avec nous.";
+        eyebrow.textContent = 'Mariana & Robin vous remercient';
+        sub.textContent = 'Avec tout notre amour.';
+        enter.setAttribute('href', 'photos.html');
+        enter.textContent = 'Photos';
+        const note = document.getElementById('enterNote');
+        note.textContent = 'Pour voir et partager les photos, c\'est ici.';
+        note.hidden = false;
+        document.getElementById('routeBtn').hidden = true;
+      } else {
+        const i = currentStageIndex(), st = STAGES[i];
+        document.getElementById('nowName').textContent = st.name;
+        document.getElementById('nowDesc').textContent = st.desc;
+        eyebrow.textContent = 'En ce moment';
+        sub.textContent = "Touchez « Entrer » pour le plan et l'itinéraire de cette étape.";
+        // « Entrer » ouvre directement la page de l'étape en cours
+        enter.setAttribute('href', 'itineraire-v3.html?etape=' + i + extra);
+      }
       return;
     }
 
@@ -351,122 +349,19 @@
 
     if(days <= 7){
       eyebrow.textContent = 'Plus que quelques jours';
-      sub.textContent = "L'itinéraire du jour J (plan, horaires, chemins) est prêt. Demandez le code d'accès aux mariés.";
+      sub.textContent = "Le jour J approche : le plan, les horaires et l'itinéraire vous attendent.";
     }
   }
 
-  /* Calendrier .ics */
-  document.getElementById('saveDateBtn').addEventListener('click', () => {
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Mariana & Robin//Wedding//FR',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      'UID:mariana-robin-2027-05-15@wedding',
-      'DTSTAMP:20260515T000000Z',
-      'DTSTART:20270515T113000Z',
-      'DTEND:20270516T020000Z',
-      'SUMMARY:Mariage Mariana & Robin',
-      'LOCATION:Domaine Monmanoir',
-      'DESCRIPTION:Mariage de Mariana et Robin — Domaine Monmanoir',
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
-    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'mariage-mariana-robin.ics';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Événement ajouté au calendrier');
-  });
-
-  document.getElementById('shareBtn').addEventListener('click', async () => {
-    const data = {
-      title: 'Mariana & Robin — 15 mai 2027',
-      text: 'Mariana & Robin se marient le 15 mai 2027 au Domaine Monmanoir.',
-      url: location.href.split('#')[0]
-    };
-    try{
-      if(navigator.share){ await navigator.share(data); }
-      else{
-        await navigator.clipboard.writeText(data.url);
-        showToast('Lien copié');
-      }
-    }catch(e){
-      if(e && e.name === 'AbortError') return;
-      try{
-        await navigator.clipboard.writeText(data.url);
-        showToast('Lien copié');
-      }catch(_){
-        showToast('Partage indisponible');
-      }
-    }
-  });
-
-  /* Accès discret : 5 taps / Enter sur le titre */
-  let taps = 0;
-  let tapTimer = null;
-  function openGate(){
-    const gate = document.getElementById('gate');
-    gate.classList.add('open');
-    gate.setAttribute('aria-hidden', 'false');
-    document.getElementById('accessCode').focus();
-  }
-  function onBrandActivate(){
-    taps += 1;
-    clearTimeout(tapTimer);
-    tapTimer = setTimeout(() => { taps = 0; }, 900);
-    if(taps >= 5){ taps = 0; openGate(); }
-  }
-  document.getElementById('brandTitle').addEventListener('click', onBrandActivate);
-  document.getElementById('brandTitle').addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); onBrandActivate(); }
-  });
-
-  async function tryAccess(){
-    const input = document.getElementById('accessCode');
-    const err = document.getElementById('gateErr');
-    const code = (input.value || '').trim().toUpperCase();
-    if(!code){ err.classList.add('show'); return; }
-
-    const hash = await sha256Hex(code);
-    const ok = hash === ACCESS_HASH || hash === ACCESS_HASH_FALLBACK;
-
-    if(ok){
-      err.classList.remove('show');
-      try{ sessionStorage.setItem('wedding_access', ACCESS_TOKEN); }catch(_){}
-      location.href = 'itineraire-v3.html';
-    } else {
-      err.classList.add('show');
-      input.value = '';
-      input.focus();
-    }
-  }
-
-  document.getElementById('gateEnter').addEventListener('click', tryAccess);
-  document.getElementById('accessCode').addEventListener('keydown', e => {
-    if(e.key === 'Enter') tryAccess();
-  });
-
-  // Si déjà authentifié dans la session, proposer l'itinéraire quand proche du jour J
-  try{
-    if(sessionStorage.getItem('wedding_access') === ACCESS_TOKEN){
-      const daysLeft = Math.ceil((TARGET_DATE - new Date()) / 86400000);
-      if(daysLeft <= 30){
-        const go = document.createElement('button');
-        go.type = 'button';
-        go.className = 'btn btn-ghost';
-        go.textContent = "Ouvrir l'itinéraire";
-        go.style.marginTop = '4px';
-        go.addEventListener('click', () => { location.href = 'itineraire-v3.html'; });
-        document.querySelector('.actions').appendChild(go);
-      }
-    }
-  }catch(_){}
+  /* Itinéraire : choix Maps / Waze */
+  const sheet = document.getElementById('routeSheet');
+  const openSheet = () => { sheet.hidden = false; };
+  const closeSheet = () => { sheet.hidden = true; };
+  document.getElementById('routeBtn').addEventListener('click', openSheet);
+  document.getElementById('routeCancel').addEventListener('click', closeSheet);
+  sheet.addEventListener('click', e => { if(e.target === sheet) closeSheet(); });
+  sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', closeSheet));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeSheet(); });
 
   updateCountdown();
   setInterval(updateCountdown, 1000);

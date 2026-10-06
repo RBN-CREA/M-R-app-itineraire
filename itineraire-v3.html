@@ -521,7 +521,6 @@
     color:#fff; background:var(--terracotta); border-radius:999px; padding:6px 12px; position:relative; z-index:2;
   }
   .prog-hint{ font-size:12px; color:#A79878; margin:-8px 0 18px; }
-  .prog-live{ display:inline-block; margin-top:6px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; background:var(--terracotta); border-radius:999px; padding:3px 9px; }
   .prog-item.live .prog-dot::after{ background:var(--terracotta); }
   .prog-item{ display:grid; grid-template-columns:1fr 34px 1fr; align-items:start; min-height:96px; }
   .prog-dot{
@@ -542,15 +541,6 @@
   @media (prefers-reduced-motion: reduce){
     .diner-overlay *, .disco-overlay *{ animation:none !important; }
   }
-  /* Écran d'accès : visible par défaut (pas de contournement sans JS) */
-  .lock-screen{ display:flex; position:fixed; inset:0; z-index:300; background:var(--creme); align-items:center; justify-content:center; padding:24px; }
-  .lock-screen.unlocked{ display:none; }
-  .phone{ display:none; }
-  .phone.unlocked{ display:block; }
-  .lock-card{ width:100%; max-width:340px; text-align:center; background:var(--papier); border:1px solid #EAD9BE; border-radius:22px; padding:32px 24px; box-shadow:var(--ombre); }
-  .lock-card h2{ font-family:'Parisienne', cursive; font-weight:400; font-size:28px; margin:0 0 8px; color:var(--encre); }
-  .lock-card p{ font-size:13px; color:#8A7A64; margin:0 0 18px; line-height:1.5; }
-  .lock-card a{ display:inline-block; font-size:13px; font-weight:600; color:#fff; background:#7F9A80; text-decoration:none; padding:12px 20px; border-radius:999px; }
   .back-link{ font-size:12px; color:#F4EBD9; text-decoration:none; opacity:0.9; padding:6px 4px; }
   .back-link:hover{ opacity:1; text-decoration:underline; }
   .header-top{ display:flex; align-items:center; justify-content:flex-start; margin-bottom:4px; }
@@ -559,15 +549,7 @@
 
 <body>
 
-<div class="lock-screen" id="lockScreen" aria-hidden="false">
-  <div class="lock-card">
-    <h2>Accès réservé</h2>
-    <p>Cette page est réservée aux invités. Revenez à l'accueil pour entrer le code d'accès.</p>
-    <a href="index.html">Retour à l'accueil</a>
-  </div>
-</div>
-
-<div class="phone" id="appRoot" aria-hidden="true">
+<div class="phone" id="appRoot">
   <div class="header">
     <div class="header-top"><a class="back-link" href="index.html">← Accueil</a></div>
     <h1>Mariana &amp; Robin</h1>
@@ -756,16 +738,6 @@
 </div>
 
 <script>
-(function(){
-const ACCESS_TOKEN = 'mr-guest-2027';
-try{
-  if(sessionStorage.getItem('wedding_access') !== ACCESS_TOKEN){ return; }
-  document.getElementById('lockScreen').classList.add('unlocked');
-  document.getElementById('lockScreen').setAttribute('aria-hidden','true');
-  const root = document.getElementById('appRoot');
-  root.classList.add('unlocked');
-  root.setAttribute('aria-hidden','false');
-}catch(_){ return; }
 const stages = [
   {id:'arrivee',   time:'13:30', label:"Accueil", welcome:true,      title:"Bienvenue !",  desc:"Garez-vous sur le parking en suivant le chemin depuis le portail.",              path:'path-entree-parking',    pin:'pin-parking', illu:null},
   {id:'ceremonie', time:'14:00', label:"Cérémonie",    title:"Cérémonie",    desc:"Suivez le chemin depuis le parking, la cérémonie va commencer.",                path:'path-parking-ceremonie', pin:'pin-ceremonie', illu:null},
@@ -934,7 +906,6 @@ document.getElementById('welcomeProgram').innerHTML = stages.map((s,i)=>`
         <div class="prog-time">${s.time.replace(':','H')}</div>
         <div class="prog-name">${PROGRAM_TEXT[s.id][0]}</div>
         <div class="prog-sub">${PROGRAM_TEXT[s.id][1]}</div>
-        ${onDay && i===live ? '<span class="prog-live">En ce moment</span>' : ''}
         ${s.welcome ? `<a class="prog-go" href="${ITINERAIRE_URL}" target="_blank" rel="noopener">Itinéraire</a>` : ''}
       </div></div></div>`).join('');
 }
@@ -1034,6 +1005,13 @@ document.getElementById('copyAddr').addEventListener('click', async e=>{
 buildHub();
 render();
 setInterval(render, 30000);
+// Arrivée depuis « Entrer » avec ?etape=N : on ouvre directement la page de cette étape
+(function(){
+  const n = parseInt(new URLSearchParams(location.search).get('etape'), 10);
+  if(Number.isInteger(n) && n >= 0 && n < stages.length){
+    cur = n; render();
+    hub.hidden = true; page.hidden = false;
+  }
 })();
 
 </script>
