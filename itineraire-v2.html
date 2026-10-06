@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mariana &amp; Robin — Programme</title>
+<meta name="theme-color" content="#C66B49">
+<meta name="description" content="Mariana &amp; Robin — 15 mai 2027 — Domaine Monmanoir">
+<meta property="og:title" content="Mariana &amp; Robin — 15 mai 2027">
+<meta property="og:description" content="Toutes les infos pratiques de notre mariage au Domaine Monmanoir.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="asset/icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="asset/icon-192.png">
+<link rel="apple-touch-icon" href="asset/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --creme:#F4EBD9;
+    --papier:#FBF6EC;
+    --terracotta:#C66B49;
+    --or:#E8A856;
+    --bleu:#A4C3D2;
+    --sauge:#9CAF9B;
+    --encre:#5B4636;
+    --ombre: 0 20px 45px -20px rgba(91,70,54,0.35);
+  }
+  [hidden]{display:none !important;}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Jost', sans-serif;
+    color:var(--encre);
+    min-height:100vh;
+    min-height:100dvh; /* better viewport unit on mobile browsers (avoids URL-bar jump) */
+    display:flex; align-items:center; justify-content:center;
+    padding:24px 12px;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(164,195,210,0.35), transparent 45%),
+      radial-gradient(circle at 85% 85%, rgba(232,168,86,0.25), transparent 45%),
+      var(--creme);
+  }
+  .phone{
+    width:100%; max-width:520px;
+    background:var(--papier);
+    border-radius:26px;
+    box-shadow:var(--ombre);
+    overflow:hidden;
+    border:1px solid #EAD9BE;
+    position:relative;
+  }
+
+  /* On real phone-width screens: use the whole viewport edge-to-edge,
+     respect notch / home-indicator safe areas, no floating-card mockup look */
+  @media (max-width: 560px){
+    body{
+      padding:0;
+      align-items:stretch;
+    }
+    .phone{
+      max-width:100%;
+      width:100%;
+      border-radius:0;
+      border:none;
+      box-shadow:none;
+    }
+    .header{
+      padding-top:calc(14px + env(safe-area-inset-top));
+    }
+    .footnote{
+      padding-bottom:calc(22px + env(safe-area-inset-bottom));
+    }
+  }
+  /* Corner ornaments: each piece keeps its native aspect ratio and just
+     anchors to its corner, so nothing ever stretches regardless of the
+     card's height on any screen. */
+  .frame-corner{
+    position:absolute;
+    width:min(28vw, 130px);
+    height:auto;
+    pointer-events:none;
+    z-index:50;
+  }
+  .frame-corner.tl{ top:0; left:0; }
+  .frame-corner.tr{ top:0; right:0; }
+  .frame-corner.bl{ bottom:0; left:0; width:min(15vw, 70px); }
+  .frame-corner.br{ bottom:0; right:0; width:min(24vw, 112px); }
+  .frame-sprig{
+    position:absolute;
+    right:0;
+    top:55%;
+    width:min(9vw, 42px);
+    height:auto;
+    pointer-events:none;
+    z-index:50;
+  }
+
+  /* watercolor blob divider */
+  .brush{
+    height:14px; width:100%;
+    background: linear-gradient(90deg, var(--terracotta), var(--or), var(--sauge), var(--bleu));
+    opacity:0.55;
+    mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 14'><path d='M0 7 Q20 0 40 7 T80 7 T120 7 T160 7 T200 7 T240 7 T280 7 T320 7 T360 7 T400 7 V14 H0 Z' fill='black'/></svg>");
+    mask-size: 100px 14px;
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 14'><path d='M0 7 Q20 0 40 7 T80 7 T120 7 T160 7 T200 7 T240 7 T280 7 T320 7 T360 7 T400 7 V14 H0 Z' fill='black'/></svg>");
+    -webkit-mask-size: 100px 14px;
+  }
+
+  /* HEADER */
+  .header{
+    padding:14px 24px 20px;
+    text-align:center;
+    background: linear-gradient(160deg, var(--sauge) 0%, #7F9A80 100%);
+    color:#FBF6EC;
+    position:relative;
+  }
+  .header h1{
+    font-family:'Parisienne', cursive;
+    font-weight:400;
+    font-size:28px;
+    margin:0 0 2px;
+  }
+  .header .sub{
+    font-size:11px; letter-spacing:0.28em; text-transform:uppercase;
+    color:#F4EBD9; opacity:0.85;
+  }
+
+  /* STATUS BANNER */
+  .status{
+    margin:10px 18px 0;
+    background:var(--papier);
+    border-radius:20px;
+    box-shadow:var(--ombre);
+    padding:16px 18px 14px;
+    position:relative; z-index:5;
+    border:1px solid #EAD9BE;
+  }
+  .status .eyebrow{
+    font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--terracotta); font-weight:600;
+    display:flex; align-items:center; gap:6px;
+  }
+  .status .eyebrow .dot{
+    width:6px; height:6px; border-radius:50%; background:var(--terracotta);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.35; transform:scale(1.5);}}
+  .status h2{
+    font-family:'Cormorant Garamond', serif; font-size:24px; font-weight:600;
+    margin:5px 0 4px; color:var(--encre);
+  }
+  .status p{ font-size:13px; color:#7A6A57; margin:0; line-height:1.5; }
+  #clockBadge{ display:none; }
+  .status .time-badge{
+    position:absolute; top:16px; right:16px;
+    font-family:'Cormorant Garamond', serif; font-size:15px; font-weight:600;
+    color:#fff; background:var(--or);
+    border-radius:20px; padding:3px 12px;
+  }
+
+  /* MAP */
+  .map-slot{ margin:18px 18px 0; aspect-ratio:16 / 9; position:relative; }
+  .map-wrap{
+    position:absolute; inset:0;
+    border-radius:20px;
+    overflow:hidden;
+    border:2px solid var(--papier);
+    outline:1px solid #EAD9BE;
+    box-shadow:var(--ombre);
+    background:#EDE3CE;
+    cursor:zoom-in;
+  }
+  .map-wrap img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:contain; display:block;
+  }
+  .map-layer{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:1; transition: opacity .5s ease;
+  }
+  .map-wrap.show-illu .map-layer{ opacity:0; pointer-events:none; }
+  .illu-img{
+    opacity:0; transition: opacity .5s ease; object-fit:cover;
+  }
+  .illu-img.active{ opacity:1; }
+
+  /* Effets lumineux sur l'illustration soirée : petits éclats façon boule à
+     facettes qui scintillent par-dessus l'image, deux halos chauds qui
+     respirent, et des projecteurs colorés façon boîte de nuit. Les animations
+     ne tournent QUE sous la classe .active (ajoutée/retirée en JS à chaque
+     changement d'étape) : sans ça, elles tournaient en fond depuis le
+     chargement de la page et apparaissaient "en cours de route" à un moment
+     aléatoire de leur cycle - d'où le creux d'opacité juste après l'activation. */
+  .disco-overlay{
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none; opacity:0; transition: opacity .6s ease;
+    overflow:hidden;
+  }
+  #illu-soiree.active ~ .disco-overlay{ opacity:1; }
+
+  .disco-dot, .disco-flare, .spot-beam{ opacity:0; }
+
+  .disco-dot{
+    position:absolute; width:5px; height:5px; border-radius:50%;
+    background:#FFF7E0;
+    box-shadow: 0 0 6px 2px rgba(255,247,224,0.9), 0 0 14px 5px rgba(232,168,86,0.5);
+    mix-blend-mode:screen;
+  }
+  .disco-overlay.active .disco-dot{
+    animation-name: discoTwinkle, discoDrift;
+    animation-duration: 2.4s, 5s;
+    animation-timing-function: ease-in-out, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+  }
+  @keyframes discoTwinkle{
+    0%, 100%{ opacity:0; transform:scale(0.4); }
+    50%{ opacity:1; transform:scale(1.3); }
+  }
+  @keyframes discoDrift{
+    0%{ margin-left:0; margin-top:0; }
+    50%{ margin-left:6px; margin-top:-4px; }
+    100%{ margin-left:0; margin-top:0; }
+  }
+
+  .disco-flare{
+    position:absolute; border-radius:50%;
+    background: radial-gradient(circle, rgba(255,214,140,0.55) 0%, rgba(255,214,140,0) 70%);
+    mix-blend-mode:screen;
+  }
+  .disco-flare-a{ width:22%; height:22%; top:8%; left:4%; }
+  .disco-flare-b{ width:16%; height:16%; top:34%; left:56%; }
+  .disco-overlay.active .disco-flare-a{ animation: discoFlarePulse 4.5s ease-in-out infinite; }
+  .disco-overlay.active .disco-flare-b{ animation: discoFlarePulse 4.5s ease-in-out infinite; animation-delay:1.8s; }
+  @keyframes discoFlarePulse{
+    0%, 100%{ opacity:0.35; transform:scale(0.9); }
+    50%{ opacity:0.75; transform:scale(1.15); }
+  }
+
+  /* Projecteurs façon boîte de nuit : cônes de lumière colorés qui balaient
+     la scène depuis le plafond, comme des lyres/spots mobiles. */
+  .spot-beam{
+    position:absolute; top:-6%; left:0; width:100%; height:130%;
+    transform-origin:50% 0%;
+    clip-path: polygon(47% 0%, 53% 0%, 100% 100%, 0% 100%);
+    mix-blend-mode:screen;
+  }
+  .spot-beam-1{ left:-30%; background: linear-gradient(to bottom, rgba(255,60,180,0.55) 0%, rgba(255,60,180,0) 72%); }
+  .spot-beam-2{ left:-6%;  background: linear-gradient(to bottom, rgba(70,210,255,0.5) 0%, rgba(70,210,255,0) 72%); }
+  .spot-beam-3{ left:20%;  background: linear-gradient(to bottom, rgba(190,110,255,0.5) 0%, rgba(190,110,255,0) 72%); }
+  .spot-beam-4{ left:46%;  background: linear-gradient(to bottom, rgba(255,196,90,0.5) 0%, rgba(255,196,90,0) 72%); }
+
+  .disco-overlay.active .spot-beam-1{ animation: spotSwing1 6s ease-in-out infinite, spotFade 6s ease-in-out infinite; }
+  .disco-overlay.active .spot-beam-2{ animation: spotSwing2 7.5s ease-in-out infinite, spotFade 7.5s ease-in-out infinite; animation-delay: 0.6s, 0.6s; }
+  .disco-overlay.active .spot-beam-3{ animation: spotSwing1 6.8s ease-in-out infinite reverse, spotFade 6.8s ease-in-out infinite; animation-delay: 1.4s, 1.4s; }
+  .disco-overlay.active .spot-beam-4{ animation: spotSwing2 8.4s ease-in-out infinite reverse, spotFade 8.4s ease-in-out infinite; animation-delay: 0.2s, 0.2s; }
+  @keyframes spotSwing1{
+    0%   { transform: rotate(-24deg); }
+    50%  { transform: rotate(18deg); }
+    100% { transform: rotate(-24deg); }
+  }
+  @keyframes spotSwing2{
+    0%   { transform: rotate(-14deg); }
+    50%  { transform: rotate(28deg); }
+    100% { transform: rotate(-14deg); }
+  }
+  @keyframes spotFade{
+    0%   { opacity:0.45; }
+    50%  { opacity:0.65; }
+    100% { opacity:0.45; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .disco-overlay.active .disco-dot,
+    .disco-overlay.active .disco-flare-a,
+    .disco-overlay.active .disco-flare-b,
+    .disco-overlay.active .spot-beam-1,
+    .disco-overlay.active .spot-beam-2,
+    .disco-overlay.active .spot-beam-3,
+    .disco-overlay.active .spot-beam-4{ animation:none !important; opacity:0 !important; }
+  }
+
+  /* Effets lumineux sur l'illustration dîner : bougies qui vacillent (placées
+     précisément sur chaque mèche réelle de l'illustration) + poussière dorée
+     qui dérive doucement dans l'air. Comme pour la soirée, tout est gelé tant
+     que .active n'est pas posé, pour repartir proprement à chaque activation. */
+  .diner-overlay{
+    position:absolute; inset:0; width:100%; height:100%;
+    pointer-events:none; opacity:0; transition: opacity .6s ease;
+    overflow:hidden;
+  }
+  #illu-diner.active ~ .diner-overlay{ opacity:1; }
+
+  .diner-flame, .diner-particle{ opacity:0; }
+
+  .diner-flame{
+    position:absolute; transform:translate(-50%,-50%);
+    border-radius:60% 60% 50% 50% / 80% 80% 40% 40%;
+    background: radial-gradient(circle at 50% 68%, #fff3c8 0%, #ffb545 42%, #ff7a1a 78%, transparent 100%);
+    filter: drop-shadow(0 0 4px rgba(255,170,60,0.85)) drop-shadow(0 0 8px rgba(255,130,20,0.5));
+    transform-origin:50% 65%;
+  }
+  .diner-flame.flame-sm{ width:4px; height:7px; }
+  .diner-flame.flame-lg{ width:6px; height:10px; }
+  .diner-overlay.active .diner-flame{
+    animation-name: dinerFlicker;
+    animation-duration: 1.7s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  @keyframes dinerFlicker{
+    0%,100%{ opacity:1;    transform:translate(-50%,-50%) scale(1) rotate(0deg); }
+    20%{     opacity:0.9;  transform:translate(-52%,-50%) scale(0.92,1.06) rotate(-2deg); }
+    45%{     opacity:1;    transform:translate(-48%,-50%) scale(1.06,0.94) rotate(2deg); }
+    70%{     opacity:0.94; transform:translate(-50%,-50%) scale(0.96,1.02) rotate(-1deg); }
+  }
+
+  .diner-particle{
+    position:absolute; width:3px; height:3px; border-radius:50%;
+    background:#ffdf9e; box-shadow:0 0 6px 2px rgba(255,210,130,0.75);
+  }
+  .diner-overlay.active .diner-particle{
+    animation-name: dinerFloat;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes dinerFloat{
+    0%{ opacity:0; transform:translate(0,0); }
+    15%{ opacity:0.85; }
+    85%{ opacity:0.4; }
+    100%{ opacity:0; transform:translate(var(--dx,8px), -60px); }
+  }
+
+  /* Vues : frise (hub) et page d'étape, avec glissement latéral */
+  .views{ position:relative; overflow:hidden; }
+  .view[hidden]{ display:none; }
+  .view.leaving{ position:absolute; top:0; left:0; right:0; pointer-events:none; }
+  .view.to-left{ animation:v-out-l .45s cubic-bezier(.2,.8,.2,1) forwards; }
+  .view.to-right{ animation:v-out-r .45s cubic-bezier(.2,.8,.2,1) forwards; }
+  .view.from-left{ animation:v-in-l .45s cubic-bezier(.2,.8,.2,1); }
+  .view.from-right{ animation:v-in-r .45s cubic-bezier(.2,.8,.2,1); }
+  @keyframes v-out-l{ to{ transform:translateX(-100%); opacity:0; } }
+  @keyframes v-out-r{ to{ transform:translateX(100%); opacity:0; } }
+  @keyframes v-in-l{ from{ transform:translateX(-100%); opacity:0; } }
+  @keyframes v-in-r{ from{ transform:translateX(100%); opacity:0; } }
+  .back-bar{ padding:16px 18px 0; }
+  .back-btn{ border:1px solid var(--terracotta); color:var(--terracotta); background:transparent; border-radius:999px; font:600 12px 'Jost'; padding:7px 14px; cursor:pointer; }
+  .view-page .status{ margin-top:12px; }
+  .view-page .welcome{ margin-top:12px; }
+  .view-page .map-slot{ margin-top:12px; }
+  @media (prefers-reduced-motion: reduce){
+    .view.to-left,.view.to-right,.view.from-left,.view.from-right{ animation:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .diner-overlay.active .diner-flame,
+    .diner-overlay.active .diner-particle{ animation:none !important; opacity:0 !important; }
+  }
+  .map-wrap svg{ position:absolute; inset:0; width:100%; height:100%; }
+
+  /* Trajets illustrés : révélés par un MASQUE SVG dont l'intérieur est un trait
+     (stroke) suivant le VRAI tracé de la courbe, animé via stroke-dashoffset.
+     Comme la révélation avance le long du chemin réel (et pas d'une simple
+     bande horizontale), l'ordre d'apparition est toujours le bon, même quand
+     le chemin repart vers la gauche après un virage. Le motif de tirets fait
+     exactement la longueur du chemin (pathLength=100), donc la boucle est
+     parfaitement continue, sans jamais de moment vide. Un second trait,
+     décalé d'un demi-cycle, ajoute un deuxième petit groupe d'icônes pour une
+     circulation plus dense. */
+  .trajet-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:2; }
+  .path-img{ opacity:0; transition: opacity .4s ease; }
+  .path-img.active{ opacity:1; }
+
+  .dash{ animation-timing-function: linear; animation-iteration-count: infinite; }
+  @keyframes dash-flow{ from{ stroke-dashoffset:0; } to{ stroke-dashoffset:-100; } }
+
+  .dash-entree-parking.active{ animation-name: dash-flow; animation-duration: 2.6s; }
+  .dash-parking-ceremonie.active{ animation-name: dash-flow; animation-duration: 4.4s; }
+  .dash-ceremonie-cocktail.active{ animation-name: dash-flow; animation-duration: 3s; }
+
+  /* Points de localisation : le pin-wrap gère l'apparition (translation + fondu),
+     l'image du point gère elle seule le grossi/rapetissi, ancrée précisément sur
+     la pointe du pin (et non sur le centre du calque entier) pour qu'elle ne
+     "dérive" plus visuellement sur le plan. */
+  .pin-wrap{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:0;
+    transform:translateY(-14px);
+    transition: opacity .35s ease, transform .35s ease;
+    z-index:3;
+    pointer-events:none;
+  }
+  .pin-wrap.shown{
+    animation: pin-drop-wrap .6s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes pin-drop-wrap{
+    0%  { opacity:0; transform:translateY(-14px); }
+    65% { opacity:1; transform:translateY(2px); }
+    100%{ opacity:1; transform:translateY(0); }
+  }
+  .pin-img{ transform:scale(1); }
+  .pin-wrap.shown .pin-img{
+    animation: pin-breathe 1.6s ease-in-out .6s infinite;
+  }
+  @keyframes pin-breathe{
+    0%,100%{ transform:scale(1); }
+    50%    { transform:scale(1.14); }
+  }
+  /* Ancrage = pointe réelle du pin dans chaque image (calculé sur le pixel, pas le centre du calque) */
+  #pin-parking{   transform-origin: 18.15% 64.81%; }
+  #pin-ceremonie{ transform-origin: 66.48% 19.63%; }
+  #pin-cocktail{  transform-origin: 31.46% 24.72%; }
+
+  #mapSvg{ z-index:4; }
+  @media (prefers-reduced-motion: reduce){
+    .dash, .pin-wrap, .pin-img{ animation:none !important; }
+    .path-img.active{ opacity:1; }
+    .pin-wrap.shown{ opacity:1; transform:none; }
+  }
+
+
+  .map-caption{
+    display:flex; justify-content:space-between; align-items:center;
+    margin:8px 18px 0;
+    padding:9px 14px; font-size:10.5px; color:#8A7A64; background:var(--papier);
+    border-radius:12px; border:1px solid #EAD9BE;
+  }
+  .map-caption .locate-btn{
+    border:none; background:var(--terracotta); color:#fff;
+    font-size:10.5px; padding:6px 12px; border-radius:20px;
+    font-family:'Jost'; font-weight:600; cursor:pointer;
+    display:flex; align-items:center; gap:5px;
+  }
+  .map-caption .locate-btn:active{ transform:scale(0.96); }
+
+
+  /* Transition de fondu entre étapes */
+  #stageBody.out{ opacity:0; transform:translateX(calc(var(--dir,1) * -26px)); transition:opacity .16s ease, transform .16s ease; }
+  #stageBody.in{ animation:stage-in .38s cubic-bezier(.2,.8,.2,1); }
+  @keyframes stage-in{ from{ opacity:0; transform:translateX(calc(var(--dir,1) * 26px)); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){ #stageBody.in{ animation:none; } #stageBody.out{ transition:none; transform:none; } }
+
+  .status .next{
+    display:block; width:100%; text-align:left; border:0; background:none; font:500 12px 'Jost'; color:var(--terracotta);
+    padding:10px 0 0; margin-top:10px; border-top:1px dashed #E0CDA6; cursor:pointer;
+  }
+  .status .next[hidden]{ display:none; }
+
+  /* Plein écran du plan */
+  .map-expand{
+    position:absolute; top:8px; right:8px; z-index:6; width:30px; height:30px; border-radius:50%;
+    border:1px solid #EAD9BE; background:rgba(251,246,236,0.92); color:var(--terracotta); font-size:15px; line-height:1; cursor:pointer;
+  }
+  .map-ctrl{ display:none; }
+  .map-wrap.zoomed{ position:fixed; inset:0; z-index:200; border-radius:0; border:0; outline:0; box-shadow:none; overflow:auto; display:flex; cursor:default; }
+  .map-wrap.zoomed .map-layer{ position:relative; inset:auto; flex:none; margin:auto; width:calc(100vw * var(--z,2)); height:auto; aspect-ratio:16 / 9; }
+  .map-wrap.zoomed .map-ctrl{ display:flex; position:fixed; top:calc(12px + env(safe-area-inset-top)); right:12px; gap:8px; z-index:210; }
+  .map-ctrl button{
+    width:40px; height:40px; border-radius:50%; border:1px solid #EAD9BE; background:var(--papier); color:var(--terracotta);
+    font:600 20px 'Jost'; cursor:pointer; box-shadow:var(--ombre);
+  }
+
+  /* CARTE DE BIENVENUE */
+  .welcome{ margin:18px 18px 0; display:grid; gap:12px; }
+  .welcome[hidden]{ display:none; }
+  .w-card{ background:var(--papier); border:1px solid #EAD9BE; border-radius:18px; padding:14px 16px; box-shadow:var(--ombre); }
+  .w-card h3{ margin:0 0 8px; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--terracotta); font-weight:600; }
+  .w-address{ font-family:'Cormorant Garamond', serif; font-size:19px; font-weight:600; line-height:1.3; }
+  .w-btns{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  .w-btn{
+    font:500 12px 'Jost'; letter-spacing:0.03em; text-decoration:none; cursor:pointer; background:transparent;
+    color:var(--terracotta); border:1px solid var(--terracotta); border-radius:999px; padding:8px 14px;
+  }
+  .w-btn.primary{ background:var(--terracotta); color:#fff; }
+  .w-btn:active{ transform:scale(.97); }
+  .w-contact{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; }
+  .w-contact + .w-contact{ border-top:1px dashed #E0CDA6; }
+  .w-contact b{ display:block; font-weight:600; font-size:14px; }
+  .w-contact span{ font-size:11.5px; color:#8A7A64; }
+  /* Programme de la journée (frise alternée) */
+  .prog{ text-align:center; padding:22px 0 8px; }
+  .prog-date{ font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:var(--or); font-weight:500; }
+  .prog-title{ font-family:'Cormorant Garamond', serif; font-weight:500; font-size:34px; line-height:1.1; margin:10px 0 14px; color:var(--encre); }
+  .prog-rule{ width:48px; height:2px; background:var(--terracotta); margin:0 auto 26px; }
+  .prog-list{ list-style:none; margin:0; padding:0; position:relative; }
+  .prog-list::before{ content:''; position:absolute; left:50%; top:14px; bottom:14px; width:2px; margin-left:-1px; background:#EBD3C6; }
+  .prog-item{ cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .prog-item:focus-visible .prog-card{ outline:2px solid var(--terracotta); outline-offset:2px; }
+  .prog-card{ position:relative; padding:6px 28px 6px 8px; transition:transform .15s ease; }
+  .prog-item.left .prog-card{ padding:6px 8px 6px 28px; }
+  .prog-card::after{
+    content:'›'; position:absolute; top:50%; right:6px; transform:translateY(-50%);
+    width:20px; height:20px; border-radius:50%; background:#F3E2D6; color:var(--terracotta);
+    font-size:16px; line-height:19px; text-align:center;
+  }
+  .prog-item.left .prog-card::after{ content:'‹'; right:auto; left:6px; }
+  .prog-item:active .prog-card{ transform:scale(.97); }
+  /* Étape en cours : lavis d'aquarelle terracotta (SVG bruité) derrière le texte */
+  .prog-item.live .prog-card::before{
+    content:''; position:absolute; inset:-20px -10px; z-index:-1; pointer-events:none;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 190' preserveAspectRatio='none'%3E%3Cdefs%3E%3CradialGradient id='r' cx='50%' cy='52%' r='62%'%3E%3Cstop offset='0' stop-color='%23C66B49' stop-opacity='0.5'/%3E%3Cstop offset='0.55' stop-color='%23D98866' stop-opacity='0.3'/%3E%3Cstop offset='1' stop-color='%23E8A856' stop-opacity='0.16'/%3E%3C/radialGradient%3E%3Cfilter id='f' x='-5%' y='-5%' width='110%' height='110%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05 0.11' numOctaves='3' seed='4' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='20' result='d'/%3E%3CfeGaussianBlur in='d' stdDeviation='0.5' result='b'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='9' result='t'/%3E%3CfeComposite in='b' in2='t' operator='arithmetic' k1='0.55' k2='0.7' k3='0' k4='0'/%3E%3C/filter%3E%3C/defs%3E%3Cpath filter='url(%23f)' fill='url(%23r)' d='M30 40 Q70 22 150 28 T292 36 Q300 80 290 120 Q282 158 240 160 Q160 170 80 162 Q30 156 26 120 Q20 80 30 40 Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  }
+  /* le lavis déborde davantage côté frise pour laisser de l'air autour du texte */
+  .prog-item.live.left .prog-card::before{ inset:-30px -42px -30px 4px; }
+  .prog-item.live.right .prog-card::before{ inset:-30px 4px -30px -42px; }
+  .prog-item.live .prog-txt{ position:relative; z-index:0; isolation:isolate; }
+  .prog-item.live .prog-name{ color:var(--encre); }
+  .prog-item.live .prog-sub{ color:#6B5645; }
+  .prog-item.live .prog-time{ color:#B5573A; }
+  .prog-item.live .prog-dot{ background:#F5C9B3; animation:pulse 2s infinite; }
+  .prog-item.live .prog-dot::after{ background:var(--terracotta); }
+  .prog-go{
+    display:inline-block; margin-top:8px; font:600 11.5px 'Jost'; letter-spacing:0.03em; text-decoration:none;
+    color:#fff; background:var(--terracotta); border-radius:999px; padding:6px 12px; position:relative; z-index:2;
+  }
+  .prog-hint{ font-size:12px; color:#A79878; margin:-8px 0 18px; }
+  .prog-live{ display:inline-block; margin-top:6px; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; background:var(--terracotta); border-radius:999px; padding:3px 9px; }
+  .prog-item.live .prog-dot::after{ background:var(--terracotta); }
+  .prog-item{ display:grid; grid-template-columns:1fr 34px 1fr; align-items:start; min-height:96px; }
+  .prog-dot{
+    grid-column:2; grid-row:1; justify-self:center; margin-top:2px; position:relative; z-index:1;
+    width:30px; height:30px; border-radius:50%; background:#F3E2D6; display:flex; align-items:center; justify-content:center;
+  }
+  .prog-dot::after{ content:''; width:12px; height:12px; border-radius:50%; border:3px solid var(--terracotta); background:var(--papier); box-sizing:border-box; }
+  .prog-txt{ grid-row:1; padding:0 6px; }
+  .prog-item.left .prog-txt{ grid-column:1; text-align:right; }
+  .prog-item.right .prog-txt{ grid-column:3; text-align:left; }
+  .prog-time{ font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--or); font-weight:500; }
+  .prog-name{ font-family:'Cormorant Garamond', serif; font-size:20px; line-height:1.15; margin:4px 0 3px; color:var(--encre); }
+  .prog-sub{ font-size:13.5px; color:#8A7A64; line-height:1.35; }
+  .footnote{
+    text-align:center; font-size:10px; color:#A79878;
+    padding:0 26px 22px; line-height:1.5;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .diner-overlay *, .disco-overlay *{ animation:none !important; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+  <div class="header">
+    <h1>Mariana &amp; Robin</h1>
+    <div class="sub">Domaine Monmanoir · 15 mai 2027</div>
+  </div>
+  <div class="brush"></div>
+
+  <div class="views">
+  <section class="view view-hub" id="viewHub">
+    <section class="prog">
+      <div class="prog-date">Samedi 15 mai 2027</div>
+      <h2 class="prog-title">Programme de la journée</h2>
+      <div class="prog-rule"></div>
+      <div class="prog-list" id="welcomeProgram"></div>
+    </section>
+  </section>
+  <section class="view view-page" id="viewPage" hidden>
+  <div class="back-bar"><button class="back-btn" id="backBtn" type="button">‹ Programme</button></div>
+  <div class="stage-body" id="stageBody">  <div class="stage-body" id="stageBody">
+  <div class="status" aria-live="polite">
+    <div class="time-badge" id="clockBadge">14:02</div>
+    <div class="eyebrow"><span class="dot" id="liveDot"></span> <span id="eyebrowText">En ce moment</span></div>
+    <h2 id="stageTitle">Cérémonie</h2>
+    <p id="stageDesc"></p>
+    <button class="next" id="nextStep" type="button" hidden></button>
+  </div>
+  <!-- ===== CARTE DE BIENVENUE (étape « Bienvenue ») ===== -->
+  <div class="welcome" id="welcome" hidden>
+    <div class="w-card">
+      <h3>Le lieu</h3>
+            <div class="w-address" id="wAddress">Domaine Monmanoir<br>6 Rue de Paris<br>95680 Montlignon</div>
+      <div class="w-btns">
+        <a class="w-btn primary" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
+        <a class="w-btn" href="https://waze.com/ul?q=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
+        <button class="w-btn" type="button" id="copyAddr">Copier l'adresse</button>
+      </div>
+    </div>
+    <div class="w-card">
+      <h3>En cas de besoin</h3>
+      <!-- TODO : remplacer les noms et numéros -->
+      <div class="w-contact"><div><b>Prénom Nom</b><span>Témoin</span></div><a class="w-btn" href="tel:+33600000001">📞 06 00 00 00 01</a></div>
+      <div class="w-contact"><div><b>Prénom Nom</b><span>Maître de cérémonie</span></div><a class="w-btn" href="tel:+33600000002">📞 06 00 00 00 02</a></div>
+    </div>
+  </div>
+  <div class="map-slot" id="mapSlot">
+  <button class="map-expand" id="mapExpand" type="button" aria-label="Agrandir le plan">⤢</button>
+  <div class="map-wrap" id="mapWrap">
+    <div class="map-ctrl">
+      <button type="button" id="zoomOut" aria-label="Dézoomer">−</button>
+      <button type="button" id="zoomIn" aria-label="Zoomer">+</button>
+      <button type="button" id="mapClose" aria-label="Fermer le plan">✕</button>
+    </div>
+    <div class="map-layer" id="mapLayer">
+    <img src="asset/plan.webp" alt="Plan du domaine">
+
+    <!-- Trajets illustrés : chaque image est révélée par un masque qui suit le
+         VRAI tracé de la courbe (et non une simple bande horizontale), pour que
+         les icônes apparaissent toujours dans le bon ordre de marche, même sur
+         un chemin qui repart vers la gauche après un virage. -->
+    <svg class="trajet-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+<mask id="mask-entree-parking" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="900">
+          <path id="dash-entree-parking" class="dash dash-entree-parking" style="animation-delay:-0.0s" stroke-opacity="0.14" d="M 1163.3 729.2 C 1161.3 719.5, 1155.3 690.5, 1150.8 671.2 C 1146.4 651.9, 1139.4 633.4, 1136.7 613.3 C 1133.9 593.1, 1136.6 570.7, 1134.2 550.5 C 1131.7 530.2, 1130.5 509.0, 1121.8 491.8 C 1113.1 474.6, 1098.2 457.9, 1082.2 447.5 C 1066.2 437.1, 1045.8 432.6, 1026.0 429.2 C 1006.1 425.7, 983.5 425.7, 963.2 426.7 C 942.9 427.6, 924.0 432.1, 904.2 435.0 C 884.4 437.9, 863.8 440.3, 844.2 444.2 C 824.5 448.1, 806.0 454.8, 786.2 458.3 C 766.5 461.9, 746.0 463.7, 725.6 465.6 C 705.3 467.5, 684.4 467.9, 664.1 470.0 C 643.8 472.1, 623.9 475.5, 603.6 478.0 C 583.4 480.5, 562.0 480.4, 542.7 485.0 C 523.3 489.6, 496.7 502.4, 487.5 505.8" fill="none" stroke="#fff" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="11.11 88.89"/>
+          <path id="dash-entree-parking-t1" class="dash dash-entree-parking" style="animation-delay:-0.289s" stroke-opacity="0.28" d="M 1163.3 729.2 C 1161.3 719.5, 1155.3 690.5, 1150.8 671.2 C 1146.4 651.9, 1139.4 633.4, 1136.7 613.3 C 1133.9 593.1, 1136.6 570.7, 1134.2 550.5 C 1131.7 530.2, 1130.5 509.0, 1121.8 491.8 C 1113.1 474.6, 1098.2 457.9, 1082.2 447.5 C 1066.2 437.1, 1045.8 432.6, 1026.0 429.2 C 1006.1 425.7, 983.5 425.7, 963.2 426.7 C 942.9 427.6, 924.0 432.1, 904.2 435.0 C 884.4 437.9, 863.8 440.3, 844.2 444.2 C 824.5 448.1, 806.0 454.8, 786.2 458.3 C 766.5 461.9, 746.0 463.7, 725.6 465.6 C 705.3 467.5, 684.4 467.9, 664.1 470.0 C 643.8 472.1, 623.9 475.5, 603.6 478.0 C 583.4 480.5, 562.0 480.4, 542.7 485.0 C 523.3 489.6, 496.7 502.4, 487.5 505.8" fill="none" stroke="#fff" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="11.11 88.89"/>
+          <path id="dash-entree-parking-t2" class="dash dash-entree-parking" style="animation-delay:-0.578s" stroke-opacity="0.46" d="M 1163.3 729.2 C 1161.3 719.5, 1155.3 690.5, 1150.8 671.2 C 1146.4 651.9, 1139.4 633.4, 1136.7 613.3 C 1133.9 593.1, 1136.6 570.7, 1134.2 550.5 C 1131.7 530.2, 1130.5 509.0, 1121.8 491.8 C 1113.1 474.6, 1098.2 457.9, 1082.2 447.5 C 1066.2 437.1, 1045.8 432.6, 1026.0 429.2 C 1006.1 425.7, 983.5 425.7, 963.2 426.7 C 942.9 427.6, 924.0 432.1, 904.2 435.0 C 884.4 437.9, 863.8 440.3, 844.2 444.2 C 824.5 448.1, 806.0 454.8, 786.2 458.3 C 766.5 461.9, 746.0 463.7, 725.6 465.6 C 705.3 467.5, 684.4 467.9, 664.1 470.0 C 643.8 472.1, 623.9 475.5, 603.6 478.0 C 583.4 480.5, 562.0 480.4, 542.7 485.0 C 523.3 489.6, 496.7 502.4, 487.5 505.8" fill="none" stroke="#fff" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="11.11 88.89"/>
+          <path id="dash-entree-parking-t3" class="dash dash-entree-parking" style="animation-delay:-0.867s" stroke-opacity="0.68" d="M 1163.3 729.2 C 1161.3 719.5, 1155.3 690.5, 1150.8 671.2 C 1146.4 651.9, 1139.4 633.4, 1136.7 613.3 C 1133.9 593.1, 1136.6 570.7, 1134.2 550.5 C 1131.7 530.2, 1130.5 509.0, 1121.8 491.8 C 1113.1 474.6, 1098.2 457.9, 1082.2 447.5 C 1066.2 437.1, 1045.8 432.6, 1026.0 429.2 C 1006.1 425.7, 983.5 425.7, 963.2 426.7 C 942.9 427.6, 924.0 432.1, 904.2 435.0 C 884.4 437.9, 863.8 440.3, 844.2 444.2 C 824.5 448.1, 806.0 454.8, 786.2 458.3 C 766.5 461.9, 746.0 463.7, 725.6 465.6 C 705.3 467.5, 684.4 467.9, 664.1 470.0 C 643.8 472.1, 623.9 475.5, 603.6 478.0 C 583.4 480.5, 562.0 480.4, 542.7 485.0 C 523.3 489.6, 496.7 502.4, 487.5 505.8" fill="none" stroke="#fff" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="11.11 88.89"/>
+          <path id="dash-entree-parking-t4" class="dash dash-entree-parking" style="animation-delay:-1.156s" stroke-opacity="1" d="M 1163.3 729.2 C 1161.3 719.5, 1155.3 690.5, 1150.8 671.2 C 1146.4 651.9, 1139.4 633.4, 1136.7 613.3 C 1133.9 593.1, 1136.6 570.7, 1134.2 550.5 C 1131.7 530.2, 1130.5 509.0, 1121.8 491.8 C 1113.1 474.6, 1098.2 457.9, 1082.2 447.5 C 1066.2 437.1, 1045.8 432.6, 1026.0 429.2 C 1006.1 425.7, 983.5 425.7, 963.2 426.7 C 942.9 427.6, 924.0 432.1, 904.2 435.0 C 884.4 437.9, 863.8 440.3, 844.2 444.2 C 824.5 448.1, 806.0 454.8, 786.2 458.3 C 766.5 461.9, 746.0 463.7, 725.6 465.6 C 705.3 467.5, 684.4 467.9, 664.1 470.0 C 643.8 472.1, 623.9 475.5, 603.6 478.0 C 583.4 480.5, 562.0 480.4, 542.7 485.0 C 523.3 489.6, 496.7 502.4, 487.5 505.8" fill="none" stroke="#fff" stroke-width="110" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="11.11 88.89"/>
+        </mask>
+        <mask id="mask-parking-ceremonie" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="900">
+          <path id="dash-parking-ceremonie" class="dash dash-parking-ceremonie" style="animation-delay:-0.0s" stroke-opacity="0.14" d="M 432.5 562.5 C 444.1 554.5, 475.2 526.2, 501.9 514.7 C 528.7 503.2, 561.5 498.0, 592.8 493.3 C 624.1 488.7, 658.0 490.0, 689.7 486.7 C 721.4 483.3, 751.8 477.5, 783.2 473.3 C 814.6 469.2, 846.3 465.0, 878.0 461.7 C 909.8 458.3, 941.6 454.0, 973.6 453.3 C 1005.6 452.6, 1041.5 461.9, 1070.2 457.5 C 1098.8 453.1, 1123.4 442.3, 1145.3 426.7 C 1167.2 411.0, 1180.4 383.6, 1201.7 363.8 C 1222.9 344.0, 1252.7 328.2, 1273.0 307.8 C 1293.3 287.5, 1322.9 264.5, 1323.3 241.7 C 1323.8 218.8, 1298.9 183.2, 1275.5 170.5 C 1252.2 157.9, 1198.7 166.6, 1183.3 165.8" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="4.5 95.5"/>
+          <path id="dash-parking-ceremonie-t1" class="dash dash-parking-ceremonie" style="animation-delay:-0.198s" stroke-opacity="0.28" d="M 432.5 562.5 C 444.1 554.5, 475.2 526.2, 501.9 514.7 C 528.7 503.2, 561.5 498.0, 592.8 493.3 C 624.1 488.7, 658.0 490.0, 689.7 486.7 C 721.4 483.3, 751.8 477.5, 783.2 473.3 C 814.6 469.2, 846.3 465.0, 878.0 461.7 C 909.8 458.3, 941.6 454.0, 973.6 453.3 C 1005.6 452.6, 1041.5 461.9, 1070.2 457.5 C 1098.8 453.1, 1123.4 442.3, 1145.3 426.7 C 1167.2 411.0, 1180.4 383.6, 1201.7 363.8 C 1222.9 344.0, 1252.7 328.2, 1273.0 307.8 C 1293.3 287.5, 1322.9 264.5, 1323.3 241.7 C 1323.8 218.8, 1298.9 183.2, 1275.5 170.5 C 1252.2 157.9, 1198.7 166.6, 1183.3 165.8" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="4.5 95.5"/>
+          <path id="dash-parking-ceremonie-t2" class="dash dash-parking-ceremonie" style="animation-delay:-0.396s" stroke-opacity="0.46" d="M 432.5 562.5 C 444.1 554.5, 475.2 526.2, 501.9 514.7 C 528.7 503.2, 561.5 498.0, 592.8 493.3 C 624.1 488.7, 658.0 490.0, 689.7 486.7 C 721.4 483.3, 751.8 477.5, 783.2 473.3 C 814.6 469.2, 846.3 465.0, 878.0 461.7 C 909.8 458.3, 941.6 454.0, 973.6 453.3 C 1005.6 452.6, 1041.5 461.9, 1070.2 457.5 C 1098.8 453.1, 1123.4 442.3, 1145.3 426.7 C 1167.2 411.0, 1180.4 383.6, 1201.7 363.8 C 1222.9 344.0, 1252.7 328.2, 1273.0 307.8 C 1293.3 287.5, 1322.9 264.5, 1323.3 241.7 C 1323.8 218.8, 1298.9 183.2, 1275.5 170.5 C 1252.2 157.9, 1198.7 166.6, 1183.3 165.8" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="4.5 95.5"/>
+          <path id="dash-parking-ceremonie-t3" class="dash dash-parking-ceremonie" style="animation-delay:-0.594s" stroke-opacity="0.68" d="M 432.5 562.5 C 444.1 554.5, 475.2 526.2, 501.9 514.7 C 528.7 503.2, 561.5 498.0, 592.8 493.3 C 624.1 488.7, 658.0 490.0, 689.7 486.7 C 721.4 483.3, 751.8 477.5, 783.2 473.3 C 814.6 469.2, 846.3 465.0, 878.0 461.7 C 909.8 458.3, 941.6 454.0, 973.6 453.3 C 1005.6 452.6, 1041.5 461.9, 1070.2 457.5 C 1098.8 453.1, 1123.4 442.3, 1145.3 426.7 C 1167.2 411.0, 1180.4 383.6, 1201.7 363.8 C 1222.9 344.0, 1252.7 328.2, 1273.0 307.8 C 1293.3 287.5, 1322.9 264.5, 1323.3 241.7 C 1323.8 218.8, 1298.9 183.2, 1275.5 170.5 C 1252.2 157.9, 1198.7 166.6, 1183.3 165.8" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="4.5 95.5"/>
+          <path id="dash-parking-ceremonie-t4" class="dash dash-parking-ceremonie" style="animation-delay:-0.792s" stroke-opacity="1" d="M 432.5 562.5 C 444.1 554.5, 475.2 526.2, 501.9 514.7 C 528.7 503.2, 561.5 498.0, 592.8 493.3 C 624.1 488.7, 658.0 490.0, 689.7 486.7 C 721.4 483.3, 751.8 477.5, 783.2 473.3 C 814.6 469.2, 846.3 465.0, 878.0 461.7 C 909.8 458.3, 941.6 454.0, 973.6 453.3 C 1005.6 452.6, 1041.5 461.9, 1070.2 457.5 C 1098.8 453.1, 1123.4 442.3, 1145.3 426.7 C 1167.2 411.0, 1180.4 383.6, 1201.7 363.8 C 1222.9 344.0, 1252.7 328.2, 1273.0 307.8 C 1293.3 287.5, 1322.9 264.5, 1323.3 241.7 C 1323.8 218.8, 1298.9 183.2, 1275.5 170.5 C 1252.2 157.9, 1198.7 166.6, 1183.3 165.8" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="4.5 95.5"/>
+        </mask>
+        <mask id="mask-ceremonie-cocktail" maskUnits="userSpaceOnUse" x="0" y="0" width="1600" height="900">
+          <path id="dash-ceremonie-cocktail" class="dash dash-ceremonie-cocktail" style="animation-delay:-0.0s" stroke-opacity="0.14" d="M 1085.0 176.7 C 1078.9 177.8, 1060.4 180.1, 1048.4 183.3 C 1036.4 186.6, 1024.3 190.8, 1013.0 196.1 C 1001.7 201.4, 992.0 209.9, 980.6 215.0 C 969.3 220.1, 956.5 222.2, 944.8 226.7 C 933.1 231.1, 922.7 238.8, 910.3 241.7 C 897.9 244.6, 884.0 243.6, 870.6 244.2 C 857.3 244.7, 843.4 244.0, 830.3 245.0 C 817.1 246.0, 804.8 249.0, 791.6 250.0 C 778.5 251.0, 764.6 250.3, 751.3 250.8 C 738.0 251.4, 723.9 250.3, 711.6 253.3 C 699.3 256.4, 688.9 263.9, 677.5 269.2 C 666.1 274.5, 654.8 280.0, 643.4 285.0 C 631.9 290.0, 620.5 296.0, 608.5 299.2 C 596.5 302.3, 583.9 303.3, 571.4 303.9 C 558.9 304.4, 539.7 302.7, 533.3 302.5" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="8.5 91.5"/>
+          <path id="dash-ceremonie-cocktail-t1" class="dash dash-ceremonie-cocktail" style="animation-delay:-0.255s" stroke-opacity="0.28" d="M 1085.0 176.7 C 1078.9 177.8, 1060.4 180.1, 1048.4 183.3 C 1036.4 186.6, 1024.3 190.8, 1013.0 196.1 C 1001.7 201.4, 992.0 209.9, 980.6 215.0 C 969.3 220.1, 956.5 222.2, 944.8 226.7 C 933.1 231.1, 922.7 238.8, 910.3 241.7 C 897.9 244.6, 884.0 243.6, 870.6 244.2 C 857.3 244.7, 843.4 244.0, 830.3 245.0 C 817.1 246.0, 804.8 249.0, 791.6 250.0 C 778.5 251.0, 764.6 250.3, 751.3 250.8 C 738.0 251.4, 723.9 250.3, 711.6 253.3 C 699.3 256.4, 688.9 263.9, 677.5 269.2 C 666.1 274.5, 654.8 280.0, 643.4 285.0 C 631.9 290.0, 620.5 296.0, 608.5 299.2 C 596.5 302.3, 583.9 303.3, 571.4 303.9 C 558.9 304.4, 539.7 302.7, 533.3 302.5" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="8.5 91.5"/>
+          <path id="dash-ceremonie-cocktail-t2" class="dash dash-ceremonie-cocktail" style="animation-delay:-0.51s" stroke-opacity="0.46" d="M 1085.0 176.7 C 1078.9 177.8, 1060.4 180.1, 1048.4 183.3 C 1036.4 186.6, 1024.3 190.8, 1013.0 196.1 C 1001.7 201.4, 992.0 209.9, 980.6 215.0 C 969.3 220.1, 956.5 222.2, 944.8 226.7 C 933.1 231.1, 922.7 238.8, 910.3 241.7 C 897.9 244.6, 884.0 243.6, 870.6 244.2 C 857.3 244.7, 843.4 244.0, 830.3 245.0 C 817.1 246.0, 804.8 249.0, 791.6 250.0 C 778.5 251.0, 764.6 250.3, 751.3 250.8 C 738.0 251.4, 723.9 250.3, 711.6 253.3 C 699.3 256.4, 688.9 263.9, 677.5 269.2 C 666.1 274.5, 654.8 280.0, 643.4 285.0 C 631.9 290.0, 620.5 296.0, 608.5 299.2 C 596.5 302.3, 583.9 303.3, 571.4 303.9 C 558.9 304.4, 539.7 302.7, 533.3 302.5" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="8.5 91.5"/>
+          <path id="dash-ceremonie-cocktail-t3" class="dash dash-ceremonie-cocktail" style="animation-delay:-0.765s" stroke-opacity="0.68" d="M 1085.0 176.7 C 1078.9 177.8, 1060.4 180.1, 1048.4 183.3 C 1036.4 186.6, 1024.3 190.8, 1013.0 196.1 C 1001.7 201.4, 992.0 209.9, 980.6 215.0 C 969.3 220.1, 956.5 222.2, 944.8 226.7 C 933.1 231.1, 922.7 238.8, 910.3 241.7 C 897.9 244.6, 884.0 243.6, 870.6 244.2 C 857.3 244.7, 843.4 244.0, 830.3 245.0 C 817.1 246.0, 804.8 249.0, 791.6 250.0 C 778.5 251.0, 764.6 250.3, 751.3 250.8 C 738.0 251.4, 723.9 250.3, 711.6 253.3 C 699.3 256.4, 688.9 263.9, 677.5 269.2 C 666.1 274.5, 654.8 280.0, 643.4 285.0 C 631.9 290.0, 620.5 296.0, 608.5 299.2 C 596.5 302.3, 583.9 303.3, 571.4 303.9 C 558.9 304.4, 539.7 302.7, 533.3 302.5" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="8.5 91.5"/>
+          <path id="dash-ceremonie-cocktail-t4" class="dash dash-ceremonie-cocktail" style="animation-delay:-1.02s" stroke-opacity="1" d="M 1085.0 176.7 C 1078.9 177.8, 1060.4 180.1, 1048.4 183.3 C 1036.4 186.6, 1024.3 190.8, 1013.0 196.1 C 1001.7 201.4, 992.0 209.9, 980.6 215.0 C 969.3 220.1, 956.5 222.2, 944.8 226.7 C 933.1 231.1, 922.7 238.8, 910.3 241.7 C 897.9 244.6, 884.0 243.6, 870.6 244.2 C 857.3 244.7, 843.4 244.0, 830.3 245.0 C 817.1 246.0, 804.8 249.0, 791.6 250.0 C 778.5 251.0, 764.6 250.3, 751.3 250.8 C 738.0 251.4, 723.9 250.3, 711.6 253.3 C 699.3 256.4, 688.9 263.9, 677.5 269.2 C 666.1 274.5, 654.8 280.0, 643.4 285.0 C 631.9 290.0, 620.5 296.0, 608.5 299.2 C 596.5 302.3, 583.9 303.3, 571.4 303.9 C 558.9 304.4, 539.7 302.7, 533.3 302.5" fill="none" stroke="#fff" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="8.5 91.5"/>
+        </mask>
+      </defs>
+
+      <image id="path-entree-parking"    class="path-img" href="asset/trajet-entree-parking.png"     x="0" y="0" width="1600" height="900" mask="url(#mask-entree-parking)"/>
+      <image id="path-parking-ceremonie" class="path-img" href="asset/trajet-parking-ceremonie.png"  x="0" y="0" width="1600" height="900" mask="url(#mask-parking-ceremonie)"/>
+      <image id="path-ceremonie-cocktail" class="path-img" href="asset/trajet-ceremonie-cocktail.png" x="0" y="0" width="1600" height="900" mask="url(#mask-ceremonie-cocktail)"/>
+    </svg>
+
+    <!-- Points de localisation : apparaissent une fois l'étape correspondante atteinte -->
+    <div class="pin-wrap" id="wrap-pin-parking">
+      <img class="pin-img" id="pin-parking"   src="asset/point-parking.png"   alt="Parking">
+    </div>
+    <div class="pin-wrap" id="wrap-pin-ceremonie">
+      <img class="pin-img" id="pin-ceremonie" src="asset/point-ceremonie.png" alt="Cérémonie">
+    </div>
+    <div class="pin-wrap" id="wrap-pin-cocktail">
+      <img class="pin-img" id="pin-cocktail"  src="asset/point-cocktail.png"  alt="Vin d'honneur">
+    </div>
+
+    <svg id="mapSvg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- guest position dot -->
+      <g id="guestDot" style="display:none;">
+        <circle cx="0" cy="0" r="16" fill="#A4C3D2" opacity="0.35">
+          <animate attributeName="r" values="14;26;14" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.45;0;0.45" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="0" cy="0" r="9" fill="#C66B49" stroke="#fff" stroke-width="3"/>
+      </g>
+    </svg>
+    </div>
+
+    <!-- Illustrations pour les étapes sans trajet (dîner, soirée) : remplacent
+         le plan/les trajets/les points le temps de l'étape. -->
+    <img class="illu-img" loading="lazy" id="illu-diner"  src="asset/diner-illu.webp"  alt="Illustration du dîner">
+    <div class="diner-overlay" id="dinerOverlay" aria-hidden="true">
+      <span class="diner-flame flame-lg" style="left:10.0%; top:61.22%; animation-delay:0.0s;"></span>
+      <span class="diner-flame flame-sm" style="left:13.31%; top:49.22%; animation-delay:0.31s;"></span>
+      <span class="diner-flame flame-sm" style="left:14.88%; top:48.44%; animation-delay:0.62s;"></span>
+      <span class="diner-flame flame-sm" style="left:16.31%; top:45.78%; animation-delay:0.93s;"></span>
+      <span class="diner-flame flame-sm" style="left:17.69%; top:48.78%; animation-delay:1.24s;"></span>
+      <span class="diner-flame flame-sm" style="left:19.25%; top:49.33%; animation-delay:1.55s;"></span>
+      <span class="diner-flame flame-lg" style="left:31.13%; top:54.33%; animation-delay:1.86s;"></span>
+      <span class="diner-flame flame-lg" style="left:37.75%; top:54.56%; animation-delay:0.07s;"></span>
+      <span class="diner-flame flame-lg" style="left:50.88%; top:65.78%; animation-delay:0.38s;"></span>
+      <span class="diner-flame flame-lg" style="left:61.88%; top:68.56%; animation-delay:0.69s;"></span>
+      <span class="diner-flame flame-lg" style="left:61.12%; top:52.0%; animation-delay:1.0s;"></span>
+      <span class="diner-flame flame-lg" style="left:56.0%; top:51.33%; animation-delay:1.31s;"></span>
+      <span class="diner-flame flame-sm" style="left:66.12%; top:49.22%; animation-delay:1.62s;"></span>
+      <span class="diner-flame flame-sm" style="left:67.31%; top:49.33%; animation-delay:1.93s;"></span>
+      <span class="diner-flame flame-sm" style="left:68.44%; top:46.44%; animation-delay:0.14s;"></span>
+      <span class="diner-flame flame-sm" style="left:69.31%; top:49.56%; animation-delay:0.45s;"></span>
+      <span class="diner-flame flame-sm" style="left:70.56%; top:49.33%; animation-delay:0.76s;"></span>
+      <span class="diner-flame flame-lg" style="left:71.69%; top:57.44%; animation-delay:1.07s;"></span>
+
+      <span class="diner-particle" style="left:8%;  top:30%; --dx:8px;  animation-duration:9s;  animation-delay:0s;"></span>
+      <span class="diner-particle" style="left:22%; top:20%; --dx:-6px; animation-duration:11s; animation-delay:1.6s;"></span>
+      <span class="diner-particle" style="left:40%; top:35%; --dx:7px;  animation-duration:8.5s; animation-delay:3.1s;"></span>
+      <span class="diner-particle" style="left:58%; top:18%; --dx:-8px; animation-duration:10s; animation-delay:0.8s;"></span>
+      <span class="diner-particle" style="left:74%; top:32%; --dx:6px;  animation-duration:9.5s; animation-delay:2.4s;"></span>
+      <span class="diner-particle" style="left:88%; top:22%; --dx:-7px; animation-duration:12s; animation-delay:4s;"></span>
+      <span class="diner-particle" style="left:33%; top:60%; --dx:9px;  animation-duration:10.5s; animation-delay:1.2s;"></span>
+      <span class="diner-particle" style="left:65%; top:58%; --dx:-9px; animation-duration:9.2s; animation-delay:2.9s;"></span>
+      <span class="diner-particle" style="left:4%;  top:52%; --dx:6px;  animation-duration:10.8s; animation-delay:2.1s;"></span>
+      <span class="diner-particle" style="left:15%; top:70%; --dx:-5px; animation-duration:9.8s;  animation-delay:0.4s;"></span>
+      <span class="diner-particle" style="left:48%; top:12%; --dx:8px;  animation-duration:11.5s; animation-delay:3.6s;"></span>
+      <span class="diner-particle" style="left:55%; top:78%; --dx:-7px; animation-duration:8.8s;  animation-delay:1.9s;"></span>
+      <span class="diner-particle" style="left:80%; top:55%; --dx:6px;  animation-duration:10.2s; animation-delay:0.2s;"></span>
+      <span class="diner-particle" style="left:93%; top:40%; --dx:-8px; animation-duration:9.4s;  animation-delay:3.3s;"></span>
+      <span class="diner-particle" style="left:27%; top:44%; --dx:7px;  animation-duration:11.8s; animation-delay:2.7s;"></span>
+      <span class="diner-particle" style="left:70%; top:14%; --dx:-6px; animation-duration:10.6s; animation-delay:1.3s;"></span>
+    </div>
+    <img class="illu-img" loading="lazy" id="illu-soiree" src="asset/soiree-illu.webp" alt="Illustration de la soirée">
+    <div class="disco-overlay" id="discoOverlay" aria-hidden="true">
+      <span class="disco-dot" style="top:14%; left:8%;  animation-delay:0s,   0.1s;"></span>
+      <span class="disco-dot" style="top:22%; left:19%; animation-delay:0.4s, 0.3s;"></span>
+      <span class="disco-dot" style="top:9%;  left:31%; animation-delay:0.9s, 0.6s;"></span>
+      <span class="disco-dot" style="top:27%; left:42%; animation-delay:1.3s, 0.2s;"></span>
+      <span class="disco-dot" style="top:12%; left:55%; animation-delay:0.2s, 0.8s;"></span>
+      <span class="disco-dot" style="top:31%; left:66%; animation-delay:1.6s, 0.5s;"></span>
+      <span class="disco-dot" style="top:17%; left:77%; animation-delay:0.7s, 0.1s;"></span>
+      <span class="disco-dot" style="top:25%; left:88%; animation-delay:1.1s, 0.7s;"></span>
+      <span class="disco-dot" style="top:38%; left:26%; animation-delay:1.9s, 0.4s;"></span>
+      <span class="disco-dot" style="top:41%; left:73%; animation-delay:0.5s, 0.9s;"></span>
+      <span class="disco-flare disco-flare-a"></span>
+      <span class="disco-flare disco-flare-b"></span>
+      <span class="spot-beam spot-beam-1"></span>
+      <span class="spot-beam spot-beam-2"></span>
+      <span class="spot-beam spot-beam-3"></span>
+      <span class="spot-beam spot-beam-4"></span>
+    </div>
+  </div>
+  </div>
+  <div class="map-caption" id="mapCaption">
+    <span id="mapCaptionText">Suivez le chemin</span>
+    <button class="locate-btn" id="locateBtn">📍 Me localiser</button>
+  </div>
+  </div>
+  </section>
+  </div>
+
+  <div class="footnote" style="padding-top:22px">
+    Astuce : ajoutez cette page à votre écran d'accueil pour la retrouver en un geste, même sans réseau.
+  </div>
+  <img class="frame-corner tl" src="asset/corner-tl.png" alt="">
+  <img class="frame-corner tr" src="asset/corner-tr.png" alt="">
+  <img class="frame-corner bl" src="asset/corner-bl.png" alt="">
+  <img class="frame-corner br" src="asset/corner-br.png" alt="">
+  <img class="frame-sprig" src="asset/sprig-right.png" alt="">
+</div>
+
+<script>
+const stages = [
+  {id:'arrivee',   time:'13:30', label:"Accueil", welcome:true,      title:"Bienvenue !",  desc:"Garez-vous sur le parking en suivant le chemin depuis le portail.",              path:'path-entree-parking',    pin:'pin-parking', illu:null},
+  {id:'ceremonie', time:'14:00', label:"Cérémonie",    title:"Cérémonie",    desc:"Suivez le chemin depuis le parking, la cérémonie va commencer.",                path:'path-parking-ceremonie', pin:'pin-ceremonie', illu:null},
+  {id:'cocktail',  time:'15:00', label:"Vin d'honneur", title:"Vin d'honneur", desc:"Suivez le chemin vers la terrasse pour l'apéritif.",                            path:'path-ceremonie-cocktail', pin:'pin-cocktail', illu:null},
+  {id:'diner',     time:'19:00', label:"Dîner",        title:"Bon appétit !", desc:"Installez-vous, le dîner va être servi.",                                       path:null,                      pin:null, illu:'illu-diner'},
+  {id:'soiree',    time:'22:00', label:"Soirée",       title:"Bonne soirée !", desc:"Place à la piste de danse pour la suite de la fête.",                          path:null,                      pin:null, illu:'illu-soiree'},
+];
+
+const PROGRAM_TEXT = {
+  arrivee:   ['Accueil', 'Arrivée au domaine'],
+  ceremonie: ['Cérémonie', 'Dans les jardins'],
+  cocktail:  ["Vin d'honneur", 'Cocktail & photos'],
+  diner:     ['Dîner', 'Repas dans la grande salle'],
+  soiree:    ['Soirée & danse', 'La nuit vous appartient !']
+};
+
+const ALL_PATHS = ['path-entree-parking','path-parking-ceremonie','path-ceremonie-cocktail'];
+const ALL_PINS  = ['pin-parking','pin-ceremonie','pin-cocktail'];
+
+// cur : page d'étape ouverte (null = on est sur la frise du programme)
+let cur = null;
+function timeToMinutes(t){ const [h,m] = t.split(':').map(Number); return h*60+m; }
+
+// Jour J et fuseau : l'heure affichée est toujours celle du domaine (Paris),
+// quel que soit le fuseau du téléphone.
+const WEDDING_DATE = '2027-05-15';
+// Pour tester : ajouter ?heure=15:30 à l'adresse simule le jour J à cette heure.
+const FAKE_TIME = new URLSearchParams(location.search).get('heure');
+function parisNow(){
+  if(FAKE_TIME && /^\d{1,2}:\d{2}$/.test(FAKE_TIME)){
+    const [h,m] = FAKE_TIME.split(':').map(Number);
+    return { date:WEDDING_DATE, min:h*60+m, hhmm:FAKE_TIME };
+  }
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris',
+    year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'})
+    .formatToParts(new Date()).map(x=>[x.type,x.value]));
+  return { date:`${p.year}-${p.month}-${p.day}`, min:(+p.hour)*60 + (+p.minute), hhmm:`${p.hour}:${p.minute}` };
+}
+// Avant le jour J : étape Bienvenue ; après : dernière étape ; le jour J : selon l'heure.
+function liveIndex(){
+  const n = parisNow();
+  if(n.date < WEDDING_DATE) return 0;
+  if(n.date > WEDDING_DATE) return stages.length-1;
+  let idx = 0;
+  for(let i=0;i<stages.length;i++){ if(n.min >= timeToMinutes(stages[i].time)) idx = i; }
+  return idx;
+}
+function shownIndex(){ return cur !== null ? cur : liveIndex(); }
+let lastStageIndex = -1;
+
+function render(){
+  const live = liveIndex();
+  const idx = shownIndex();
+  const stage = stages[idx];
+  const isLive = idx === live;
+  const stageChanged = idx !== lastStageIndex;
+  lastStageIndex = idx;
+
+  document.getElementById('stageTitle').textContent = stage.title;
+  document.getElementById('stageDesc').textContent = stage.desc;
+
+  const onDay = parisNow().date === WEDDING_DATE;
+  document.getElementById('eyebrowText').textContent = (isLive && onDay) ? 'En ce moment' : ('À ' + stage.time.replace(':','h'));
+  document.getElementById('liveDot').style.display = (isLive && onDay) ? '' : 'none';
+  const next = stages[idx+1];
+  const nextBtn = document.getElementById('nextStep');
+  nextBtn.hidden = !next;
+  if(next) nextBtn.textContent = 'Ensuite · ' + next.time + ' · ' + next.label + '  →';
+  document.getElementById('welcome').hidden = !stage.welcome;
+  updateHub();
+
+  // Trajets : uniquement visibles pendant leur propre étape ; dès qu'on change
+  // d'étape, l'ancien trajet disparaît complètement (plus de trace après coup).
+  ALL_PATHS.forEach(pathId=>{
+    const image = document.getElementById(pathId);
+    const dashes = Array.from(document.querySelectorAll('.dash-' + pathId.replace('path-','')));
+    const owner = stages.findIndex(s => s.path === pathId);
+    if(owner === -1 || !image) return;
+    if(owner === idx){
+      if(stageChanged || !image.classList.contains('active')){
+        image.classList.add('active');
+        dashes.forEach(el=>{
+          el.classList.remove('active');
+          void el.getBoundingClientRect(); // relance la boucle proprement (garde le déphasage entre les 2 traits)
+          el.classList.add('active');
+        });
+      }
+      // sinon : on ne touche à rien, la boucle infinie continue de tourner
+    } else {
+      image.classList.remove('active');
+      dashes.forEach(el => el.classList.remove('active'));
+    }
+  });
+
+  // Points de localisation : visibles uniquement pendant l'étape qui les concerne,
+  // ils disparaissent dès qu'on passe à une autre section.
+  ALL_PINS.forEach(pinId=>{
+    const el = document.getElementById('wrap-' + pinId);
+    const owner = stages.findIndex(s => s.pin === pinId);
+    if(owner === -1 || !el) return;
+    el.classList.toggle('shown', owner === idx);
+  });
+
+
+  // Illustrations (dîner, soirée) : remplacent le plan pour les étapes sans trajet
+  const mapWrap = document.getElementById('mapWrap');
+  mapWrap.classList.toggle('show-illu', !!stage.illu);
+  document.getElementById('mapExpand').hidden = !!stage.illu;
+  document.querySelectorAll('.illu-img').forEach(el=>{
+    el.classList.toggle('active', el.id === stage.illu);
+  });
+
+  // Effets lumineux de l'illustration soirée : on force un redémarrage propre
+  // (classe retirée puis reflow puis rajoutée) à chaque fois qu'on arrive sur
+  // cette étape, pour que les animations repartent toujours de leur position
+  // de départ plutôt que d'être reprises en plein milieu de leur cycle.
+  const discoOverlay = document.getElementById('discoOverlay');
+  if(discoOverlay){
+    if(stage.illu === 'illu-soiree'){
+      if(stageChanged || !discoOverlay.classList.contains('active')){
+        discoOverlay.classList.remove('active');
+        void discoOverlay.offsetWidth;
+        discoOverlay.classList.add('active');
+      }
+    } else {
+      discoOverlay.classList.remove('active');
+    }
+  }
+
+  const dinerOverlay = document.getElementById('dinerOverlay');
+  if(dinerOverlay){
+    if(stage.illu === 'illu-diner'){
+      if(stageChanged || !dinerOverlay.classList.contains('active')){
+        dinerOverlay.classList.remove('active');
+        void dinerOverlay.offsetWidth;
+        dinerOverlay.classList.add('active');
+      }
+    } else {
+      dinerOverlay.classList.remove('active');
+    }
+  }
+}
+
+// ---------- Frise (hub) et pages d'étape ----------
+const ITINERAIRE_URL = 'https://www.google.com/maps/dir/?api=1&destination=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon';
+const hub = document.getElementById('viewHub');
+const page = document.getElementById('viewPage');
+const stageBody = document.getElementById('stageBody');
+const sideOf = i => (i % 2 === 0 ? 'left' : 'right');   // côté de l'étape sur la frise
+const ANIM_MS = 460;
+let animating = false, hubScroll = 0;
+
+function buildHub(){
+  const onDay = parisNow().date === WEDDING_DATE, live = liveIndex();
+document.getElementById('welcomeProgram').innerHTML = stages.map((s,i)=>`
+    <div class="prog-item ${sideOf(i)}${onDay && i===live ? ' live' : ''}" data-i="${i}" role="button" tabindex="0" aria-label="${PROGRAM_TEXT[s.id][0]}, ${s.time.replace(':','h')}">
+      <span class="prog-dot"></span>
+      <div class="prog-txt"><div class="prog-card">
+        <div class="prog-time">${s.time.replace(':','H')}</div>
+        <div class="prog-name">${PROGRAM_TEXT[s.id][0]}</div>
+        <div class="prog-sub">${PROGRAM_TEXT[s.id][1]}</div>
+        ${onDay && i===live ? '<span class="prog-live">En ce moment</span>' : ''}
+        ${s.welcome ? `<a class="prog-go" href="${ITINERAIRE_URL}" target="_blank" rel="noopener">Itinéraire</a>` : ''}
+      </div></div></div>`).join('');
+}
+function updateHub(){ buildHub(); }
+document.getElementById('welcomeProgram').addEventListener('click', e=>{
+  if(e.target.closest('.prog-go')) return;   // le bouton Itinéraire ouvre Maps, pas la page
+  const b = e.target.closest('.prog-item'); if(b) openStage(+b.dataset.i, true);
+});
+document.getElementById('welcomeProgram').addEventListener('keydown', e=>{
+  if((e.key==='Enter' || e.key===' ') && e.target.classList.contains('prog-item')){ e.preventDefault(); openStage(+e.target.dataset.i, true); }
+});
+
+function runSwap(outEl, inEl, outDir, inFrom, done){
+  animating = true;
+  inEl.hidden = false;
+  outEl.classList.add('leaving', outDir);
+  inEl.classList.add(inFrom);
+  setTimeout(()=>{
+    outEl.hidden = true; outEl.classList.remove('leaving','to-left','to-right');
+    inEl.classList.remove('from-left','from-right');
+    animating = false; if(done) done();
+  }, ANIM_MS);
+}
+function openStage(i, push){
+  if(animating || cur !== null) return;
+  hubScroll = window.scrollY;
+  cur = i; render();
+  window.scrollTo(0,0);
+  // étape à gauche : la frise part vers la gauche, la page arrive depuis la droite (et inversement)
+  const left = sideOf(i) === 'left';
+  runSwap(hub, page, left ? 'to-left' : 'to-right', left ? 'from-right' : 'from-left');
+  if(push) history.pushState({stage:i}, '');
+}
+function closeStage(){
+  if(animating || cur === null) return;
+  const left = sideOf(cur) === 'left';
+  closeMap();
+  cur = null; buildHub();
+  runSwap(page, hub, left ? 'to-right' : 'to-left', left ? 'from-left' : 'from-right', ()=>window.scrollTo(0, hubScroll));
+}
+document.getElementById('backBtn').addEventListener('click', ()=>{
+  if(history.state && history.state.stage !== undefined) history.back(); else closeStage();
+});
+window.addEventListener('popstate', ()=>{ if(cur !== null) closeStage(); });
+
+// « Ensuite » : passe à la page suivante avec un fondu
+document.getElementById('nextStep').addEventListener('click', ()=>{
+  if(animating || cur === null || cur >= stages.length-1) return;
+  stageBody.style.setProperty('--dir', 1);
+  stageBody.classList.add('out');
+  setTimeout(()=>{
+    cur += 1; render(); window.scrollTo(0,0);
+    history.replaceState({stage:cur}, '');
+    stageBody.classList.remove('out'); void stageBody.offsetWidth; stageBody.classList.add('in');
+    setTimeout(()=>stageBody.classList.remove('in'), 420);
+  }, 160);
+});
+
+// ---------- Plan en plein écran ----------
+const mapWrapEl = document.getElementById('mapWrap');
+let zoom = 2;
+function setZoom(z){
+  const prev = zoom; zoom = Math.max(1, Math.min(4, z));
+  const cx = (mapWrapEl.scrollLeft + mapWrapEl.clientWidth/2) / prev;
+  const cy = (mapWrapEl.scrollTop + mapWrapEl.clientHeight/2) / prev;
+  mapWrapEl.style.setProperty('--z', zoom);
+  mapWrapEl.scrollLeft = cx*zoom - mapWrapEl.clientWidth/2;
+  mapWrapEl.scrollTop  = cy*zoom - mapWrapEl.clientHeight/2;
+}
+function openMap(){
+  if(mapWrapEl.classList.contains('zoomed')) return;
+  zoom = 2; mapWrapEl.style.setProperty('--z', zoom);
+  mapWrapEl.classList.add('zoomed'); document.body.style.overflow = 'hidden';
+  mapWrapEl.scrollLeft = (mapWrapEl.scrollWidth - mapWrapEl.clientWidth)/2;
+}
+function closeMap(){
+  if(!mapWrapEl.classList.contains('zoomed')) return;
+  mapWrapEl.classList.remove('zoomed'); document.body.style.overflow = '';
+}
+mapWrapEl.addEventListener('click', e=>{ if(!mapWrapEl.classList.contains('zoomed') && !mapWrapEl.classList.contains('show-illu')) openMap(); });
+document.getElementById('mapExpand').addEventListener('click', openMap);
+document.getElementById('mapClose').addEventListener('click', e=>{ e.stopPropagation(); closeMap(); });
+document.getElementById('zoomIn').addEventListener('click', e=>{ e.stopPropagation(); setZoom(zoom+0.5); });
+document.getElementById('zoomOut').addEventListener('click', e=>{ e.stopPropagation(); setZoom(zoom-0.5); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeMap(); });
+
+// ---------- Carte de bienvenue ----------
+document.getElementById('copyAddr').addEventListener('click', async e=>{
+  const btn = e.currentTarget;
+  const txt = document.getElementById('wAddress').innerText.replace(/\n/g, ', ');
+  try{ await navigator.clipboard.writeText(txt); btn.textContent = 'Adresse copiée ✓'; }
+  catch(_){ btn.textContent = 'Copie impossible'; }
+  setTimeout(()=>{ btn.textContent = "Copier l'adresse"; }, 2000);
+});
+// --- Geolocation: convert real GPS to a point on the map image (1600x900 space) ---
+// Calibré avec 3 repères réels du domaine (parking, manoir, esplanade). Avec 3
+// points on résout une vraie transformation affine (x = A·lat + B·lng + C, et
+// pareil pour y) : ça gère aussi la rotation/l'inclinaison du plan par rapport
+// au nord, contrairement à une simple règle de 3 sur 2 points.
+// Repères utilisés :
+//   Parking   49°00'35.30"N 2°17'14.49"E -> x:290,  y:615
+//   Manoir    49°00'30.41"N 2°17'18.40"E -> x:741,  y:204
+//   Esplanade 49°00'26.85"N 2°17'17.43"E -> x:1164, y:206
+const GPS_CALIBRATION = {
+  coefX: { lat: -403422.83353515, lng: -89293.51815774,  c: 19976210.90109994 },
+  coefY: { lat:   75393.4276022,  lng: -284124.33223098, c: -3044508.06791933 }
+};
+
+function gpsToSvg(lat, lng){
+  const {coefX, coefY} = GPS_CALIBRATION;
+  return {
+    x: coefX.lat*lat + coefX.lng*lng + coefX.c,
+    y: coefY.lat*lat + coefY.lng*lng + coefY.c
+  };
+}
+
+// --- Restreint la position affichée au tracé réel des chemins ---
+// Plutôt que d'afficher la position GPS brute (qui pourrait tomber sur le
+// point d'eau, une pelouse, etc. à cause de l'imprécision du GPS), on cherche
+// le point le plus proche sur l'un des 3 chemins tracés et on affiche le
+// marqueur là, comme "où en est la personne sur le parcours".
+const SNAP_PATH_IDS = ['dash-entree-parking', 'dash-parking-ceremonie', 'dash-ceremonie-cocktail'];
+
+function snapToNearestPath(x, y){
+  let best = null;
+  let bestDist = Infinity;
+  SNAP_PATH_IDS.forEach(id=>{
+    const path = document.getElementById(id);
+    if(!path) return;
+    const total = path.getTotalLength();
+    const steps = 120; // résolution de l'échantillonnage le long du chemin
+    for(let i = 0; i <= steps; i++){
+      const pt = path.getPointAtLength((i / steps) * total);
+      const d = (pt.x - x) ** 2 + (pt.y - y) ** 2;
+      if(d < bestDist){ bestDist = d; best = { x: pt.x, y: pt.y }; }
+    }
+  });
+  return best || { x, y };
+}
+
+document.getElementById('locateBtn').addEventListener('click', ()=>{
+  const caption = document.getElementById('mapCaptionText');
+  if(!navigator.geolocation){ caption.textContent = "Géolocalisation non disponible sur cet appareil."; return; }
+  caption.textContent = "Localisation en cours…";
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude, longitude} = pos.coords;
+    const raw = gpsToSvg(latitude, longitude);
+    const {x,y} = snapToNearestPath(raw.x, raw.y);
+    const cx = Math.max(20, Math.min(1580, x));
+    const cy = Math.max(20, Math.min(880, y));
+    const dot = document.getElementById('guestDot');
+    dot.setAttribute('transform', `translate(${cx},${cy})`);
+    dot.style.display = 'block';
+    caption.textContent = "Vous êtes ici";
+  }, ()=>{ caption.textContent = "Position indisponible — autorisez la localisation dans les réglages."; },
+  { enableHighAccuracy:true, timeout:8000 });
+});
+
+buildHub();
+render();
+setInterval(render, 30000);
+
+</script>
+
+<script>if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>

@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mariana &amp; Robin — 15 mai 2027</title>
+<meta name="theme-color" content="#C66B49">
+<meta name="description" content="Mariana &amp; Robin — 15 mai 2027 — Domaine Monmanoir">
+<meta property="og:title" content="Mariana &amp; Robin — 15 mai 2027">
+<meta property="og:description" content="Toutes les infos pratiques de notre mariage au Domaine Monmanoir.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="asset/icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="asset/icon-192.png">
+<link rel="apple-touch-icon" href="asset/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -17,6 +27,7 @@
     --encre:#5B4636;
     --ombre: 0 20px 45px -20px rgba(91,70,54,0.35);
   }
+  [hidden]{display:none !important;}
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
   body{
@@ -194,7 +205,7 @@
     <p class="sub-msg">Toutes les informations pratiques (plan, horaires, itinéraires) seront disponibles ici à l'approche du jour J.</p>
 
     <!-- ===================== BLOC DE TEST — à retirer avant publication ===================== -->
-    <div class="test-access">
+    <div class="test-access" id="testAccess" hidden>
       <div class="test-label">Accès test</div>
       <a class="test-tile" href="itineraire-mariage.html" title="Accéder au site (test)">→</a>
     </div>
@@ -202,7 +213,7 @@
   </div>
 
 <script>
-  const TARGET_DATE = new Date('2027-05-15T00:00:00');
+  const TARGET_DATE = new Date('2027-05-15T14:00:00+02:00');
 
   function pad(n){ return String(n).padStart(2,'0'); }
 
@@ -222,9 +233,13 @@
     document.getElementById('cd-secs').textContent = pad(secs);
   }
 
+  // Accès test réservé à l'organisation : ajouter ?test à l'adresse de la page.
+  if(new URLSearchParams(location.search).has('test')) document.getElementById('testAccess').hidden = false;
+
   updateCountdown();
   setInterval(updateCountdown, 1000);
 </script>
 
+<script>if('serviceWorker' in navigator && location.protocol!=='file:'){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
 </body>
 </html>
