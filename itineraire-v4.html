@@ -114,6 +114,7 @@
 
   /* HEADER */
   .header{
+    position:relative;
     padding:14px 24px 20px;
     text-align:center;
     background: linear-gradient(160deg, var(--sauge) 0%, #7F9A80 100%);
@@ -574,6 +575,10 @@
   .lang-switch button{appearance:none; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; gap:6px; font:600 13px 'Jost',sans-serif; letter-spacing:0.06em; color:#5B4636; padding:6px 12px; border-radius:999px;}
   .lang-switch button .fl{font-size:18px; line-height:1;}
   .lang-switch button[aria-pressed="true"]{background:#7F9A80; color:#FBF6EC;}
+  .lang-top{position:absolute; top:calc(12px + env(safe-area-inset-top)); left:0; right:0; display:flex; justify-content:center; z-index:60; pointer-events:none;}
+  .lang-top .lang-switch{pointer-events:auto; padding:2px; gap:0; background:rgba(255,255,255,0.55); box-shadow:none; opacity:0.85;}
+  .lang-top .lang-switch button{font-size:10px; gap:4px; padding:3px 8px;}
+  .lang-top .lang-switch button .fl{font-size:12px;}
 </style>
 </head>
 
@@ -581,7 +586,7 @@
 
 <div class="phone" id="appRoot">
   <div class="header">
-    <div class="header-top"><a class="back-link" href="index.html" data-i18n="home">← Accueil</a><div class="lang-switch" style="margin-left:auto"></div></div>
+    <div class="header-top"><a class="back-link" href="index.html" data-i18n="home">← Accueil</a><div class="lang-top"><div class="lang-switch"></div></div></div>
     <h1>Mariana &amp; Robin</h1>
     <div class="sub" data-i18n="venueSub">Domaine Monmanoir · 15 mai 2027</div>
   </div>
