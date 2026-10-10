@@ -12,6 +12,7 @@
 <meta property="og:type" content="website">
 <meta name="robots" content="noindex, nofollow">
 <title>Mariana &amp; Robin — 15 mai 2027</title>
+<script src="lang.js"></script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="asset/icon-192.png">
 <link rel="apple-touch-icon" href="asset/icon-192.png">
@@ -206,6 +207,9 @@
   @media (max-width:420px){
     .unit .num{ font-size:24px; }
   }
+
+  .lang-switch{position:absolute; top:calc(14px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); z-index:60; appearance:none; background:rgba(244,235,217,0.7); border:1px solid var(--ligne); color:var(--encre-douce); font:500 11px 'Jost',sans-serif; letter-spacing:0.08em; padding:5px 12px; border-radius:999px; cursor:pointer;}
+  .lang-switch:hover{ border-color:var(--terracotta); color:var(--terracotta); }
   @media (prefers-reduced-motion: reduce){
     .shell, .frame-corner, .frame-sprig{ animation:none; opacity:1; transform:none; }
   }
@@ -221,15 +225,16 @@
     <img class="frame-sprig" src="asset/sprig-right.png" alt="" width="42" height="120">
 
     <h1 id="brandTitle">Mariana &amp; Robin</h1>
+    <button type="button" class="lang-switch" aria-label="Langue / Idioma">Português (BR)</button>
     <div class="venue">Domaine Monmanoir</div>
 
-    <p class="eyebrow" id="countdownEyebrow">Le grand jour arrive dans</p>
+    <p class="eyebrow" id="countdownEyebrow" data-i18n="eyebrowCountdown">Le grand jour arrive dans</p>
 
     <div class="countdown" id="countdown" role="timer" aria-live="polite" aria-atomic="true">
-      <div class="unit"><div class="num" id="cd-days">00</div><div class="label">jours</div></div>
-      <div class="unit"><div class="num" id="cd-hours">00</div><div class="label">heures</div></div>
-      <div class="unit"><div class="num" id="cd-mins">00</div><div class="label">min</div></div>
-      <div class="unit"><div class="num" id="cd-secs">00</div><div class="label">sec</div></div>
+      <div class="unit"><div class="num" id="cd-days">00</div><div class="label" data-i18n="days">jours</div></div>
+      <div class="unit"><div class="num" id="cd-hours">00</div><div class="label" data-i18n="hours">heures</div></div>
+      <div class="unit"><div class="num" id="cd-mins">00</div><div class="label" data-i18n="mins">min</div></div>
+      <div class="unit"><div class="num" id="cd-secs">00</div><div class="label" data-i18n="secs">sec</div></div>
     </div>
 
     <div class="now" id="now" hidden>
@@ -237,23 +242,23 @@
       <p class="now-desc" id="nowDesc"></p>
     </div>
 
-    <div class="date-line">15 mai 2027</div>
-    <p class="sub-msg" id="subMsg">Retrouvez ici le plan, les horaires et l'itinéraire du jour J.</p>
+    <div class="date-line" data-i18n="dateShort">15 mai 2027</div>
+    <p class="sub-msg" id="subMsg" data-i18n="subMsg">Retrouvez ici le plan, les horaires et l'itinéraire du jour J.</p>
 
     <div class="actions">
-      <a class="btn btn-primary" id="enterBtn" href="itineraire-v4.html" style="text-decoration:none;text-align:center">Entrer</a>
+      <a class="btn btn-primary" id="enterBtn" href="itineraire-v4.html" style="text-decoration:none;text-align:center" data-i18n="enter">Entrer</a>
       <p class="enter-note" id="enterNote" hidden></p>
-      <button type="button" class="btn btn-ghost" id="routeBtn">Itinéraire</button>
+      <button type="button" class="btn btn-ghost" id="routeBtn" data-i18n="route">Itinéraire</button>
     </div>
   </main>
 
   <div class="sheet" id="routeSheet" hidden>
     <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="routeTitle">
-      <h2 id="routeTitle">Ouvrir l'itinéraire avec</h2>
+      <h2 id="routeTitle" data-i18n="openWith">Ouvrir l'itinéraire avec</h2>
       <p>Domaine Monmanoir<br>6 Rue de Paris, 95680 Montlignon</p>
       <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
       <a class="btn btn-primary" href="https://waze.com/ul?q=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
-      <button type="button" class="btn btn-ghost" id="routeCancel">Annuler</button>
+      <button type="button" class="btn btn-ghost" id="routeCancel" data-i18n="cancel">Annuler</button>
     </div>
   </div>
 
@@ -268,14 +273,15 @@
 
   /* Étapes du jour J (heure de Paris) */
   const WEDDING_DATE = '2027-05-15';
+  const STAGE_IDS = ['arrivee','ceremonie','cocktail','diner','soiree','retour'];
   const STAGES = [
-    {time:'13:30', name:'Accueil',       desc:"Garez-vous sur le parking en suivant le chemin depuis le portail."},
-    {time:'14:00', name:'Cérémonie',     desc:"Suivez le chemin depuis le parking, la cérémonie va commencer."},
-    {time:'15:00', name:"Vin d'honneur", desc:"Suivez le chemin vers la terrasse pour l'apéritif."},
-    {time:'19:00', name:'Dîner',         desc:"Installez-vous, le dîner va être servi."},
-    {time:'22:00', name:'Soirée',        desc:"Place à la piste de danse pour la suite de la fête."},
+    {time:'13:30', id:'arrivee'},
+    {time:'14:00', id:'ceremonie'},
+    {time:'15:00', id:'cocktail'},
+    {time:'19:00', id:'diner'},
+    {time:'22:00', id:'soiree'},
     // Lendemain (dimanche 16 mai)
-    {time:'11:00', day:1, name:'Retour de mariage', desc:"Rendez-vous dimanche 16 mai à 11h pour le retour de mariage."}
+    {time:'11:00', day:1, id:'retour'}
   ];
   // Pour tester : ?heure=15:30 simule le jour J à cette heure.
   const FAKE_TIME = new URLSearchParams(location.search).get('heure');
@@ -317,22 +323,22 @@
       const enter = document.getElementById('enterBtn');
       const extra = FAKE_TIME ? '&heure=' + encodeURIComponent(FAKE_TIME) : '';
       if(partyOver()){
-        document.getElementById('nowName').textContent = 'Merci !';
-        document.getElementById('nowDesc').textContent = "Merci d'avoir partagé ce jour si spécial avec nous.";
-        eyebrow.textContent = 'Mariana & Robin vous remercient';
-        sub.textContent = 'Avec tout notre amour.';
-        enter.setAttribute('href', 'photos.html');
-        enter.textContent = 'Photos';
+        document.getElementById('nowName').textContent = t('thanks');
+        document.getElementById('nowDesc').textContent = t('thanksDesc');
+        eyebrow.textContent = t('eyebrowThanks');
+        sub.textContent = t('subThanks');
+        enter.setAttribute('href', 'photo-app/');
+        enter.textContent = t('photos');
         const note = document.getElementById('enterNote');
-        note.textContent = 'Pour voir et partager les photos, c\'est ici.';
+        note.textContent = t('photosNote');
         note.hidden = false;
         document.getElementById('routeBtn').hidden = true;
       } else {
         const i = currentStageIndex(), st = STAGES[i];
-        document.getElementById('nowName').textContent = st.name;
-        document.getElementById('nowDesc').textContent = st.desc;
-        eyebrow.textContent = 'En ce moment';
-        sub.textContent = "Touchez « Entrer » pour le plan et l'itinéraire de cette étape.";
+        document.getElementById('nowName').textContent = t('n.' + st.id);
+        document.getElementById('nowDesc').textContent = t('d.' + st.id);
+        eyebrow.textContent = t('eyebrowNow');
+        sub.textContent = t('subNow');
         // « Entrer » ouvre directement la page de l'étape en cours
         enter.setAttribute('href', 'itineraire-v4.html?etape=' + i + extra);
       }
@@ -350,8 +356,8 @@
     document.getElementById('cd-secs').textContent = pad(secs);
 
     if(days <= 7){
-      eyebrow.textContent = 'Plus que quelques jours';
-      sub.textContent = "Le jour J approche : le plan, les horaires et l'itinéraire vous attendent.";
+      eyebrow.textContent = t('eyebrowFew');
+      sub.textContent = t('subFew');
     }
   }
 

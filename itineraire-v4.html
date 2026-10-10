@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Parisienne&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="lang.js"></script>
 <style>
   :root{
     --creme:#F4EBD9;
@@ -568,6 +569,9 @@
   .prog-item.live .prog-time{ padding:4px 16px; }
   .prog-item.live .prog-time::before{ inset:-7px -14px; }
   @media (prefers-reduced-motion: reduce){ .prog-item{ opacity:1 !important; transform:none !important; } .prog-list{ scroll-behavior:auto; } }
+
+  .lang-switch{position:absolute; top:calc(14px + env(safe-area-inset-top)); right:14px; z-index:60; appearance:none; background:rgba(244,235,217,0.7); border:1px solid var(--ligne); color:var(--encre-douce); font:500 11px 'Jost',sans-serif; letter-spacing:0.08em; padding:5px 12px; border-radius:999px; cursor:pointer;}
+  .lang-switch:hover{ border-color:var(--terracotta); color:var(--terracotta); }
 </style>
 </head>
 
@@ -575,23 +579,23 @@
 
 <div class="phone" id="appRoot">
   <div class="header">
-    <div class="header-top"><a class="back-link" href="index.html">← Accueil</a></div>
+    <div class="header-top"><a class="back-link" href="index.html" data-i18n="home">← Accueil</a><button type="button" class="lang-switch" style="position:static;margin-left:auto;color:#F4EBD9;background:rgba(255,255,255,0.15);border-color:rgba(244,235,217,0.5)" aria-label="Langue / Idioma">Português (BR)</button></div>
     <h1>Mariana &amp; Robin</h1>
-    <div class="sub">Domaine Monmanoir · 15 mai 2027</div>
+    <div class="sub" data-i18n="venueSub">Domaine Monmanoir · 15 mai 2027</div>
   </div>
   <div class="brush"></div>
 
   <div class="views">
   <section class="view view-hub" id="viewHub">
     <section class="prog">
-      <div class="prog-date">Samedi 15 mai 2027</div>
-      <h2 class="prog-title">Programme de la journée</h2>
+      <div class="prog-date" data-i18n="dateLong">Samedi 15 mai 2027</div>
+      <h2 class="prog-title" data-i18n="programTitle">Programme de la journée</h2>
       <div class="prog-rule"></div>
       <div class="prog-list" id="welcomeProgram"></div>
     </section>
   </section>
   <section class="view view-page" id="viewPage" hidden>
-  <div class="back-bar"><button class="back-btn" id="backBtn" type="button">‹ Retour</button><h2 class="bar-title" id="barTitle"></h2><button class="back-btn" id="nextBtn" type="button">Suivant ›</button></div>
+  <div class="back-bar"><button class="back-btn" id="backBtn" type="button" data-i18n="back">‹ Retour</button><h2 class="bar-title" id="barTitle"></h2><button class="back-btn" id="nextBtn" type="button" data-i18n="next">Suivant ›</button></div>
   <div class="stage-body" id="stageBody">  <div class="stage-body" id="stageBody">
   <div class="status" aria-live="polite">
     <div class="time-badge" id="clockBadge">14:02</div>
@@ -603,25 +607,25 @@
   <!-- ===== ACCUEIL : lieu (au-dessus du plan) ===== -->
   <div class="welcome" id="welcome" hidden>
     <div class="w-card w-lieu">
-      <h3>Le lieu</h3>
-      <div class="w-address" id="wAddress"><span class="w-name">Domaine Monmanoir</span><span class="w-street">6 Rue de Paris<br>95680 Montlignon</span></div>
+      <h3 data-i18n="theVenue">Le lieu</h3>
+      <div class="w-address" id="wAddress"><span class="w-name">Domaine Monmanoir</span><span class="w-street" data-i18n-html="street">6 Rue de Paris<br>95680 Montlignon</span></div>
       <div class="w-btns">
         <a class="w-btn primary" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
         <a class="w-btn" href="https://waze.com/ul?q=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
       </div>
-      <button class="w-link" type="button" id="copyAddr">Copier l'adresse</button>
+      <button class="w-link" type="button" id="copyAddr" data-i18n="copyAddr">Copier l'adresse</button>
     </div>
   </div>
   <div class="map-slot" id="mapSlot">
-  <button class="map-expand" id="mapExpand" type="button" aria-label="Agrandir le plan">⤢</button>
+  <button class="map-expand" id="mapExpand" type="button" data-i18n-attr="aria-label:expandMap" aria-label="Agrandir le plan">⤢</button>
   <div class="map-wrap" id="mapWrap">
     <div class="map-ctrl">
-      <button type="button" id="zoomOut" aria-label="Dézoomer">−</button>
-      <button type="button" id="zoomIn" aria-label="Zoomer">+</button>
-      <button type="button" id="mapClose" aria-label="Fermer le plan">✕</button>
+      <button type="button" id="zoomOut" data-i18n-attr="aria-label:zoomOut" aria-label="Dézoomer">−</button>
+      <button type="button" id="zoomIn" data-i18n-attr="aria-label:zoomIn" aria-label="Zoomer">+</button>
+      <button type="button" id="mapClose" data-i18n-attr="aria-label:closeMap" aria-label="Fermer le plan">✕</button>
     </div>
     <div class="map-layer" id="mapLayer">
-    <img src="asset/plan.webp" alt="Plan du domaine">
+    <img src="asset/plan.webp" data-i18n-attr="alt:mapAlt" alt="Plan du domaine">
 
     <!-- Trajets illustrés : chaque image est révélée par un masque qui suit le
          VRAI tracé de la courbe (et non une simple bande horizontale), pour que
@@ -659,13 +663,13 @@
 
     <!-- Points de localisation : apparaissent une fois l'étape correspondante atteinte -->
     <div class="pin-wrap" id="wrap-pin-parking">
-      <img class="pin-img" id="pin-parking"   src="asset/point-parking.png"   alt="Parking">
+      <img class="pin-img" id="pin-parking"   src="asset/point-parking.png"   data-i18n-attr="alt:pinParking" alt="Parking">
     </div>
     <div class="pin-wrap" id="wrap-pin-ceremonie">
-      <img class="pin-img" id="pin-ceremonie" src="asset/point-ceremonie.png" alt="Cérémonie">
+      <img class="pin-img" id="pin-ceremonie" src="asset/point-ceremonie.png" data-i18n-attr="alt:pinCeremonie" alt="Cérémonie">
     </div>
     <div class="pin-wrap" id="wrap-pin-cocktail">
-      <img class="pin-img" id="pin-cocktail"  src="asset/point-cocktail.png"  alt="Vin d'honneur">
+      <img class="pin-img" id="pin-cocktail"  src="asset/point-cocktail.png"  data-i18n-attr="alt:pinCocktail" alt="Vin d'honneur">
     </div>
 
     <svg id="mapSvg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -675,7 +679,7 @@
 
     <!-- Illustrations pour les étapes sans trajet (dîner, soirée) : remplacent
          le plan/les trajets/les points le temps de l'étape. -->
-    <img class="illu-img" loading="lazy" id="illu-diner"  src="asset/diner-illu.webp"  alt="Illustration du dîner">
+    <img class="illu-img" loading="lazy" id="illu-diner"  src="asset/diner-illu.webp"  data-i18n-attr="alt:dinerAlt" alt="Illustration du dîner">
     <div class="diner-overlay" id="dinerOverlay" aria-hidden="true">
       <span class="diner-flame flame-lg" style="left:10.0%; top:61.22%; animation-delay:0.0s;"></span>
       <span class="diner-flame flame-sm" style="left:13.31%; top:49.22%; animation-delay:0.31s;"></span>
@@ -713,7 +717,7 @@
       <span class="diner-particle" style="left:27%; top:44%; --dx:7px;  animation-duration:11.8s; animation-delay:2.7s;"></span>
       <span class="diner-particle" style="left:70%; top:14%; --dx:-6px; animation-duration:10.6s; animation-delay:1.3s;"></span>
     </div>
-    <img class="illu-img" loading="lazy" id="illu-soiree" src="asset/soiree-illu.webp" alt="Illustration de la soirée">
+    <img class="illu-img" loading="lazy" id="illu-soiree" src="asset/soiree-illu.webp" data-i18n-attr="alt:soireeAlt" alt="Illustration de la soirée">
     <div class="disco-overlay" id="discoOverlay" aria-hidden="true">
       <span class="disco-dot" style="top:14%; left:8%;  animation-delay:0s,   0.1s;"></span>
       <span class="disco-dot" style="top:22%; left:19%; animation-delay:0.4s, 0.3s;"></span>
@@ -741,26 +745,26 @@
   <!-- ===== RETOUR DE MARIAGE : accès aux photos ===== -->
   <div class="welcome welcome-bottom" id="retourPhotos" hidden>
     <div class="w-card w-lieu">
-      <h3>Photos</h3>
-      <p class="w-street">Pour voir et partager les photos, c'est ici.</p>
-      <div class="w-btns" style="grid-template-columns:1fr"><a class="w-btn primary" href="photos.html">Photos</a></div>
+      <h3 data-i18n="photos">Photos</h3>
+      <p class="w-street" data-i18n="photosNote">Pour voir et partager les photos, c'est ici.</p>
+      <div class="w-btns" style="grid-template-columns:1fr"><a class="w-btn primary" href="photo-app/" data-i18n="photos">Photos</a></div>
     </div>
   </div>
 
   <!-- ===== ACCUEIL : contacts (sous le plan) ===== -->
   <div class="welcome welcome-bottom" id="welcomeContacts" hidden>
     <div class="w-card">
-      <h3>En cas de besoin</h3>
+      <h3 data-i18n="help">En cas de besoin</h3>
       <!-- TODO : remplacer les noms et numéros -->
-      <div class="w-contact"><div class="w-who"><b>Prénom Nom</b><span>Témoin</span><em>06 00 00 00 01</em></div><a class="w-btn primary" href="tel:+33600000001">Appeler</a></div>
-      <div class="w-contact"><div class="w-who"><b>Prénom Nom</b><span>Maître de cérémonie</span><em>06 00 00 00 02</em></div><a class="w-btn primary" href="tel:+33600000002">Appeler</a></div>
+      <div class="w-contact"><div class="w-who"><b>Prénom Nom</b><span data-i18n="witness">Témoin</span><em>06 00 00 00 01</em></div><a class="w-btn primary" href="tel:+33600000001" data-i18n="call">Appeler</a></div>
+      <div class="w-contact"><div class="w-who"><b>Prénom Nom</b><span data-i18n="mc">Maître de cérémonie</span><em>06 00 00 00 02</em></div><a class="w-btn primary" href="tel:+33600000002" data-i18n="call">Appeler</a></div>
     </div>
   </div>
   </div>
   </section>
   </div>
 
-  <div class="footnote" style="padding-top:22px">
+  <div class="footnote" style="padding-top:22px" data-i18n="tip">
     Astuce : ajoutez cette page à votre écran d'accueil pour la retrouver en un geste, même sans réseau.
   </div>
   <img class="frame-corner tl" src="asset/corner-tl.png" alt="">
@@ -772,23 +776,21 @@
 
 <script>
 const stages = [
-  {id:'arrivee',   time:'13:30', label:"Accueil", welcome:true,      title:"Bienvenue !",  desc:"Garez-vous sur le parking en suivant le chemin depuis le portail.",              path:'path-entree-parking',    pin:'pin-parking', illu:null},
-  {id:'ceremonie', time:'14:00', label:"Cérémonie",    title:"Cérémonie",    desc:"Suivez le chemin depuis le parking, la cérémonie va commencer.",                path:'path-parking-ceremonie', pin:'pin-ceremonie', illu:null},
-  {id:'cocktail',  time:'15:00', label:"Vin d'honneur", title:"Vin d'honneur", desc:"Suivez le chemin vers la terrasse pour l'apéritif.",                            path:'path-ceremonie-cocktail', pin:'pin-cocktail', illu:null},
-  {id:'diner',     time:'19:00', label:"Dîner",        title:"Bon appétit !", desc:"Installez-vous, le dîner va être servi.",                                       path:null,                      pin:null, illu:'illu-diner'},
-  {id:'soiree',    time:'22:00', label:"Soirée",       title:"Bonne soirée !", desc:"Place à la piste de danse pour la suite de la fête.",                          path:null,                      pin:null, illu:'illu-soiree'},
+  {id:'arrivee',   time:'13:30', welcome:true, path:'path-entree-parking',     pin:'pin-parking',   illu:null},
+  {id:'ceremonie', time:'14:00',               path:'path-parking-ceremonie',  pin:'pin-ceremonie', illu:null},
+  {id:'cocktail',  time:'15:00',               path:'path-ceremonie-cocktail', pin:'pin-cocktail',  illu:null},
+  {id:'diner',     time:'19:00',               path:null, pin:null, illu:'illu-diner'},
+  {id:'soiree',    time:'22:00',               path:null, pin:null, illu:'illu-soiree'},
   // Lendemain : retour de mariage (dimanche 16 mai, 11h)
-  {id:'retour',    time:'11:00', day:1, label:"Retour de mariage", title:"Retour de mariage", desc:"Rendez-vous dimanche 16 mai à 11h pour le retour de mariage.", path:null, pin:null, illu:null, noMap:true, photos:true},
+  {id:'retour',    time:'11:00', day:1,        path:null, pin:null, illu:null, noMap:true, photos:true},
 ];
-
-const PROGRAM_TEXT = {
-  arrivee:   ['Accueil', 'Arrivée au domaine'],
-  ceremonie: ['Cérémonie', 'Dans les jardins'],
-  cocktail:  ["Vin d'honneur", 'Cocktail & photos'],
-  diner:     ['Dîner', 'Repas dans la grande salle'],
-  soiree:    ['Soirée & danse', 'La nuit vous appartient !'],
-  retour:    ['Retour de mariage', 'Dimanche 16 mai']
-};
+// Textes traduits (lang.js) : libellé, titre, consigne
+stages.forEach(s=>{
+  Object.defineProperties(s, {
+    label:{get:()=>t('n.'+s.id)}, title:{get:()=>t('t.'+s.id)}, desc:{get:()=>t('d.'+s.id)}
+  });
+});
+const PROGRAM_TEXT = new Proxy({}, {get:(_,id)=>t('p.'+id)});
 
 const ALL_PATHS = ['path-entree-parking','path-parking-ceremonie','path-ceremonie-cocktail'];
 const ALL_PINS  = ['pin-parking','pin-ceremonie','pin-cocktail'];
@@ -841,18 +843,18 @@ function render(){
   document.getElementById('stageDesc').textContent = stage.desc;
   // Toutes les pages d'étape : titre dans la barre du haut, consigne sous le plan / l'illustration
   document.querySelector('#stageBody .status').hidden = true;
-  document.getElementById('barTitle').textContent = stage.welcome ? 'Bienvenue' : PROGRAM_TEXT[stage.id][0];
+  document.getElementById('barTitle').textContent = stage.welcome ? t('welcomeBar') : PROGRAM_TEXT[stage.id][0];
   document.getElementById('mapCaption').hidden = false;
   document.getElementById('mapCaptionText').textContent = stage.desc;
 
   const onDay = sinceStart() >= 0;
-  document.getElementById('eyebrowText').textContent = (isLive && onDay) ? 'En ce moment' : ('À ' + stage.time.replace(':','h'));
+  document.getElementById('eyebrowText').textContent = (isLive && onDay) ? t('live') : (t('at') + stage.time.replace(':','h'));
   document.getElementById('liveDot').style.display = (isLive && onDay) ? '' : 'none';
   const next = stages[idx+1];
   const nextBtn = document.getElementById('nextStep');
   nextBtn.hidden = !next;
   document.getElementById('nextBtn').style.visibility = next ? '' : 'hidden';
-  if(next) nextBtn.textContent = 'Ensuite · ' + next.time + ' · ' + next.label + '  →';
+  if(next) nextBtn.textContent = t('then') + ' · ' + next.time + ' · ' + next.label + '  →';
   document.getElementById('welcome').hidden = !stage.welcome;
   document.getElementById('welcomeContacts').hidden = !stage.welcome;
   document.getElementById('mapSlot').hidden = !!stage.noMap;
@@ -946,7 +948,7 @@ document.getElementById('welcomeProgram').innerHTML = '<div class="prog-track">'
     <div class="prog-item ${sideOf(i)}${onDay && i===live ? ' live' : ''}" data-i="${i}" role="button" tabindex="0" aria-label="${PROGRAM_TEXT[s.id][0]}, ${s.time.replace(':','h')}">
       <span class="prog-dot"></span>
       <div class="prog-txt"><div class="prog-card">
-        <div class="prog-time">${s.day ? "Dim. " : ""}${s.time.replace(":","H")}</div>
+        <div class="prog-time">${s.day ? t("sun") : ""}${s.time.replace(":","H")}</div>
         <div class="prog-name">${PROGRAM_TEXT[s.id][0]}</div>
         <div class="prog-sub">${PROGRAM_TEXT[s.id][1]}</div>
         ${s.welcome ? `<a class="prog-go" href="${ITINERAIRE_URL}" target="_blank" rel="noopener">Itinéraire</a>` : ''}
@@ -1074,9 +1076,9 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeMap(); });
 document.getElementById('copyAddr').addEventListener('click', async e=>{
   const btn = e.currentTarget;
   const txt = document.getElementById('wAddress').innerText.replace(/\n/g, ', ');
-  try{ await navigator.clipboard.writeText(txt); btn.textContent = 'Adresse copiée ✓'; }
-  catch(_){ btn.textContent = 'Copie impossible'; }
-  setTimeout(()=>{ btn.textContent = "Copier l'adresse"; }, 2000);
+  try{ await navigator.clipboard.writeText(txt); btn.textContent = t('copied'); }
+  catch(_){ btn.textContent = t('copyFail'); }
+  setTimeout(()=>{ btn.textContent = t('copyAddr'); }, 2000);
 });
 buildHub();
 render();
