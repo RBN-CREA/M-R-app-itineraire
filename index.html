@@ -208,8 +208,11 @@
     .unit .num{ font-size:24px; }
   }
 
-  .lang-switch{position:absolute; top:calc(14px + env(safe-area-inset-top)); left:50%; transform:translateX(-50%); z-index:60; appearance:none; background:rgba(244,235,217,0.7); border:1px solid var(--ligne); color:var(--encre-douce); font:500 11px 'Jost',sans-serif; letter-spacing:0.08em; padding:5px 12px; border-radius:999px; cursor:pointer;}
-  .lang-switch:hover{ border-color:var(--terracotta); color:var(--terracotta); }
+  .lang-switch{position:relative; z-index:60; display:inline-flex; gap:2px; padding:3px; background:rgba(255,255,255,0.75); border:1px solid var(--ligne,#EAD9BE); border-radius:999px; box-shadow:0 2px 8px rgba(91,70,54,0.12);}
+  .lang-switch button{appearance:none; border:0; background:transparent; cursor:pointer; display:flex; align-items:center; gap:6px; font:600 13px 'Jost',sans-serif; letter-spacing:0.06em; color:#5B4636; padding:6px 12px; border-radius:999px;}
+  .lang-switch button .fl{font-size:18px; line-height:1;}
+  .lang-switch button[aria-pressed="true"]{background:#7F9A80; color:#FBF6EC;}
+  .lang-top{display:flex; justify-content:center; margin:-22px 0 16px; position:relative; z-index:60;}
   @media (prefers-reduced-motion: reduce){
     .shell, .frame-corner, .frame-sprig{ animation:none; opacity:1; transform:none; }
   }
@@ -225,7 +228,7 @@
     <img class="frame-sprig" src="asset/sprig-right.png" alt="" width="42" height="120">
 
     <h1 id="brandTitle">Mariana &amp; Robin</h1>
-    <button type="button" class="lang-switch" aria-label="Langue / Idioma">Português (BR)</button>
+    <div class="lang-top"><div class="lang-switch"></div></div>
     <div class="venue">Domaine Monmanoir</div>
 
     <p class="eyebrow" id="countdownEyebrow" data-i18n="eyebrowCountdown">Le grand jour arrive dans</p>
@@ -327,7 +330,7 @@
         document.getElementById('nowDesc').textContent = t('thanksDesc');
         eyebrow.textContent = t('eyebrowThanks');
         sub.textContent = t('subThanks');
-        enter.setAttribute('href', 'photo-app/');
+        enter.setAttribute('href', 'https://photos-mariage-umber.vercel.app/');
         enter.textContent = t('photos');
         const note = document.getElementById('enterNote');
         note.textContent = t('photosNote');

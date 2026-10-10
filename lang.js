@@ -40,8 +40,7 @@
       mapAlt:"Plan du domaine", dinerAlt:"Illustration du dîner", soireeAlt:"Illustration de la soirée",
       pinParking:"Parking", pinCeremonie:"Cérémonie", pinCocktail:"Vin d'honneur",
       help:"En cas de besoin", witness:"Témoin", mc:"Maître de cérémonie", call:"Appeler",
-      tip:"Astuce : ajoutez cette page à votre écran d'accueil pour la retrouver en un geste, même sans réseau.",
-      switchTo:"Português (BR)"
+      tip:"Astuce : ajoutez cette page à votre écran d'accueil pour la retrouver en un geste, même sans réseau."
     },
     pt: {
       home:"← Início", dateShort:"15 de maio de 2027", dateLong:"Sábado, 15 de maio de 2027",
@@ -80,8 +79,7 @@
       mapAlt:"Mapa do domínio", dinerAlt:"Ilustração do jantar", soireeAlt:"Ilustração da festa",
       pinParking:"Estacionamento", pinCeremonie:"Cerimônia", pinCocktail:"Coquetel",
       help:"Em caso de necessidade", witness:"Padrinho/Madrinha", mc:"Mestre de cerimônias", call:"Ligar",
-      tip:"Dica: adicione esta página à tela inicial do celular para abri-la rapidamente, mesmo sem internet.",
-      switchTo:"Français"
+      tip:"Dica: adicione esta página à tela inicial do celular para abri-la rapidamente, mesmo sem internet."
     }
   };
 
@@ -113,8 +111,8 @@
       });
     },
     // Bascule FR <-> PT (mémorisée) puis recharge
-    toggle: function(){
-      try{ localStorage.setItem('lang', lang === 'pt' ? 'fr' : 'pt'); }catch(_){}
+    set: function(l){
+      try{ localStorage.setItem('lang', l); }catch(_){}
       var u = new URL(location.href); u.searchParams.delete('lang'); location.href = u.toString();
     }
   };
@@ -125,6 +123,12 @@
   document.addEventListener('DOMContentLoaded', function(){
     T.apply();
     var d = document.querySelector('meta[name="description"]'); if(d) d.setAttribute('content', T.t('metaDesc'));
-    document.querySelectorAll('.lang-switch').forEach(function(b){ b.textContent = T.t('switchTo'); b.addEventListener('click', T.toggle); });
+    document.querySelectorAll('.lang-switch').forEach(function(box){
+      box.setAttribute('role','group');
+      box.innerHTML = [['fr','\uD83C\uDDEB\uD83C\uDDF7','FR'],['pt','\uD83C\uDDE7\uD83C\uDDF7','PT']].map(function(x){
+        return '<button type="button" data-l="'+x[0]+'" aria-pressed="'+(lang===x[0])+'" aria-label="'+(x[0]==='fr'?'Français':'Português (Brasil)')+'"><span class="fl">'+x[1]+'</span>'+x[2]+'</button>';
+      }).join('');
+      box.addEventListener('click', function(e){ var b = e.target.closest('button'); if(b && b.dataset.l !== lang) T.set(b.dataset.l); });
+    });
   });
 })();
