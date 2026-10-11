@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Mariana &amp; Robin — Programme</title>
-<meta name="description" content="Itinéraire du jour — mariage Mariana & Robin, Domaine Monmanoir.">
+<meta name="description" content="Itinéraire du jour — mariage Mariana & Robin, Domaine Montmanoir.">
 <meta name="theme-color" content="#7F9A80">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline'; connect-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'">
 <meta property="og:title" content="Mariana &amp; Robin — 15 mai 2027">
-<meta property="og:description" content="Toutes les infos pratiques de notre mariage au Domaine Monmanoir.">
+<meta property="og:description" content="Toutes les infos pratiques de notre mariage au Domaine Montmanoir.">
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="asset/icon-192.png">
@@ -588,7 +588,7 @@
   <div class="header">
     <div class="header-top"><a class="back-link" href="index.html" data-i18n="home">← Accueil</a><div class="lang-top"><div class="lang-switch"></div></div></div>
     <h1>Mariana &amp; Robin</h1>
-    <div class="sub" data-i18n="venueSub">Domaine Monmanoir · 15 mai 2027</div>
+    <div class="sub" data-i18n="venueSub">Domaine Montmanoir · 15 mai 2027</div>
   </div>
   <div class="brush"></div>
 
@@ -615,10 +615,10 @@
   <div class="welcome" id="welcome" hidden>
     <div class="w-card w-lieu">
       <h3 data-i18n="theVenue">Le lieu</h3>
-      <div class="w-address" id="wAddress"><span class="w-name">Domaine Monmanoir</span><span class="w-street" data-i18n-html="street">6 Rue de Paris<br>95680 Montlignon</span></div>
+      <div class="w-address" id="wAddress"><span class="w-name">Domaine Montmanoir</span><span class="w-street" data-i18n-html="street">6 Rue de Paris<br>95680 Montlignon</span></div>
       <div class="w-btns">
-        <a class="w-btn primary" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
-        <a class="w-btn" href="https://waze.com/ul?q=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
+        <a class="w-btn primary" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
+        <a class="w-btn" href="https://waze.com/ul?q=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
       </div>
       <button class="w-link" type="button" id="copyAddr" data-i18n="copyAddr">Copier l'adresse</button>
     </div>
@@ -941,7 +941,7 @@ function render(){
 }
 
 // ---------- Frise (hub) et pages d'étape ----------
-const ITINERAIRE_URL = 'https://www.google.com/maps/dir/?api=1&destination=Domaine%20Monmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon';
+const ITINERAIRE_URL = 'https://www.google.com/maps/dir/?api=1&destination=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon';
 const hub = document.getElementById('viewHub');
 const page = document.getElementById('viewPage');
 const stageBody = document.getElementById('stageBody');
@@ -957,7 +957,7 @@ document.getElementById('welcomeProgram').innerHTML = '<div class="prog-track">'
       <div class="prog-txt"><div class="prog-card">
         <div class="prog-time">${s.day ? t("sun") : ""}${s.time.replace(":","H")}</div>
         <div class="prog-name">${PROGRAM_TEXT[s.id][0]}</div>
-        <div class="prog-sub">${PROGRAM_TEXT[s.id][1]}</div>
+        ${PROGRAM_TEXT[s.id][1] ? `<div class="prog-sub">${PROGRAM_TEXT[s.id][1]}</div>` : ''}
         ${s.welcome ? `<a class="prog-go" href="${ITINERAIRE_URL}" target="_blank" rel="noopener">Itinéraire</a>` : ''}
       </div></div></div>`).join('') + '</div>';
   queueFx();
