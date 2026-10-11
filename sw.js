@@ -1,6 +1,6 @@
-// Mode hors-ligne : pages en "réseau d'abord", le reste en "cache d'abord".
+// Mode hors-ligne : pages et scripts en "réseau d'abord", le reste en "cache d'abord".
 // Changer la version pour forcer la mise à jour du cache chez les invités.
-const CACHE = 'mariage-v10';
+const CACHE = 'mariage-v11';
 const CORE = ['./', 'index.html', 'lang.js', 'itineraire-v4.html', 'manifest.webmanifest',
   'asset/plan.webp', 'asset/diner-illu.webp', 'asset/soiree-illu.webp',
   'asset/corner-tl.png', 'asset/corner-tr.png', 'asset/corner-bl.png', 'asset/corner-br.png', 'asset/sprig-right.png',
@@ -18,7 +18,7 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
-  const isPage = req.mode === 'navigate';
+  const isPage = req.mode === 'navigate' || /\.(js|html)$/.test(new URL(req.url).pathname);
   e.respondWith(
     isPage
       ? fetch(req, {cache:'no-store'}).then(r => { const cp = r.clone(); caches.open(CACHE).then(c => c.put(req, cp)); return r; })
