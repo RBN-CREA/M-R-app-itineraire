@@ -201,7 +201,7 @@
   .sheet-card .btn{ text-decoration:none; text-align:center; }
   @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
 
-  .jp[hidden], .date-line[hidden]{ display:none; }
+  .jp[hidden], .date-line[hidden], #brandTitle[hidden], .venue[hidden]{ display:none; }
   .jp{ margin:0 auto 26px; max-width:340px; animation:rise-in .6s ease both; }
   .jp-title{ font-family:'Cormorant Garamond', serif; font-weight:600; font-size:24px; line-height:1.2; margin:0 0 10px; color:var(--encre); }
   .jp-bye{ font-size:22px; color:var(--terracotta); margin:10px 0 0; letter-spacing:0.06em; }
@@ -245,7 +245,7 @@
 
     <h1 id="brandTitle">Mariana &amp; Robin</h1>
     <div class="lang-top"><div class="lang-switch"></div></div>
-    <div class="venue">Domaine Montmanoir</div>
+    <div class="venue" id="venue">Domaine Montmanoir</div>
 
     <p class="eyebrow" id="countdownEyebrow" data-i18n="eyebrowCountdown">Le grand jour arrive dans</p>
 
@@ -265,10 +265,9 @@
     <p class="sub-msg" id="subMsg" data-i18n="subMsg">Retrouvez ici le plan, les horaires et l'itinéraire du jour J.</p>
 
     <div class="jp" id="jp" hidden>
-      <div class="eyebrow" data-i18n="jpEyebrow">Notre aventure</div>
       <h2 class="jp-title" data-i18n="jpTitle">Voyage de noces — Japon</h2>
-      <p class="jp-text" data-i18n="jpText"></p>
-      <p class="jp-bye" lang="ja">さようなら！</p>
+      <p class="jp-text" id="jpText"></p>
+      <p class="jp-bye">Sayonara !</p>
       <a class="btn btn-ghost" id="cagnotteBtn" href="https://www.millemercismariage.com/marianarobin/liste.html" target="_blank" rel="noopener" style="display:block;max-width:280px;margin:18px auto 0;text-decoration:none;text-align:center" data-i18n="jpBtn">Contribuer à la cagnotte</a>
     </div>
 
@@ -312,6 +311,7 @@
   ];
   // Pour tester : ?heure=15:30 simule le jour J à cette heure.
   const FAKE_TIME = new URLSearchParams(location.search).get('heure');
+  const FAKE_GONE = new URLSearchParams(location.search).get('apres') === '1';   // test : simule « après le 17 mai »
   function parisNow(){
     if(FAKE_TIME && /^\d{1,2}:\d{2}$/.test(FAKE_TIME)){
       const [h,m] = FAKE_TIME.split(':').map(Number);
@@ -376,8 +376,13 @@
         note.textContent = t('photosNote');
         note.hidden = false;
         document.getElementById('routeBtn').hidden = true;
+        // Avant le départ (17 mai) : « on s'envole » ; après : « nous sommes partis »
+        const gone = FAKE_GONE || parisNow().date >= '2027-05-17';
+        document.getElementById('jpText').textContent = t(gone ? 'jpTextGone' : 'jpText');
         document.getElementById('jp').hidden = false;
         document.getElementById('dateLine').hidden = true;
+        document.getElementById('brandTitle').hidden = true;
+        document.getElementById('venue').hidden = true;
         startPetals();
       } else {
         const i = currentStageIndex(), st = STAGES[i];
