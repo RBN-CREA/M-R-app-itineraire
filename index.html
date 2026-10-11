@@ -191,7 +191,7 @@
   .now-name{ font-family:'Parisienne', cursive; font-weight:400; font-size:46px; line-height:1.1; color:var(--terracotta); margin:2px 0 8px; }
   .now-desc{ font-size:14px; line-height:1.5; color:var(--encre-douce); max-width:300px; margin:0 auto; }
 
-  .enter-note{ margin:2px 0 0; font-size:13px; line-height:1.5; color:var(--encre-douce); }
+  .enter-note{ order:-1; margin:0 0 2px; font-size:13px; line-height:1.5; color:var(--encre-douce); }
   .enter-note[hidden]{ display:none; }
   .sheet[hidden]{ display:none; }
   .sheet{ position:fixed; inset:0; z-index:100; background:rgba(91,70,54,0.35); display:flex; align-items:flex-end; justify-content:center; padding:16px; animation:fade-in .2s ease; }
@@ -201,6 +201,20 @@
   .sheet-card .btn{ text-decoration:none; text-align:center; }
   @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
 
+  .jp[hidden], .date-line[hidden]{ display:none; }
+  .jp{ margin:0 auto 26px; max-width:340px; animation:rise-in .6s ease both; }
+  .jp-title{ font-family:'Cormorant Garamond', serif; font-weight:600; font-size:24px; line-height:1.2; margin:0 0 10px; color:var(--encre); }
+  .jp-text{ font-size:13px; line-height:1.65; color:var(--encre-douce); margin:0; }
+  #cagnotteBtn{ border-color:var(--terracotta); color:var(--terracotta); }
+  .petals{ position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:40; }
+  .petal{ position:absolute; top:-30px; background:#EFA9B8; opacity:0; border-radius:80% 0 80% 0; animation:petal-fall linear infinite; }
+  @keyframes petal-fall{
+    0%{ transform:translate3d(0,0,0) rotate(0deg); opacity:0; }
+    10%{ opacity:.85; }
+    50%{ transform:translate3d(var(--sway),55vh,0) rotate(180deg); }
+    90%{ opacity:.8; }
+    100%{ transform:translate3d(calc(var(--sway) * -0.6),108vh,0) rotate(360deg); opacity:0; }
+  }
   @media (max-width:420px){
     .unit .num{ font-size:24px; }
   }
@@ -215,6 +229,7 @@
   .lang-top .lang-switch button .fl{font-size:12px;}
   @media (prefers-reduced-motion: reduce){
     .shell, .frame-corner, .frame-sprig{ animation:none; opacity:1; transform:none; }
+    .petals{ display:none; }
   }
 </style>
 </head>
@@ -245,8 +260,15 @@
       <p class="now-desc" id="nowDesc"></p>
     </div>
 
-    <div class="date-line" data-i18n="dateShort">15 mai 2027</div>
+    <div class="date-line" id="dateLine" data-i18n="dateShort">15 mai 2027</div>
     <p class="sub-msg" id="subMsg" data-i18n="subMsg">Retrouvez ici le plan, les horaires et l'itinéraire du jour J.</p>
+
+    <div class="jp" id="jp" hidden>
+      <div class="eyebrow" data-i18n="jpEyebrow">Notre aventure</div>
+      <h2 class="jp-title" data-i18n="jpTitle">Voyage de noces — Japon</h2>
+      <p class="jp-text" data-i18n="jpText"></p>
+      <a class="btn btn-ghost" id="cagnotteBtn" href="https://www.millemercismariage.com/marianarobin/liste.html" target="_blank" rel="noopener" style="display:block;max-width:280px;margin:18px auto 0;text-decoration:none;text-align:center" data-i18n="jpBtn">Contribuer à la cagnotte</a>
+    </div>
 
     <div class="actions">
       <a class="btn btn-primary" id="enterBtn" href="itineraire-v4.html" style="text-decoration:none;text-align:center" data-i18n="enter">Entrer</a>
@@ -313,6 +335,22 @@
     return cur;
   }
 
+  /* Pétales de sakura (page de remerciement) */
+  let petalsOn = false;
+  function startPetals(){
+    if(petalsOn) return; petalsOn = true;
+    const box = document.createElement('div'); box.className = 'petals'; box.setAttribute('aria-hidden','true');
+    for(let i=0;i<18;i++){
+      const p = document.createElement('span'); p.className = 'petal';
+      const w = 8 + Math.random()*8;
+      p.style.cssText = `left:${(Math.random()*100).toFixed(1)}%;width:${w.toFixed(1)}px;height:${(w*1.25).toFixed(1)}px;` +
+        `--sway:${(Math.random()*90-45).toFixed(0)}px;animation-duration:${(9+Math.random()*8).toFixed(1)}s;animation-delay:-${(Math.random()*14).toFixed(1)}s;` +
+        `background:${['#EFA9B8','#F4C2CC','#E8929F'][i%3]}`;
+      box.appendChild(p);
+    }
+    document.body.appendChild(box);
+  }
+
   function updateCountdown(){
     const now = new Date();
     let diff = FAKE_TIME ? 0 : TARGET_DATE - now;
@@ -336,6 +374,9 @@
         note.textContent = t('photosNote');
         note.hidden = false;
         document.getElementById('routeBtn').hidden = true;
+        document.getElementById('jp').hidden = false;
+        document.getElementById('dateLine').hidden = true;
+        startPetals();
       } else {
         const i = currentStageIndex(), st = STAGES[i];
         document.getElementById('nowName').textContent = t('n.' + st.id);
