@@ -129,6 +129,7 @@
   }
   .header h1, .header .sub, .brush{ display:none; }
   .header{ padding-bottom:0 !important; }
+  .header-top[hidden]{ display:none; }
   .header-top{ margin-top:24px !important; margin-bottom:6px !important; }
   .header .sub{
     font-size:11px; letter-spacing:0.24em; text-transform:uppercase;
@@ -529,8 +530,17 @@
   .prog-item.live .prog-dot::after{ background:var(--terracotta); }
   .prog-go{
     display:inline-block; margin-top:8px; font:600 11.5px 'Jost'; letter-spacing:0.03em; text-decoration:none;
-    color:#fff; background:var(--terracotta); border-radius:999px; padding:6px 12px; position:relative; z-index:2;
+    color:var(--terracotta); background:transparent; border:1px solid var(--terracotta); border-radius:999px; padding:5px 12px; position:relative; z-index:2; cursor:pointer;
   }
+  .prog-go:hover{ background:rgba(198,107,73,0.08); }
+  /* Choix Maps / Waze */
+  .sheet[hidden]{ display:none; }
+  .sheet{ position:fixed; inset:0; z-index:200; background:rgba(91,70,54,0.35); display:flex; align-items:flex-end; justify-content:center; padding:16px; }
+  .sheet-card{ width:100%; max-width:380px; background:var(--papier); border-radius:22px; padding:22px 20px 18px; text-align:center; box-shadow:var(--ombre); display:flex; flex-direction:column; gap:10px; margin-bottom:env(safe-area-inset-bottom); }
+  .sheet-card h2{ font-family:'Cormorant Garamond', serif; font-size:22px; font-weight:600; margin:0; color:var(--encre); }
+  .sheet-card p{ font-size:13px; line-height:1.5; color:var(--encre-douce); margin:0 0 6px; }
+  .sheet-btn{ display:block; box-sizing:border-box; appearance:none; background:transparent; cursor:pointer; text-decoration:none; text-align:center; font:600 13px 'Jost',sans-serif; letter-spacing:0.04em; padding:12px 18px; border-radius:999px; border:1px solid var(--terracotta); color:var(--terracotta); }
+  .sheet-btn.ghost{ border-color:var(--ligne,#EAD9BE); color:var(--encre); }
   .prog-hint{ font-size:12px; color:#A79878; margin:-8px 0 18px; }
   .prog-item.live .prog-dot::after{ background:var(--terracotta); }
   .prog-item{ display:grid; grid-template-columns:1fr 34px 1fr; align-items:start; min-height:96px; }
@@ -598,7 +608,7 @@
     <div class="lang-top"><div class="lang-switch"></div></div>
     <h1>Mariana &amp; Robin</h1>
     <div class="sub" data-i18n="venueSub">Domaine Montmanoir</div>
-    <div class="header-top"><a class="back-link" href="index.html" data-i18n="home">← Accueil</a></div>
+    <div class="header-top" id="headerTop"><a class="back-link" href="index.html" data-i18n="home">← Accueil</a></div>
   </div>
   <div class="brush"></div>
 
@@ -781,6 +791,16 @@
   </section>
   </div>
 
+  <div class="sheet" id="routeSheet" hidden>
+    <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="routeTitle">
+      <h2 id="routeTitle" data-i18n="openWith">Ouvrir l'itinéraire avec</h2>
+      <p>Domaine Montmanoir<br>6 Rue de Paris, 95680 Montlignon</p>
+      <a class="sheet-btn" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
+      <a class="sheet-btn" href="https://waze.com/ul?q=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
+      <button type="button" class="sheet-btn ghost" id="routeCancel" data-i18n="cancel">Annuler</button>
+    </div>
+  </div>
+
   <div class="footnote" style="padding-top:22px" data-i18n="tip">
     Astuce : ajoutez cette page à votre écran d'accueil pour la retrouver en un geste, même sans réseau.
   </div>
@@ -881,6 +901,7 @@ function render(){
   document.getElementById('welcomeContacts').hidden = !stage.welcome;
   document.getElementById('mapSlot').hidden = !!stage.noMap;
   document.getElementById('retourPhotos').hidden = !stage.photos;
+  document.getElementById('headerTop').hidden = cur !== null;
   updateHub();
 
   // Trajets : uniquement visibles pendant leur propre étape ; dès qu'on change
@@ -956,6 +977,13 @@ function render(){
 }
 
 // ---------- Frise (hub) et pages d'étape ----------
+const routeSheet = document.getElementById('routeSheet');
+function openRouteSheet(){ routeSheet.hidden = false; }
+function closeRouteSheet(){ routeSheet.hidden = true; }
+document.getElementById('routeCancel').addEventListener('click', closeRouteSheet);
+routeSheet.addEventListener('click', e=>{ if(e.target === routeSheet) closeRouteSheet(); });
+routeSheet.querySelectorAll('a').forEach(a=>a.addEventListener('click', closeRouteSheet));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeRouteSheet(); });
 const ITINERAIRE_URL = 'https://www.google.com/maps/dir/?api=1&destination=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon';
 const hub = document.getElementById('viewHub');
 const page = document.getElementById('viewPage');
@@ -973,7 +1001,7 @@ document.getElementById('welcomeProgram').innerHTML = '<div class="prog-track">'
         <div class="prog-time">${s.time.replace(":","H")}</div>
         <div class="prog-name">${PROGRAM_TEXT[s.id][0]}</div>
         ${PROGRAM_TEXT[s.id][1] ? `<div class="prog-sub">${PROGRAM_TEXT[s.id][1]}</div>` : ''}
-        ${s.welcome ? `<a class="prog-go" href="${ITINERAIRE_URL}" target="_blank" rel="noopener">Itinéraire</a>` : ''}
+        ${s.welcome ? `<button type="button" class="prog-go">${t('route')}</button>` : ''}
       </div></div></div>`).join('') + '</div>';
   queueFx(); if(dayLabelEl) updateDayLabel(true);
 }
@@ -1030,7 +1058,7 @@ function centerWheel(i){
 wheelEl.addEventListener('scroll', ()=>{ wheelIdx = Math.max(0, Math.min(stages.length-1, stageOfSlot(Math.round(wheelEl.scrollTop / itemH())))); queueFx(); updateDayLabel(); }, {passive:true});
 window.addEventListener('resize', ()=>{ centerWheel(); });
 document.getElementById('welcomeProgram').addEventListener('click', e=>{
-  if(e.target.closest('.prog-go')) return;   // le bouton Itinéraire ouvre Maps, pas la page
+  if(e.target.closest('.prog-go')){ openRouteSheet(); return; }   // le bouton Itinéraire propose Maps ou Waze, sans ouvrir la page
   const b = e.target.closest('.prog-item'); if(b) openStage(+b.dataset.i, true);
 });
 document.getElementById('welcomeProgram').addEventListener('keydown', e=>{
@@ -1063,7 +1091,7 @@ function closeStage(){
   if(animating || cur === null) return;
   const left = sideOf(cur) === 'left';
   closeMap();
-  cur = null; buildHub();
+  cur = null; document.getElementById('headerTop').hidden = false; buildHub();
   runSwap(page, hub, left ? 'to-right' : 'to-left', left ? 'from-left' : 'from-right', ()=>window.scrollTo(0, hubScroll));
 }
 document.getElementById('backBtn').addEventListener('click', ()=>{
