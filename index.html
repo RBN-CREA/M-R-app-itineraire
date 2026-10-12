@@ -294,17 +294,17 @@
 (function(){
   'use strict';
 
-  const TARGET_DATE = new Date('2027-05-15T13:30:00+02:00');
+  const TARGET_DATE = new Date('2027-05-15T14:30:00+02:00');
   const pad = n => String(n).padStart(2, '0');
 
   /* Étapes du jour J (heure de Paris) */
   const WEDDING_DATE = '2027-05-15';
   const STAGE_IDS = ['arrivee','ceremonie','cocktail','diner','soiree','retour'];
   const STAGES = [
-    {time:'13:30', id:'arrivee'},
-    {time:'14:00', id:'ceremonie'},
-    {time:'15:00', id:'cocktail'},
-    {time:'19:00', id:'diner'},
+    {time:'14:30', id:'arrivee'},
+    {time:'15:00', id:'ceremonie'},
+    {time:'17:00', id:'cocktail'},
+    {time:'19:30', id:'diner'},
     {time:'22:00', id:'soiree'},
     // Lendemain (dimanche 16 mai)
     {time:'11:00', day:1, id:'retour'}
