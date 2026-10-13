@@ -574,6 +574,11 @@
   .prog-name{ font-size:28px !important; line-height:1.1; margin:6px 0 6px; }
   .prog-sub{ font-size:15px; line-height:1.3; }
   .prog-card{ padding-top:6px; padding-bottom:6px; }
+  /* Téléphone : la roue occupe exactement la hauteur restante de l'écran (--wheel-top = position du haut de la roue, mesurée en JS) */
+  @media (max-width: 560px){
+    .prog{ --wheel-h:clamp(240px, calc(100dvh - var(--wheel-top, 300px) - 14px - env(safe-area-inset-bottom)), 1100px);
+           --item-h:clamp(112px, calc(var(--wheel-h) * 0.34), 150px); padding-bottom:calc(14px + env(safe-area-inset-bottom)); }
+  }
   .prog-item.live .prog-time{ padding:4px 16px; }
   .prog-item.live .prog-time::before{ inset:-7px -14px; }
   @media (prefers-reduced-motion: reduce){ .prog-item{ opacity:1 !important; transform:none !important; } .prog-list{ scroll-behavior:auto; } }
@@ -781,9 +786,6 @@
     </div>
   </div>
 
-  <div class="footnote" style="padding-top:22px" data-i18n="tip">
-    Astuce : ajoutez cette page à votre écran d'accueil pour la retrouver en un geste, même sans réseau.
-  </div>
   <img class="frame-corner tl" src="asset/corner-tl.png" alt="">
   <img class="frame-corner tr" src="asset/corner-tr.png" alt="">
   <img class="frame-corner bl" src="asset/corner-bl.png" alt="">
@@ -1024,10 +1026,21 @@ function updateDayLabel(instant){
   setTimeout(()=>{ dayLabelEl.textContent = t(dayLabelKey); dayLabelEl.classList.remove('swap'); }, 200);
 }
 function queueFx(){ if(!fxQueued){ fxQueued = true; requestAnimationFrame(applyScrollFx); } }
+// Téléphone : mesure où commence la roue pour qu'elle remplisse la hauteur restante de l'écran
+const phoneMQ = window.matchMedia('(max-width: 560px)');
+function fitWheel(){
+  if(hub.hidden) return;
+  const prog = wheelEl.parentElement;
+  if(!phoneMQ.matches){ prog.style.removeProperty('--wheel-top'); return; }
+  prog.style.removeProperty('--wheel-top');
+  const top = wheelEl.getBoundingClientRect().top + window.scrollY;
+  prog.style.setProperty('--wheel-top', Math.round(top) + 'px');
+}
 function itemH(){ const it = wheelEl.querySelector('.prog-item'); return it ? it.offsetHeight : 176; }
 // Centre la roue sur une étape (par défaut : l'étape en cours)
 function centerWheel(i){
   if(i === undefined) i = (wheelIdx !== null ? wheelIdx : liveIndex());
+  fitWheel();
   wheelEl.style.scrollSnapType = 'none';
   wheelIdx = i; wheelEl.scrollTop = slotOf(i) * itemH();
   wheelEl.style.scrollSnapType = '';
@@ -1130,6 +1143,8 @@ document.getElementById('copyAddr').addEventListener('click', async e=>{
 buildHub();
 render();
 centerWheel();
+window.addEventListener('load', ()=>centerWheel());
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>centerWheel());
 setInterval(render, 30000);
 // Arrivée depuis « Entrer » avec ?etape=N : on ouvre directement la page de cette étape
 (function(){
