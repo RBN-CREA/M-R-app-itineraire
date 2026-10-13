@@ -194,12 +194,24 @@
   .enter-note{ order:-1; margin:0 0 2px; font-size:13px; line-height:1.5; color:var(--encre-douce); }
   .enter-note[hidden]{ display:none; }
   .sheet[hidden]{ display:none; }
-  .sheet{ position:fixed; inset:0; z-index:100; background:rgba(91,70,54,0.35); display:flex; align-items:flex-end; justify-content:center; padding:16px; animation:fade-in .2s ease; }
-  .sheet-card{ width:100%; max-width:380px; background:var(--papier); border-radius:22px; padding:22px 20px 18px; text-align:center; box-shadow:var(--ombre); display:flex; flex-direction:column; gap:10px; margin-bottom:env(safe-area-inset-bottom); }
+  .sheet{ position:fixed; inset:0; z-index:100; background:rgba(91,70,54,0.35); display:flex; align-items:center; justify-content:center; padding:16px; animation:fade-in .2s ease; }
+  .sheet-card{ width:100%; max-width:380px; background:var(--papier); border-radius:22px; padding:22px 20px 18px; text-align:center; box-shadow:var(--ombre); display:flex; flex-direction:column; gap:10px; max-height:88vh; max-height:88dvh; overflow-y:auto; }
   .sheet-card h2{ font-family:'Cormorant Garamond', serif; font-size:22px; font-weight:600; margin:0; color:var(--encre); }
   .sheet-card p{ font-size:13px; line-height:1.5; color:var(--encre-douce); margin:0 0 6px; }
   .sheet-card .btn{ text-decoration:none; text-align:center; }
   @keyframes fade-in{ from{ opacity:0; } to{ opacity:1; } }
+  /* Fenêtre contacts : centrée à l'écran */
+  .sheet-center{ align-items:center; }
+  .sheet-center .sheet-card{ margin-bottom:0; max-height:88vh; max-height:88dvh; overflow-y:auto; }
+  .btn-wa{ display:block; background:#2f8f5b; color:#fff; text-decoration:none; text-align:center; }
+  .btn-wa[hidden]{ display:none; }
+  .people{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .person{ display:flex; align-items:center; justify-content:space-between; gap:10px; text-align:left; padding:10px 12px; border:1px solid var(--ligne); border-radius:16px; background:var(--creme); }
+  .person b{ display:block; font-weight:600; font-size:15px; }
+  .person span{ display:block; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--terracotta); margin-top:2px; }
+  .person-a{ display:flex; gap:6px; flex:0 0 auto; }
+  .person-a a{ font:600 12px 'Jost',sans-serif; text-decoration:none; border:1px solid var(--terracotta); color:var(--terracotta); border-radius:999px; padding:8px 12px; }
+  .person-a a.wa{ background:var(--terracotta); color:#fff; }
 
   .jp[hidden], .date-line[hidden], #brandTitle[hidden], .venue[hidden]{ display:none; }
   .jp{ margin:0 auto 26px; max-width:340px; animation:rise-in .6s ease both; }
@@ -275,6 +287,7 @@
       <a class="btn btn-primary" id="enterBtn" href="itineraire-v4.html" style="text-decoration:none;text-align:center" data-i18n="enter">Entrer</a>
       <p class="enter-note" id="enterNote" hidden></p>
       <button type="button" class="btn btn-ghost" id="routeBtn" data-i18n="route">Itinéraire</button>
+      <button type="button" class="btn btn-ghost" id="contactBtn" data-i18n="contacts" aria-haspopup="dialog">Contacts</button>
     </div>
   </main>
 
@@ -285,6 +298,16 @@
       <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon" target="_blank" rel="noopener">Google Maps</a>
       <a class="btn btn-primary" href="https://waze.com/ul?q=Domaine%20Montmanoir%2C%206%20Rue%20de%20Paris%2C%2095680%20Montlignon&navigate=yes" target="_blank" rel="noopener">Waze</a>
       <button type="button" class="btn btn-ghost" id="routeCancel" data-i18n="cancel">Annuler</button>
+    </div>
+  </div>
+
+  <div class="sheet sheet-center" id="contactSheet" hidden>
+    <div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+      <h2 id="contactTitle" data-i18n="contacts">Contacts</h2>
+      <p data-i18n="contactsSub">Une question avant ou pendant le mariage ?</p>
+      <a class="btn btn-wa" id="waGroup" href="#" target="_blank" rel="noopener" hidden data-i18n="joinGroup">Rejoindre le groupe WhatsApp du mariage</a>
+      <ul class="people" id="people"></ul>
+      <button type="button" class="btn btn-ghost" id="contactClose" data-i18n="close">Fermer</button>
     </div>
   </div>
 
@@ -421,6 +444,44 @@
   sheet.addEventListener('click', e => { if(e.target === sheet) closeSheet(); });
   sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', closeSheet));
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeSheet(); });
+
+  /* Contacts : laisser « phone » vide pour masquer les boutons ; « group » = lien d'invitation WhatsApp (vide = masqué).
+     role : clé de lang.js (witness, mc). EXEMPLES à remplacer. */
+  const CONTACTS = {
+    group: 'https://chat.whatsapp.com/EXEMPLE',
+    people: [
+      { name:'Camille Martin', role:'witness', phone:'+33612345678' },
+      { name:'Lucas Durand',   role:'witness', phone:'+33698765432' },
+      { name:'Sofia Silva',    role:'mc',      phone:'+351912345678' }
+    ]
+  };
+  const contactSheet = document.getElementById('contactSheet');
+  function openContacts(){
+    const wa = document.getElementById('waGroup');
+    wa.hidden = !CONTACTS.group; if(CONTACTS.group) wa.href = CONTACTS.group;
+    const ul = document.getElementById('people'); ul.innerHTML = '';
+    CONTACTS.people.forEach(p => {
+      const li = document.createElement('li'); li.className = 'person';
+      const who = document.createElement('div');
+      const b = document.createElement('b'); b.textContent = p.name;
+      const r = document.createElement('span'); r.textContent = t(p.role);
+      who.append(b, r); li.appendChild(who);
+      const digits = (p.phone || '').replace(/\D/g, '');
+      if(digits){
+        const act = document.createElement('div'); act.className = 'person-a';
+        const call = document.createElement('a'); call.href = 'tel:+' + digits; call.textContent = t('call');
+        const w = document.createElement('a'); w.className = 'wa'; w.href = 'https://wa.me/' + digits; w.target = '_blank'; w.rel = 'noopener'; w.textContent = 'WhatsApp';
+        act.append(call, w); li.appendChild(act);
+      }
+      ul.appendChild(li);
+    });
+    contactSheet.hidden = false;
+  }
+  const closeContacts = () => { contactSheet.hidden = true; };
+  document.getElementById('contactBtn').addEventListener('click', openContacts);
+  document.getElementById('contactClose').addEventListener('click', closeContacts);
+  contactSheet.addEventListener('click', e => { if(e.target === contactSheet) closeContacts(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeContacts(); });
 
   updateCountdown();
   setInterval(updateCountdown, 1000);

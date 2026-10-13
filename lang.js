@@ -41,9 +41,10 @@
       theVenue:"Le lieu", street:"6 Rue de Paris<br>95680 Montlignon",
       copyAddr:"Copier l'adresse", copied:"Adresse copiée ✓", copyFail:"Copie impossible",
       zoomIn:"Zoomer", zoomOut:"Dézoomer", closeMap:"Fermer le plan", expandMap:"Agrandir le plan",
-      mapAlt:"Plan du domaine", dinerAlt:"Illustration du dîner", soireeAlt:"Illustration de la soirée",
+      mapAlt:"Plan du domaine", dinerAlt:"Illustration du dîner", brunchAlt:"Illustration du brunch", soireeAlt:"Illustration de la soirée",
       pinParking:"Parking", pinCeremonie:"Cérémonie", pinCocktail:"Vin d'honneur",
       help:"En cas de besoin", witness:"Témoin", mc:"Maître de cérémonie", call:"Appeler",
+      contacts:"Contacts", contactsSub:"Une question avant ou pendant le mariage ?", joinGroup:"Rejoindre le groupe WhatsApp du mariage", close:"Fermer",
       tip:"Astuce : ajoutez cette page à votre écran d'accueil pour la retrouver en un geste, même sans réseau."
     },
     pt: {
@@ -84,9 +85,10 @@
       theVenue:"O local", street:"6 Rue de Paris<br>95680 Montlignon, França",
       copyAddr:"Copiar o endereço", copied:"Endereço copiado ✓", copyFail:"Não foi possível copiar",
       zoomIn:"Aproximar", zoomOut:"Afastar", closeMap:"Fechar o mapa", expandMap:"Ampliar o mapa",
-      mapAlt:"Mapa do domaine", dinerAlt:"Ilustração do jantar", soireeAlt:"Ilustração da festa",
+      mapAlt:"Mapa do domaine", dinerAlt:"Ilustração do jantar", brunchAlt:"Ilustração do brunch", soireeAlt:"Ilustração da festa",
       pinParking:"Estacionamento", pinCeremonie:"Cerimônia", pinCocktail:"Coquetel",
       help:"Em caso de necessidade", witness:"Padrinho/Madrinha", mc:"Mestre de cerimônias", call:"Ligar",
+      contacts:"Contatos", contactsSub:"Alguma dúvida antes ou durante o casamento?", joinGroup:"Entrar no grupo de WhatsApp do casamento", close:"Fechar",
       tip:"Dica: adicione esta página à tela inicial do celular para abri-la rapidamente, mesmo sem internet."
     }
   };

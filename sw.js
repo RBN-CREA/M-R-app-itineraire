@@ -1,8 +1,8 @@
 // Mode hors-ligne : pages et scripts en "réseau d'abord", le reste en "cache d'abord".
 // Changer la version pour forcer la mise à jour du cache chez les invités.
-const CACHE = 'mariage-v11';
+const CACHE = 'mariage-v12';
 const CORE = ['./', 'index.html', 'lang.js', 'itineraire-v4.html', 'manifest.webmanifest',
-  'asset/plan.webp', 'asset/diner-illu.webp', 'asset/soiree-illu.webp',
+  'asset/plan.webp', 'asset/diner-illu.webp', 'asset/soiree-illu.webp', 'asset/brunch-illu.webp?v=2',
   'asset/corner-tl.png', 'asset/corner-tr.png', 'asset/corner-bl.png', 'asset/corner-br.png', 'asset/sprig-right.png',
   'asset/point-parking.png', 'asset/point-ceremonie.png', 'asset/point-cocktail.png',
   'asset/trajet-entree-parking.png', 'asset/trajet-parking-ceremonie.png', 'asset/trajet-ceremonie-cocktail.png',

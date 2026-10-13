@@ -484,12 +484,6 @@
   .w-btn:active{ transform:scale(.97); }
   .w-link{ display:block; margin:12px auto 0; border:0; background:none; font:500 12px 'Jost'; color:#8A7A64; text-decoration:underline; cursor:pointer; }
   .welcome-bottom{ margin-top:18px; margin-bottom:6px; }
-  .w-contact{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; }
-  .w-contact + .w-contact{ border-top:1px dashed #E0CDA6; }
-  .w-who b{ display:block; font-weight:600; font-size:15px; }
-  .w-who span{ display:block; font-size:12px; color:#8A7A64; margin-top:1px; }
-  .w-who em{ display:block; font-style:normal; font-size:13px; color:var(--encre); margin-top:3px; letter-spacing:0.04em; }
-  .w-contact .w-btn{ flex:0 0 auto; padding:9px 18px; }
   /* Programme de la journée (frise alternée) */
   .prog{ text-align:center; padding:0 0 8px; }
   .prog-date{ font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:var(--or); font-weight:600; min-height:16px; transition:opacity .25s ease; position:relative; z-index:3; background:var(--papier); padding:0 0 24px; }
@@ -535,8 +529,8 @@
   .prog-go:hover{ background:rgba(198,107,73,0.08); }
   /* Choix Maps / Waze */
   .sheet[hidden]{ display:none; }
-  .sheet{ position:fixed; inset:0; z-index:200; background:rgba(91,70,54,0.35); display:flex; align-items:flex-end; justify-content:center; padding:16px; }
-  .sheet-card{ width:100%; max-width:380px; background:var(--papier); border-radius:22px; padding:22px 20px 18px; text-align:center; box-shadow:var(--ombre); display:flex; flex-direction:column; gap:10px; margin-bottom:env(safe-area-inset-bottom); }
+  .sheet{ position:fixed; inset:0; z-index:200; background:rgba(91,70,54,0.35); display:flex; align-items:center; justify-content:center; padding:16px; }
+  .sheet-card{ width:100%; max-width:380px; background:var(--papier); border-radius:22px; padding:22px 20px 18px; text-align:center; box-shadow:var(--ombre); display:flex; flex-direction:column; gap:10px; max-height:88vh; max-height:88dvh; overflow-y:auto; }
   .sheet-card h2{ font-family:'Cormorant Garamond', serif; font-size:22px; font-weight:600; margin:0; color:var(--encre); }
   .sheet-card p{ font-size:13px; line-height:1.5; color:var(--encre-douce); margin:0 0 6px; }
   .sheet-btn{ display:block; box-sizing:border-box; appearance:none; background:transparent; cursor:pointer; text-decoration:none; text-align:center; font:600 13px 'Jost',sans-serif; letter-spacing:0.04em; padding:12px 18px; border-radius:999px; border:1px solid var(--terracotta); color:var(--terracotta); }
@@ -706,6 +700,7 @@
 
     <!-- Illustrations pour les étapes sans trajet (dîner, soirée) : remplacent
          le plan/les trajets/les points le temps de l'étape. -->
+    <img class="illu-img" loading="lazy" id="illu-brunch" src="asset/brunch-illu.webp?v=2" data-i18n-attr="alt:brunchAlt" alt="Illustration du brunch">
     <img class="illu-img" loading="lazy" id="illu-diner"  src="asset/diner-illu.webp"  data-i18n-attr="alt:dinerAlt" alt="Illustration du dîner">
     <div class="diner-overlay" id="dinerOverlay" aria-hidden="true">
       <span class="diner-flame flame-lg" style="left:10.0%; top:61.22%; animation-delay:0.0s;"></span>
@@ -778,15 +773,6 @@
     </div>
   </div>
 
-  <!-- ===== ACCUEIL : contacts (sous le plan) ===== -->
-  <div class="welcome welcome-bottom" id="welcomeContacts" hidden>
-    <div class="w-card">
-      <h3 data-i18n="help">En cas de besoin</h3>
-      <!-- TODO : remplacer les noms et numéros -->
-      <div class="w-contact"><div class="w-who"><b>Prénom Nom</b><span data-i18n="witness">Témoin</span><em>06 00 00 00 01</em></div><a class="w-btn primary" href="tel:+33600000001" data-i18n="call">Appeler</a></div>
-      <div class="w-contact"><div class="w-who"><b>Prénom Nom</b><span data-i18n="mc">Maître de cérémonie</span><em>06 00 00 00 02</em></div><a class="w-btn primary" href="tel:+33600000002" data-i18n="call">Appeler</a></div>
-    </div>
-  </div>
   </div>
   </section>
   </div>
@@ -819,7 +805,7 @@ const stages = [
   {id:'diner',     time:'19:30',               path:null, pin:null, illu:'illu-diner'},
   {id:'soiree',    time:'22:00',               path:null, pin:null, illu:'illu-soiree'},
   // Lendemain : retour de mariage (dimanche 16 mai, 11h)
-  {id:'retour',    time:'11:00', day:1,        path:null, pin:null, illu:null, noMap:true, photos:true},
+  {id:'retour',    time:'11:00', day:1,        path:null, pin:null, illu:'illu-brunch', photos:true},
 ];
 // Textes traduits (lang.js) : libellé, titre, consigne
 stages.forEach(s=>{
@@ -898,7 +884,6 @@ function render(){
   document.getElementById('nextBtn').style.visibility = next ? '' : 'hidden';
   if(next) nextBtn.textContent = t('then') + ' · ' + next.time + ' · ' + next.label + '  →';
   document.getElementById('welcome').hidden = !stage.welcome;
-  document.getElementById('welcomeContacts').hidden = !stage.welcome;
   document.getElementById('mapSlot').hidden = !!stage.noMap;
   document.getElementById('retourPhotos').hidden = !stage.photos;
   document.getElementById('headerTop').hidden = cur !== null;
