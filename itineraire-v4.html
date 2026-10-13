@@ -560,13 +560,13 @@
   .prog-rule{ margin-bottom:6px; }
   .prog-list{
     height:var(--wheel-h); overflow-y:auto; overscroll-behavior:contain;
-    scroll-snap-type:y mandatory; scroll-padding-top:calc(var(--wheel-h) * 0.38 - var(--item-h) / 2); scrollbar-width:none; -webkit-overflow-scrolling:touch;
-    -webkit-mask-image:linear-gradient(180deg, transparent 0, transparent 9%, #000 25%, #000 62%, transparent 100%);
-            mask-image:linear-gradient(180deg, transparent 0, transparent 9%, #000 25%, #000 62%, transparent 100%);
+    scroll-snap-type:y mandatory; scroll-padding-top:calc(var(--wheel-h) * 0.27 - var(--item-h) / 2); scrollbar-width:none; -webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(180deg, transparent 0, transparent 2%, #000 13%, #000 60%, transparent 100%);
+            mask-image:linear-gradient(180deg, transparent 0, transparent 2%, #000 13%, #000 60%, transparent 100%);
   }
   .prog-list::-webkit-scrollbar{ display:none; }
   .prog-list::before{ display:none; }
-  .prog-track{ position:relative; padding:calc(var(--wheel-h) * 0.38 - var(--item-h) / 2) 0 calc(var(--wheel-h) * 0.62 - var(--item-h) / 2); }
+  .prog-track{ position:relative; padding:calc(var(--wheel-h) * 0.27 - var(--item-h) / 2) 0 calc(var(--wheel-h) * 0.73 - var(--item-h) / 2); }
   .prog-track::before{ content:''; position:absolute; left:50%; top:0; bottom:0; width:2px; margin-left:-1px; background:#EBD3C6; }
   .prog-item{ height:var(--item-h); min-height:0; align-items:center; scroll-snap-align:start; scroll-snap-stop:always; will-change:opacity, transform; }
   .prog-dot{ margin-top:0; width:34px; height:34px; align-self:center; }
@@ -996,7 +996,7 @@ function applyScrollFx(){
   fxQueued = false;
   if(REDUCED || hub.hidden) return;
   const wr = wheelEl.getBoundingClientRect();
-  const mid = wr.top + wr.height * 0.38;
+  const mid = wr.top + wr.height * 0.27;
   wheelEl.querySelectorAll('.prog-item, .prog-day').forEach(el=>{
     const r = el.getBoundingClientRect();
     const d = Math.abs((r.top + r.height/2) - mid) / (wr.height * 0.5);
@@ -1016,7 +1016,7 @@ function updateDayLabel(instant){
     const wr = wheelEl.getBoundingClientRect(), sr = sep.getBoundingClientRect();
     // le repère « Dimanche » monte dans la roue ; passé le point de focus (+ un demi-cran),
     // il remplace « Samedi » sous le titre
-    if(sr.top + sr.height/2 <= wr.top + wr.height*0.38 - sr.height/2) key = 'dayTwo';
+    if(sr.top + sr.height/2 <= wr.top + wr.height*0.27 - sr.height/2) key = 'dayTwo';
     sep.style.visibility = key === 'dayTwo' ? 'hidden' : '';
   }
   if(key === dayLabelKey) return;
